@@ -1,6 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { fileURLToPath } from "node:url";
 import type { Database } from "bun:sqlite";
 import { MigrationFailedError } from "./db-errors";
 
@@ -12,9 +11,13 @@ export type MigrationFile = {
 
 const MIGRATION_FILENAME = /^(\d{3})_(.+)\.sql$/;
 
-/** Default migrations directory (versioned SQL files co-located with this module). */
+/**
+ * Versioned SQL migrations on disk.
+ * Uses `process.cwd()` so Next.js/Webpack bundles still resolve the repo path; `import.meta.url`
+ * points at `.next/server/chunks/...` in dev and would miss the `migrations/` folder.
+ */
 export function defaultMigrationsDir(): string {
-  return join(fileURLToPath(new URL(".", import.meta.url)), "migrations");
+  return join(process.cwd(), "src", "infrastructure", "sqlite", "migrations");
 }
 
 /**

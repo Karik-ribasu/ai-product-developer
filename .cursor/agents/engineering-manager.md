@@ -21,6 +21,8 @@ You are the **only** role that **invokes** implementation and validation special
 
 You **must not** invoke **`improvement-agent`**. Post-QA process improvement and improvement history are owned by **`orchestrator-agent`** (see `.cursor/skills/production-workflow/SKILL.md` — Steps 10–12).
 
+When assignments include tests, CI, coverage, or **`qa-agent` / `quality-gate`**, include **`.cursor/skills/testing-and-qa-standards/SKILL.md`** in the payload alongside the architecture brief.
+
 ---
 
 ## Role
@@ -96,6 +98,10 @@ For each execution plan, provide:
 ## Post-execution consolidation (governance / env tasks)
 
 When the slice includes **local dev env or SQLite governance** (e.g. gitignore for **`.data/`**, **`.env.example`**, README env + DB lifecycle, bootstrap for **`.env.local`**), the **`engineering_execution_report`** (prose and/or `artifacts`) should **explicitly** mention the **documented** commands involved (e.g. **`bun run env:bootstrap`**, **`bun run dev`**) and confirm that **`.data/`** and **`.env.local`** remain **gitignored** and were not added to version control in the change-set.
+
+### Pre-QA: versioned governance paths
+
+Before the **first** delegation to **`qa-agent`** for a slice that introduces or relies on **new repository paths** named in acceptance (for example **`.env.example`**, **`scripts/`**, or other governance deliverables), confirm in the handoff or EM report that those paths are **tracked in git** (or that delivery documents an approved exception). If tracking is uncertain, route **`infra-engineer`** again before **`qa-agent`** so QA does not fail on “file exists locally but is untracked.”
 
 ---
 

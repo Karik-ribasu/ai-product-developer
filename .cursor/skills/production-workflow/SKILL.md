@@ -107,6 +107,8 @@ User input → **Exploration** → Discovery → **Architecture** → Delivery �
 - Assignments must not bundle multiple sectors; if work crosses sectors, **delivery/engineering manager** must split into separate assignments (each with its own `agent` + `sector`) before implementation.
 - `execution_order` respects dependencies; parallel work is explicit; **`qa-agent`** appears in the plan where validation is required (typically after implementation tasks), using `quality-engineering`.
 
+**Iterate note (quality gate proportionality):** When Discovery returns **`decision: iterate`** with a small delta, **delivery** (with EM alignment) may narrow **`quality-gate`** acceptance in the matching **`task.json`** to the **commands and surfaces touched** by that delta (for example lint/tests plus a documented smoke path) as long as the written acceptance reflects that scope. For cross-cutting risk, keep the broader gate. This clarifies proportionality; it does **not** waive the requirement for a QA **`pass`** before **`improvement-agent`**.
+
 ---
 
 ## Step 7 — Engineering execution (engineering manager only)
@@ -409,3 +411,4 @@ Procedural, deterministic handoffs; strict validation; explicit delegation. Crea
 ## Additional resources
 
 - For agent persona details, read the matching file under `.cursor/agents/` (for example `exploration-agent.md`, `discovery.md`, `architecture-agent.md`, `delivery.md`, `engineering-manager.md`, `qa-agent.md`, **`improvement-agent.md`**).
+- For **coverage, containerized integration tests, and QA Chromium E2E policy**, read **`.cursor/skills/testing-and-qa-standards/SKILL.md`** (see also `.cursor/rules/mandatory-testing-and-qa-standards.mdc`).

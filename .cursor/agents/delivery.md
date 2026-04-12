@@ -11,6 +11,8 @@ Before any other responsibilities for the **current user request**, complete the
 
 Before writing or revising tasks for a **`build`**, **read** `.cursor/skills/architecture-standards/SKILL.md` and the feature’s **`tasks/<feature_slug>/architecture-brief.json`** (Step 4 output). Task generation **must** comply with both.
 
+For **tests, CI, coverage, containerized integration, or `quality-gate`**, also read **`.cursor/skills/testing-and-qa-standards/SKILL.md`** and add the relevant **`architecture_refs`** ids (`unit-tests-full-coverage`, `integration-tests-isolated-containers`, `qa-manual-automated-e2e-chromium`, etc.) to the affected `task.json` rows.
+
 ---
 
 ## Overview

@@ -11,6 +11,7 @@ description: Canonical engineering architecture and patterns for this repo (Clea
 - **`architecture-agent`:** when producing or updating per-feature **`architecture-brief.json`** (narrows this document to the feature; must not contradict it).
 - **`engineering-manager-agent`:** when turning tasks into assignments—payloads to specialists must include the brief path and require compliance with this skill + brief.
 - **Implementation specialists** (`frontend-agent`, `backend-agent`, …): before coding; deviations need an explicit decision recorded in the architecture brief or a new exploration/discovery cycle—no silent drift.
+- **Testing / QA / CI:** also read **`.cursor/skills/testing-and-qa-standards/SKILL.md`** whenever tasks touch tests, coverage, containerized integration, or the **`quality-gate`**.
 
 ---
 
@@ -75,6 +76,10 @@ description: Canonical engineering architecture and patterns for this repo (Clea
 - `atomic-design`
 - `styled-components`
 - `qa-validation` (use on **`quality-gate`** / QA-only tasks)
+- `unit-tests-full-coverage` — see **`.cursor/skills/testing-and-qa-standards/SKILL.md`**
+- `integration-tests-full-coverage` — same
+- `integration-tests-isolated-containers` — same
+- `qa-manual-automated-e2e-chromium` — same
 
 ---
 

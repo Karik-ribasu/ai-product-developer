@@ -28,6 +28,7 @@ You are **invoked by `engineering-manager-agent`** (not the orchestrator). Expec
 - Identify bugs and edge cases  
 - Validate user flows  
 - Ensure overall quality  
+- **Automated-manual E2E (mandatory per `.cursor/skills/testing-and-qa-standards/SKILL.md` when UI is in scope):** run the **application in an isolated container** (or documented compose stack), drive **all shipped user-facing features** with **Chromium** (realistic user flows) **on every `quality-gate` execution** for that scope—no feature sampling unless delivery explicitly narrows acceptance. Collect **browser console** and **network** failures and fold them into the **structured pass/fail + `issues` list** for the engineering manager (same severity rules as other QA defects).
 
 ---
 
@@ -38,6 +39,10 @@ You are **invoked by `engineering-manager-agent`** (not the orchestrator). Expec
 3. Execute tests  
 4. Report issues  
 5. Validate fixes  
+
+### Governance paths
+
+When acceptance criteria name **concrete repository paths** (for example **`.env.example`**, **`scripts/...`**), verify existence and content **and** that those paths are **tracked by git** (unless acceptance explicitly states an intentionally unversioned delivery). If they exist only as untracked files, report a **process / handoff** failure at high severity and list the paths.
 
 ---
 
@@ -54,3 +59,4 @@ You are **invoked by `engineering-manager-agent`** (not the orchestrator). Expec
 - Test results  
 - Bug reports  
 - Validation status  
+- **E2E appendix (when §4 of the testing skill applies):** container image tags / compose project name, Chromium runner version, list of features exercised, and categorized console/network issues with repro steps.
