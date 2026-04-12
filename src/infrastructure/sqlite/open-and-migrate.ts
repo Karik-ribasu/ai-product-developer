@@ -21,7 +21,7 @@ export function openDatabaseAndMigrate(
 ): Database {
   let db: Database;
   try {
-    db = new Database(options.databasePath, { strict: true });
+    db = new Database(options.databasePath, { strict: true, create: true });
   } catch (cause) {
     throw new DatabaseOpenError("Could not open SQLite database.", { cause });
   }

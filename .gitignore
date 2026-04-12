@@ -31,6 +31,9 @@ yarn-error.log*
 # env files
 .env*.local
 
+# local SQLite database (runtime; never commit)
+.data/
+
 # vercel
 .vercel
 

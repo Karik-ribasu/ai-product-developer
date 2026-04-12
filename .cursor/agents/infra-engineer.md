@@ -45,6 +45,18 @@ You are responsible for infrastructure, deployment, and system reliability.
 
 ---
 
+## Local dev env governance (this repository)
+
+When a task or architecture brief marks work as **infra-only** governance for local SQLite / Next dev setup:
+
+- Confirm **`.gitignore`** covers **`.data/`** (local DB tree) and **`.env*.local`** (local env overrides); never commit those paths.
+- Keep **`.env.example`** aligned with **server-only** variables documented in the README (e.g. **`TODO_SQLITE_PATH`**); do not add **`NEXT_PUBLIC_*`** for DB paths or anything that would ship SQLite config to the browser.
+- Ensure the README has clear sections for **environment variables**, **SQLite file lifecycle** (default path, when the file is created, how to reset), and **Windows / OneDrive / sync-folder** caveats where relevant.
+- Do **not** add a second SQLite stack: no duplicate driver wiring, migrations, or **`TodoRepository`** implementation under infra-only paths unless a delivery task explicitly expands persistence scope.
+- When acceptance calls for it, provide or maintain a **documented bootstrap** (e.g. **`bun run env:bootstrap`**) that creates **`.env.local`** from **`.env.example`** with safe defaults, without overwriting user secrets.
+
+---
+
 ## Output
 
 - Stable environments  

@@ -93,6 +93,12 @@ For each execution plan, provide:
 
 ---
 
+## Post-execution consolidation (governance / env tasks)
+
+When the slice includes **local dev env or SQLite governance** (e.g. gitignore for **`.data/`**, **`.env.example`**, README env + DB lifecycle, bootstrap for **`.env.local`**), the **`engineering_execution_report`** (prose and/or `artifacts`) should **explicitly** mention the **documented** commands involved (e.g. **`bun run env:bootstrap`**, **`bun run dev`**) and confirm that **`.data/`** and **`.env.local`** remain **gitignored** and were not added to version control in the change-set.
+
+---
+
 ## Agent Coordination Model
 
 Each task must be assigned based on:

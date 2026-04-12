@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "feature_slug": "local-todo-sqlite",
-  "summary": "Recreate Next.js App Router + TypeScript + Bun with a single bounded context for todos: pure domain and application use cases, SQLite persistence behind ports, App Router routes/server actions as adapters, and Atomic Design + styled-components at the UI edge. Migrations version the schema; validation and errors stay at server boundaries with user-safe messages.",
+  "summary": "Recreate Next.js App Router + TypeScript + Bun with a single bounded context for todos: pure domain and application use cases, SQLite persistence behind ports, App Router routes/server actions as adapters, and Atomic Design + styled-components at the UI edge. Migrations version the schema; validation and errors stay at server boundaries with user-safe messages. This increment adds infra-owned dev governance: gitignored `.data/` and `.env.local`, documented env + SQLite lifecycle in README, `.env.example` with TODO_SQLITE_PATH, and a safe `.env.local` bootstrap—without duplicating SQLite adapters outside backend/infrastructure.",
   "clean_architecture": {
     "layers": [
       "domain (entities, value objects, domain errors — no framework or driver imports)",
@@ -31,11 +31,15 @@
   "constraints_for_implementation": [
     "Use styled-components with a typed `DefaultTheme` and centralized tokens (colors, spacing); add Next.js SSR/registry setup per the installed styled-components + App Router version so hydration is correct on Windows.",
     "Place domain and application under dedicated folders (e.g. `src/domain`, `src/application`) with zero `react` / `next` / driver imports in domain.",
-    "SQLite file path must be server-only (env or resolved path), never exposed to client bundles; no secrets in client code.",
+    "SQLite file path and all related environment variables (e.g. `TODO_SQLITE_PATH`) are server-only: never use `NEXT_PUBLIC_*`, never read in client components or in modules that ship to the browser; resolve and consume only from server-only surfaces (e.g. `src/server/*`, route handlers, server actions).",
     "Versioned SQL migrations applied on startup or before first use; idempotent behavior on empty DB and on schema bumps; surface migration/open failures as user-safe messages without stack traces or internal paths in production UI.",
     "Validate all mutating inputs at server boundaries (server actions or route handlers); return structured, safe messages for invalid input, empty title, and DB/migration failures (three explicit failure paths for UX proof).",
-    "Document Bun install, dev, build, lint/test, and Windows smoke steps in README; use Bun as the package/runtime manager for scripts.",
-    "Split delivery tasks: domain vs application vs infrastructure vs UI vs migrations/quality-gate; each task lists `architecture_refs` from architecture-standards (e.g. clean-architecture, ddd-tactical, atomic-design, styled-components)."
+    "Document Bun install, dev, build, lint/test, and Windows smoke steps in README; use Bun as the package/runtime manager for scripts. README must include dedicated sections for environment variables and the local SQLite database: `TODO_SQLITE_PATH`, file lifecycle (create/open), how to reset the DB safely, and caveats when the repo or `.data/` lives under OneDrive or other sync folders.",
+    "Infra-engineer is primary owner for this increment’s governance: confirm and enforce `.gitignore` coverage for `.data/` and `.env.local` (if not already); maintain `.env.example` including `TODO_SQLITE_PATH` with clear comments; provide a single documented command or infra-owned script that creates workspace-root `.env.local` with safe dev defaults. Never commit `.env.local`, secrets, or `.data/` contents.",
+    "Do not add a duplicate SQLite adapter, second persistence stack, or infra-side reimplementation of `TodoRepository` / driver wiring; infra work is limited to ignore rules, env templates, bootstrap of `.env.local`, documentation, and CI/docs workflow hooks—not product persistence code.",
+    "Defer backend and application wiring changes unless a delivery task explicitly requires updating the SQLite path contract or composition (e.g. `src/server/todo-sqlite-path.ts` and dependent server bootstrap); otherwise keep persistence changes in existing backend/infrastructure tasks.",
+    "Split delivery tasks: domain vs application vs infrastructure vs UI vs migrations/quality-gate; each task lists `architecture_refs` from architecture-standards (e.g. clean-architecture, ddd-tactical, atomic-design, styled-components). Governance tasks should reference `clean-architecture` / `singleton-policy` where they touch env and DB file boundaries.",
+    "Delivery branch must satisfy acceptance checklist; `bun run lint` and `bun run test` pass; a fresh clone following README plus infra bootstrap steps can run locally without committing `.data/` or `.env.local`."
   ],
   "delivery_hints": [
     "Task A — Scaffold: Next App Router + TS + Bun (`package.json`, `tsconfig`, ESLint); README with install/dev/build and Windows smoke checklist for SQLite driver path.",
@@ -44,6 +48,9 @@
     "Task D — Infrastructure: SQLite schema + migration files; adapter implementing `TodoRepository`; migration runner; integration tests against temp file DB.",
     "Task E — Interface adapters: server actions or route handlers mapping requests to use cases, validation at boundary, map domain errors to user-facing messages.",
     "Task F — UI: Atomic tree under `components/ui/{atoms,molecules,organisms}`; loading and error states visible; styled-components theme tokens file.",
-    "Task G — Quality gate: single documented command (or minimal set) for lint + tests; `architecture_refs` include `qa-validation` where appropriate."
+    "Task G — Quality gate: single documented command (or minimal set) for lint + tests; `architecture_refs` include `qa-validation` where appropriate.",
+    "Task H — Dev env governance (infra-engineer, primary): verify `.gitignore` for `.data/` and `.env.local`; extend README with Environment and Local SQLite sections (`TODO_SQLITE_PATH`, lifecycle, reset, OneDrive/sync caveats); keep `.env.example` aligned; implement documented creation of gitignored `.env.local` (one command and/or optional team-approved bootstrap script); ensure no adapter or driver code is added under infra-only paths.",
+    "Task I — Path contract (backend-agent, conditional only): if acceptance requires a changed path contract, edit `src/server/todo-sqlite-path.ts` and dependent server wiring only as specified by the task—no parallel SQLite stack.",
+    "Fresh-clone smoke: README steps + infra bootstrap produce a runnable dev setup; verify `bun run lint` and `bun run test` on the delivery branch."
   ]
 }

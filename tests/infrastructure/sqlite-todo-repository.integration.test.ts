@@ -83,7 +83,7 @@ describe("SQLite TodoRepository (integration, temp file DB)", () => {
   test("schema bump: DB at v1 only receives v2 migration on open", () => {
     const { file, cleanup } = tempDbPath();
     try {
-      const db = new Database(file, { strict: true });
+      const db = new Database(file, { strict: true, create: true });
       db.run(`
         CREATE TABLE todos (
           id TEXT PRIMARY KEY NOT NULL,
@@ -107,7 +107,7 @@ describe("SQLite TodoRepository (integration, temp file DB)", () => {
       const repo = createSqliteTodoRepository({ databasePath: file });
       repo.close();
 
-      const verify = new Database(file, { strict: true });
+      const verify = new Database(file, { strict: true, create: true });
       const cols = verify
         .query<{ name: string }, []>("PRAGMA table_info(todos)")
         .all()
@@ -147,7 +147,7 @@ describe("SQLite TodoRepository (integration, temp file DB)", () => {
       expect(migrations.length).toBeGreaterThanOrEqual(2);
       expect(migrations[0]!.version).toBeLessThan(migrations[1]!.version);
 
-      const db = new Database(file, { strict: true });
+      const db = new Database(file, { strict: true, create: true });
       runMigrations(db, migrations);
       runMigrations(db, migrations);
       const v = db
