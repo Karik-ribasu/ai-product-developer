@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS todos (
+  id TEXT PRIMARY KEY NOT NULL,
+  title TEXT NOT NULL,
+  completed INTEGER NOT NULL DEFAULT 0 CHECK (completed IN (0, 1)),
+  deleted INTEGER NOT NULL DEFAULT 0 CHECK (deleted IN (0, 1))
+);
