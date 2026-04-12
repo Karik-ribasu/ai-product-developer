@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "feature_slug": "local-todo-sqlite",
+  "task_slug": "03-todo-application",
+  "title": "Application ports and todo use cases",
+  "description": "Define the TodoRepository port in the application layer and implement use cases for create, list, update text, toggle complete, and delete, orchestrating domain rules only and remaining free of framework and SQLite imports.",
+  "acceptance": [
+    "TodoRepository port expresses persistence needs without referencing concrete SQLite APIs.",
+    "Use cases exist for create, list, update text, toggle complete, and delete, each delegating invariants to domain code.",
+    "Unit tests exercise use cases with an in-memory or fake repository implementation (no file DB required).",
+    "Application modules import neither react/next nor SQLite drivers."
+  ],
+  "depends_on": ["02-todo-domain"],
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "updated_at": "2026-04-12T02:52:33.000Z"
+}

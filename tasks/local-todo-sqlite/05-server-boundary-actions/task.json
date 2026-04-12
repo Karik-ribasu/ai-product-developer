@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "feature_slug": "local-todo-sqlite",
+  "task_slug": "05-server-boundary-actions",
+  "title": "Server actions and boundary validation",
+  "description": "Expose Next.js server actions or route handlers that map external input to use case DTOs, validate all mutating inputs at the server boundary, invoke application use cases with injected repository/db factory, and translate domain and infrastructure failures into structured, user-safe error outcomes (invalid input, empty title, DB/migration failures) without leaking stack traces or internal paths in production responses.",
+  "acceptance": [
+    "All mutating server entrypoints validate inputs before calling use cases.",
+    "Three explicit failure classes are observable by callers: invalid input, empty/forbidden title text, and DB/migration failures, each with safe user-facing messages.",
+    "Successful operations return data shapes the UI can render without exposing server file paths or secrets.",
+    "Wiring composes use cases with SQLite adapter using configuration from server-only env or resolved paths (not bundled to client).",
+    "No domain rules are reimplemented in actions beyond validation/mapping."
+  ],
+  "depends_on": ["04-sqlite-persistence"],
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "updated_at": "2026-04-11T16:45:00.000Z"
+}

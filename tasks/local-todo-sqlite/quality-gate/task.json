@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "feature_slug": "local-todo-sqlite",
+  "task_slug": "quality-gate",
+  "title": "Quality gate: lint, tests, and MVP acceptance checklist",
+  "description": "Verify the feature end-to-end against discovery MVP and architecture constraints: run the single documented verification command (or minimal documented set), confirm critical automated tests for rules and persistence pass, review layering and dependency rules from the architecture brief, and record structured pass/fail outcomes for the engineering manager report.",
+  "acceptance": [
+    "Documented verification command(s) from README execute successfully in a clean checkout scenario (dependencies installed per docs).",
+    "Automated tests cover critical domain rules and SQLite persistence behaviors agreed in prior tasks with no flaky reliance on developer-specific paths.",
+    "Manual or scripted checklist confirms todo CRUD with loading/error UX, safe server error messages, and migrations on a fresh SQLite file.",
+    "Static review confirms no forbidden imports in domain/application, no client exposure of DB paths/secrets, and styled-components hydration without critical console errors on Windows smoke path when available.",
+    "QA output uses structured pass/fail with issues list suitable for engineering-manager-agent handoff per qa-agent contract."
+  ],
+  "depends_on": [
+    "01-next-bun-scaffold",
+    "02-todo-domain",
+    "03-todo-application",
+    "04-sqlite-persistence",
+    "05-server-boundary-actions",
+    "06-todo-frontend-ui"
+  ],
+  "status": "done",
+  "assigned_agent": "qa-agent",
+  "sector": "quality-engineering",
+  "updated_at": "2026-04-12T03:15:00.000Z"
+}

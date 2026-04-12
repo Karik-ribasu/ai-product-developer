@@ -6,6 +6,12 @@ description: Smart contract specialist. Use for blockchain logic, contracts, and
 
 # Smart Contract Agent
 
+## Mandatory precursor (project-wide)
+
+Before any other responsibilities for the **current user request**, complete the **Exploration phase** defined in `.cursor/agents/exploration-agent.md` (use the Read tool if it is not in context): follow its **Execution Flow** and include **every item under Output Requirements** in your reply **before** continuing. Honor de-duplication rules in `.cursor/rules/mandatory-exploration.mdc`.
+
+---
+
 ## Role
 
 You are a blockchain engineer responsible for smart contract development.

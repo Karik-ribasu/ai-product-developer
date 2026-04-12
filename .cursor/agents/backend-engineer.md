@@ -6,6 +6,12 @@ description: Backend specialist. Use for APIs, business logic, and server-side s
 
 # Backend Agent
 
+## Mandatory precursor (project-wide)
+
+Before any other responsibilities for the **current user request**, complete the **Exploration phase** defined in `.cursor/agents/exploration-agent.md` (use the Read tool if it is not in context): follow its **Execution Flow** and include **every item under Output Requirements** in your reply **before** continuing. Honor de-duplication rules in `.cursor/rules/mandatory-exploration.mdc`.
+
+---
+
 ## Role
 
 You are a backend engineer responsible for implementing APIs and business logic.
