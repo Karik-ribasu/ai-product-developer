@@ -1,0 +1,360 @@
+{
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "task_slug": "04-ui-spec-refiner",
+  "surface_id": "mvp-primary-dashboard",
+  "layout": {
+    "pattern": "dashboard",
+    "landmarks_order_dom": [
+      "banner (shell-app-header)",
+      "navigation (nav-sidebar or nav-drawer trigger)",
+      "main (surface-main-column)"
+    ],
+    "regions": [
+      {
+        "id": "shell-app-header",
+        "role": "banner",
+        "reading_order": 1,
+        "title_ownership": "Product label only: use type-label (or type-caption) for the app name; do not use type-title here. Single H1 / type-title owner is surface-main-column.page_header."
+      },
+      {
+        "id": "nav-sidebar",
+        "role": "navigation",
+        "reading_order": 2,
+        "notes": "Desktop/tablet persistent rail; mobile converts to drawer (see responsiveness)."
+      },
+      {
+        "id": "surface-main-column",
+        "role": "main",
+        "reading_order": 3,
+        "subsections": [
+          "page_header (type-title)",
+          "kpi-strip (optional stats)",
+          "toolbar (primary CTA then filters)",
+          "task_list_region",
+          "inline_error_slot (main landmark, below toolbar when fetch fails)"
+        ]
+      }
+    ],
+    "grid": {
+      "desktop": "CSS grid: sidebar fixed 264px column + minmax(0,1fr) main; main uses space-6 outer padding per design_system surface-main-column.",
+      "tablet": "Optional 264px sidebar or overlay drawer per nav_model; main min width 320px for readable column.",
+      "mobile": "Single column; sidebar hidden by default; main full width with space-4 horizontal inset (token space-4 per design_system gutters)."
+    },
+    "breakpoints": {
+      "mobile": { "min_px": 320, "max_px": 767, "canonical_band": "320–480" },
+      "tablet": { "min_px": 768, "max_px": 1279, "canonical_target_px": 768 },
+      "desktop": { "min_px": 1280, "canonical_target_px": 1280 }
+    },
+    "max_width": {
+      "readable_text_column_px": { "min": 320, "preferred_max": 1040 },
+      "dashboard_content": "Fluid inside main; cap dense KPI text blocks to ~1040px inner max when stats row spans full main width."
+    }
+  },
+  "responsive": {
+    "breakpoints": {
+      "mobile": "320–480 (extends to 767 for layout transforms)",
+      "tablet": "~768",
+      "desktop": "1280+"
+    },
+    "layout_transforms": {
+      "mobile": "Stack: header → hamburger + drawer nav → main column. Toolbar: button-primary full width above a single-row horizontal scroll of chip-filters OR filter menu button opening sheet (prefer sheet if >4 chips). KPI strip: 1 column cards.",
+      "tablet": "Optional persistent 264px sidebar OR icon rail + drawer for overflow; main retains min 320px. Toolbar: button-primary auto width, first in visual/DOM order, then chip row with wrap. KPI: 2-column grid.",
+      "desktop": "Persistent nav-sidebar 264px + main. Toolbar: primary CTA left, filters to the right with wrap at space-5 gap. KPI: up to 4 columns within max width policy."
+    },
+    "nav_model": {
+      "mobile": "drawer + contextual actions in header (menu button opens nav with focus trap; Esc closes; return focus to launcher)",
+      "tablet": "rail (icon-only 72px) optional with tooltips OR persistent 264px sidebar if EM prefers density; no duplicate top+bottom primary nav",
+      "desktop": "persistent left rail (264px) per design_system nav-sidebar"
+    },
+    "component_resize": {
+      "button-primary": {
+        "mobile": "behavior: reflow — width 100% in toolbar stack; min-height 44px touch target (use md size)",
+        "tablet_desktop": "behavior: reflow — auto width, min width 120px, align start"
+      },
+      "chip-filter": {
+        "mobile": "behavior: scroll or sheet — avoid multi-row chip wall; prefer filter sheet if more than 4 options",
+        "tablet_desktop": "behavior: reflow — horizontal cluster with space-2 gap between chips"
+      },
+      "card-task-row": {
+        "all": "behavior: reflow — internal subgrid: status column fixed 40px + minmax(0,1fr) title + meta column min 96px; quick_actions icon buttons 44x44 min on mobile"
+      }
+    }
+  },
+  "components": [
+    {
+      "id": "shell-app-header",
+      "atomic_layer": "organism",
+      "role": "Global shell",
+      "variants": { "density": ["comfortable"] },
+      "tokens": {
+        "padding_inline": "space-6",
+        "padding_block": "space-4",
+        "background": "bg-elevated",
+        "border_bottom": "border-subtle",
+        "product_label_typography": "type-label"
+      },
+      "dependencies": []
+    },
+    {
+      "id": "nav-sidebar",
+      "atomic_layer": "organism",
+      "role": "Secondary navigation",
+      "variants": { "width": ["fixed_264px", "icon_rail_72px_tablet_optional"] },
+      "tokens": {
+        "padding": "space-4",
+        "gap_items": "space-2",
+        "background": "bg-elevated",
+        "border_right": "border-subtle"
+      },
+      "dependencies": ["drawer-overlay-mobile"]
+    },
+    {
+      "id": "drawer-overlay-mobile",
+      "atomic_layer": "organism",
+      "role": "Mobile navigation container",
+      "notes": "Presents nav-sidebar content when open; scrim bg-app @ 60% opacity using existing tokens only if implemented as token alias in theme (else use documented rgba in theme module).",
+      "dependencies": []
+    },
+    {
+      "id": "kpi-strip",
+      "atomic_layer": "organism",
+      "role": "Supporting stats row",
+      "anatomy": ["metric_card_repeated"],
+      "layout_rules": {
+        "gap": "space-4",
+        "padding_block": "space-4",
+        "columns": { "mobile": 1, "tablet": 2, "desktop": 4 }
+      },
+      "tokens": {
+        "card_background": "bg-elevated",
+        "card_border": "border-subtle",
+        "value_type": "type-title",
+        "label_type": "type-caption",
+        "label_color": "fg-muted"
+      },
+      "dependencies": []
+    },
+    {
+      "id": "surface-main-column",
+      "atomic_layer": "template",
+      "role": "Primary workspace",
+      "tokens": {
+        "padding": "space-6",
+        "section_gap": "space-5",
+        "background": "bg-app"
+      },
+      "dependencies": ["page-header-title", "toolbar-cluster", "task-list-stack"]
+    },
+    {
+      "id": "page-header-title",
+      "atomic_layer": "molecule",
+      "role": "Single dominant page title",
+      "tokens": { "typography": "type-title", "color": "fg-default", "margin_bottom": "space-4" },
+      "dependencies": []
+    },
+    {
+      "id": "toolbar-cluster",
+      "atomic_layer": "molecule",
+      "role": "CTA + filters",
+      "layout_rules": {
+        "order_dom_visual": ["button-primary", "chip-filter-group"],
+        "gap": "space-3",
+        "wrap": true,
+        "mobile_stack": "CTA first (top), filters second"
+      },
+      "dependencies": ["button-primary", "chip-filter"]
+    },
+    {
+      "id": "button-primary",
+      "atomic_layer": "atom",
+      "role": "Primary CTA (e.g. New task)",
+      "variants": { "size": ["sm", "md"], "state": ["default", "hover", "focus-visible", "disabled", "loading"] },
+      "tokens": {
+        "default_bg": "accent-primary",
+        "hover_bg": "accent-primary-hover",
+        "fg": "fg-default",
+        "focus_ring": "shadow-focus-ring",
+        "radius": "radius-sm"
+      },
+      "dependencies": []
+    },
+    {
+      "id": "chip-filter",
+      "atomic_layer": "molecule",
+      "role": "Facet filters",
+      "variants": { "tone": ["neutral", "active"] },
+      "tokens": {
+        "neutral_bg": "bg-subtle",
+        "active_bg": "accent-primary",
+        "fg": "fg-default",
+        "focus_ring": "shadow-focus-ring",
+        "active_border": "border-subtle"
+      },
+      "active_state_cues": [
+        "Non-hue-only: on active, add 2px inner border using border-subtle and optional leading check glyph (decorative with aria-hidden + aria-pressed on control)",
+        "type-label weight 500 → 600 when active (still within type-label scale)"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "card-task-row",
+      "atomic_layer": "organism",
+      "role": "Task list row",
+      "layout_rules": {
+        "internal_columns": "Grid: [status 40px] [title minmax(0,1fr)] [meta min 96px] [actions auto]; gap space-3; align center vertical",
+        "padding": "space-4",
+        "radius": "radius-md",
+        "min_height_px": 72
+      },
+      "tokens": {
+        "background": "bg-elevated",
+        "border": "border-subtle",
+        "title": "type-body",
+        "meta": "type-caption",
+        "meta_color": "fg-muted"
+      },
+      "dependencies": []
+    },
+    {
+      "id": "list-loading-skeleton",
+      "atomic_layer": "organism",
+      "role": "Loading placeholder for task list",
+      "layout_rules": {
+        "mirror": "card-task-row heights and spacing",
+        "count": 6,
+        "shimmer": "optional low-contrast pulse using bg-subtle ↔ bg-elevated (no layout shift)"
+      },
+      "tokens": { "surface": "bg-subtle", "line": "border-subtle" },
+      "dependencies": []
+    },
+    {
+      "id": "empty-task-list",
+      "atomic_layer": "organism",
+      "role": "Zero tasks state",
+      "content": {
+        "title": "type-title",
+        "body": "type-body",
+        "primary_action": "button-primary",
+        "secondary_link_optional": "type-label underlined using accent-primary text color only (not a second primary button)"
+      },
+      "tokens": { "vertical_padding": "space-8", "gap": "space-4" },
+      "dependencies": ["button-primary"]
+    },
+    {
+      "id": "inline-error-panel",
+      "atomic_layer": "organism",
+      "role": "Recoverable fetch/list error",
+      "anatomy": ["icon_slot_optional", "title", "message", "retry_button_secondary", "support_link_policy_placeholder"],
+      "tokens": {
+        "border": "semantic-error",
+        "background": "bg-elevated",
+        "title_type": "type-label",
+        "body_type": "type-body",
+        "vertical_spacing": "space-4"
+      },
+      "actions": ["Retry triggers refetch of task list", "Errors announced via role=alert"],
+      "dependencies": ["button-primary"]
+    },
+    {
+      "id": "badge-status",
+      "atomic_layer": "atom",
+      "role": "Status chip",
+      "variants": { "tone": ["success", "warning", "error", "neutral"] },
+      "tokens": { "success": "semantic-success", "warning": "semantic-warning", "error": "semantic-error", "neutral_fg": "fg-muted" },
+      "dependencies": []
+    }
+  ],
+  "states": [
+    "hover",
+    "focus-visible",
+    "active",
+    "disabled",
+    "loading",
+    "empty",
+    "error",
+    "selected"
+  ],
+  "state_specs": {
+    "hover": {
+      "button-primary": "Background accent-primary-hover; cursor pointer; no motion-only cues.",
+      "card-task-row": "Border or background one step toward bg-subtle from bg-elevated; maintain readable text contrast.",
+      "chip-filter": "Neutral: slightly brighter bg-subtle border with border-subtle 1px; Active: keep non-hue cues per component.active_state_cues."
+    },
+    "focus-visible": {
+      "global": "All interactive elements use shadow-focus-ring; never remove outline without replacement.",
+      "card-task-row": "If row is interactive, show focus ring on row container; if only inner buttons, ring on control."
+    },
+    "loading": {
+      "task_list_region": "Replace card list with list-loading-skeleton; toolbar remains interactive; button-primary loading variant shows inline spinner and aria-busy."
+    },
+    "empty": {
+      "task_list_region": "Show empty-task-list; primary CTA duplicates New task path from toolbar."
+    },
+    "error": {
+      "task_list_region": "Show inline-error-panel above list area; preserve main landmark."
+    }
+  },
+  "responsiveness": {
+    "mobile": {
+      "nav": "drawer; menu in header; focus trap documented in notes_for_implementation",
+      "toolbar": "CTA full width then filters sheet or horizontal scroll",
+      "main_min_width_px": 0,
+      "touch_targets_px": 44
+    },
+    "tablet": {
+      "nav": "icon rail or 264px persistent sidebar",
+      "toolbar": "CTA first left, filters wrap with space-3",
+      "main_min_width_px": 320
+    },
+    "desktop": {
+      "nav": "264px nav-sidebar persistent",
+      "toolbar": "CTA left, filters right in single row when space allows",
+      "main_min_width_px": 480,
+      "content_max_for_stats_px": 1280
+    }
+  },
+  "accessibility": {
+    "contrast": [
+      "Body and title text on bg-app / bg-elevated: meet WCAG 2.1 AA for normal text using fg-default / fg-muted as defined in design_system.json (provisional hex until stitch.approved_baseline).",
+      "Primary button label on accent-primary: meet AA for text (token pairing already stated in design_system button-primary).",
+      "Semantic fills (success/warning/error) used as non-text indicators must pair with text label in badge-status; do not rely on color alone for chip active state."
+    ],
+    "keyboard": [
+      "Logical tab order: skip link (optional) → header actions → main h1 → toolbar (CTA before chips) → list → pagination if present.",
+      "Drawer: open/close via button; Esc closes; focus moves to drawer on open and returns to launcher on close.",
+      "chip-filter: role togglebutton or button with aria-pressed; Space/Enter toggles.",
+      "list: Arrow key navigation optional P1; minimum is roving tabindex on rows OR focusable actions per row.",
+      "error panel: focus move to role=alert container on error appearance (document in implementation)."
+    ],
+    "screen_reader": [
+      "One type-title visible as main page heading; header product label is type-label.",
+      "Loading: aria-live=polite on region when transitioning to skeleton; busy on primary fetch button when scoped to create action."
+    ]
+  },
+  "responsive_acceptance": [
+    "At viewport width 360px: no horizontal scroll for primary main content; task row text truncates with ellipsis per content_rules; CTA remains fully visible without requiring horizontal scroll in toolbar stack.",
+    "At 768px: main content column width ≥ 320px when sidebar/rail visible; nav does not duplicate as both bottom bar and full sidebar simultaneously.",
+    "At 1280px: dashboard shows persistent 264px sidebar + main; toolbar shows primary CTA before filter chips in reading order.",
+    "Nav drawer: opening does not reduce main width below 0 when closed; when open, scrim blocks interaction with main.",
+    "KPI strip column counts match layout.kpi-strip.layout_rules.columns per breakpoint."
+  ],
+  "qa_visual_capture_matrix": [
+    { "capture_id": "mobile-dashboard-default", "viewport": "mobile", "width_px": 390, "route": "/", "state": "default" },
+    { "capture_id": "mobile-dashboard-empty", "viewport": "mobile", "width_px": 390, "route": "/", "state": "empty" },
+    { "capture_id": "mobile-dashboard-loading", "viewport": "mobile", "width_px": 390, "route": "/", "state": "loading" },
+    { "capture_id": "mobile-dashboard-error", "viewport": "mobile", "width_px": 390, "route": "/", "state": "error" },
+    { "capture_id": "tablet-dashboard-default", "viewport": "tablet", "width_px": 768, "route": "/", "state": "default" },
+    { "capture_id": "desktop-dashboard-default", "viewport": "desktop", "width_px": 1280, "route": "/", "state": "default" }
+  ],
+  "changelog": [
+    { "finding_id": "S-001", "resolution": "resolved", "detail": "Documented mobile drawer nav, tablet rail/sidebar options, main min width 320px tablet / desktop policies and component_resize for nav-sidebar." },
+    { "finding_id": "U-001", "resolution": "resolved", "detail": "Added list-loading-skeleton, empty-task-list, inline-error-panel organisms and state_specs for loading/empty/error." },
+    { "finding_id": "H-001", "resolution": "resolved", "detail": "Assigned single type-title owner to main page_header; header product label demoted to type-label in layout.regions and accessibility.screen_reader." },
+    { "finding_id": "H-002", "resolution": "resolved", "detail": "toolbar-cluster enforces DOM/visual order: button-primary before chip-filter-group; mobile stack CTA first." },
+    { "finding_id": "S-002", "resolution": "resolved", "detail": "card-task-row internal_columns grid defines fixed status and meta columns vs title fr." },
+    { "finding_id": "C-002", "resolution": "resolved", "detail": "Added kpi-strip organism with tokenized typography and responsive columns." },
+    { "finding_id": "C-001", "resolution": "resolved", "detail": "chip-filter active_state_cues: border + optional check + weight bump; aria-pressed documented." }
+  ],
+  "notes_for_implementation": "Theme: map all color/space/radius/shadow strings from design_system.json to styled-components DefaultTheme; no ad-hoc hex in atoms. Compose page from organisms in order: shell-app-header, nav (sidebar or drawer wrapper), surface-main-column containing page-header-title, optional kpi-strip, toolbar-cluster (button-primary + chips), then task list or skeleton/empty/error. Breakpoints: implement three bands consistent with this spec (767/768 and 1279/1280 boundaries). SSR: preserve landmark structure in server output. Testing: each visible state (default, loading, empty, error) must expose stable data-testid or accessible name for QA selectors per testing-and-qa-standards when frontend task wires E2E."
+}

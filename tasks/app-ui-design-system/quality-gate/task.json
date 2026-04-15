@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "task_slug": "quality-gate",
+  "title": "QA gate: stitch fidelity report, tier mirror, E2E, coverage",
+  "description": "qa-agent validates the iteration: unit coverage for declared scope where enforced, automated-manual Chromium E2E over the MVP primary surface in the isolated harness with console/network reporting per QA contract; when design_package.json sets acceptance.requires_stitch_fidelity_qa true, produces tasks/app-ui-design-system/quality-gate/artifacts/stitch_fidelity_report.json (compared_baseline, canonical_screen_id, viewports, mismatches per testing-and-qa-standards) and required visual evidence under tasks/app-ui-design-system/quality-gate/artifacts/visual/ plus qa_visual_evidence metadata as mandated by EM acceptance; asserts written acceptance.fidelity_tier here matches design_package verbatim (this iteration: structural).",
+  "acceptance": [
+    "validation_status pass or fail with structured issues list per qa-agent contract; no undocumented P0 structural mismatches versus Stitch canonical screen[0] and ui_spec when pass and fidelity_tier structural applies.",
+    "Explicit acceptance.fidelity_tier structural is stated in this task.json acceptance and matches verbatim the same field in tasks/app-ui-design-system/01-stitch-design-package/artifacts/design_package.json at gate time.",
+    "When design_package.json acceptance.requires_stitch_fidelity_qa is true, tasks/app-ui-design-system/quality-gate/artifacts/stitch_fidelity_report.json exists and satisfies testing-and-qa-standards structural comparison expectations for the declared tier.",
+    "Chromium E2E executed with app in isolated container per qa-manual-automated-e2e-chromium; console and network failures reported per testing skill.",
+    "Visual evidence for the exercised MVP surface (viewports/states) exists under tasks/app-ui-design-system/quality-gate/artifacts/visual/ with qa_visual_evidence-style metadata when EM acceptance mandates capture for stitch fidelity QA (independent of waived design_visual_acceptance for this iteration).",
+    "Unit line coverage for declared unit scope is 100% where CI enforces it; integration coverage only if a scope was declared and containers are used per policy.",
+    "Deferral of additional screens remains enforced: QA scope is the single MVP primary surface only."
+  ],
+  "depends_on": ["05-frontend-mvp-primary-surface", "06-infra-qa-e2e-harness"],
+  "status": "planned",
+  "assigned_agent": null,
+  "sector": null,
+  "updated_at": "2026-04-12T21:05:00.000Z"
+}

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lineyard Appearance Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#30332e",
+                        "surface-dim": "#d9dbd2",
+                        "background": "#fbf9f5",
+                        "tertiary-container": "#d9fce9",
+                        "on-tertiary": "#e5fff0",
+                        "outline": "#797c75",
+                        "secondary": "#5d605c",
+                        "surface-tint": "#4d6453",
+                        "tertiary-dim": "#3b594b",
+                        "primary-fixed-dim": "#c2dbc6",
+                        "on-secondary": "#f8f9f4",
+                        "on-error": "#fff7f6",
+                        "on-tertiary-fixed-variant": "#4e6d5e",
+                        "error-container": "#fe8983",
+                        "error-dim": "#4e0309",
+                        "primary-container": "#d0e9d4",
+                        "on-secondary-fixed-variant": "#595c59",
+                        "on-error-container": "#752121",
+                        "secondary-container": "#e1e3de",
+                        "on-primary-container": "#415747",
+                        "surface-container-high": "#e8e9e2",
+                        "on-tertiary-fixed": "#315042",
+                        "surface-variant": "#e2e3db",
+                        "surface-bright": "#fbf9f5",
+                        "on-tertiary-container": "#436254",
+                        "tertiary": "#476657",
+                        "on-primary-fixed": "#2f4435",
+                        "surface-container-low": "#f5f4ef",
+                        "on-background": "#30332e",
+                        "inverse-surface": "#0e0e0d",
+                        "tertiary-fixed": "#d9fce9",
+                        "surface-container-highest": "#e2e3db",
+                        "surface-container": "#eeeee8",
+                        "secondary-fixed-dim": "#d3d5d0",
+                        "primary-dim": "#415847",
+                        "inverse-primary": "#e3fde7",
+                        "on-surface-variant": "#5d605a",
+                        "secondary-dim": "#515450",
+                        "on-secondary-container": "#50524f",
+                        "outline-variant": "#b1b3ab",
+                        "on-secondary-fixed": "#3d403d",
+                        "surface": "#fbf9f5",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#4a6150",
+                        "tertiary-fixed-dim": "#cbeddb",
+                        "on-primary": "#e5fee8",
+                        "primary-fixed": "#d0e9d4",
+                        "secondary-fixed": "#e1e3de",
+                        "primary": "#4d6453",
+                        "inverse-on-surface": "#9e9d99",
+                        "error": "#9f403d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "0px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #fbf9f5; color: #30332e; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .serif-headline { font-family: 'Newsreader', serif; }
+        .sharp-border { border-radius: 0px !important; border-width: 2px; border-color: #797c75; }
+        .active-ring { outline: 2px solid #4d6453; outline-offset: 2px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<nav class="bg-[#fbf9f5] dark:bg-[#1a1c18] border-[#797c75] border-b-2 flex justify-between items-center px-6 py-4 w-full fixed top-0 z-50">
+<div class="flex items-center gap-4">
+<span class="text-xl font-bold font-['Newsreader'] text-[#30332e] dark:text-[#fbf9f5]">Lineyard</span>
+<div class="flex items-center gap-2 font-['Manrope'] uppercase tracking-widest text-[0.75rem] text-[#797c75]">
+<span>Settings</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-[#4d6453] dark:text-[#e5fee8] font-bold border-b-2 border-[#4d6453]">Appearance</span>
+</div>
+</div>
+<div class="flex gap-6 items-center">
+<a class="text-[#797c75] hover:bg-[#f5f4ef] dark:hover:bg-[#30332e] transition-colors duration-150 px-2 py-1 font-['Newsreader'] italic font-medium" href="#">Settings</a>
+<a class="text-[#797c75] hover:bg-[#f5f4ef] dark:hover:bg-[#30332e] transition-colors duration-150 px-2 py-1 font-['Newsreader'] italic font-medium" href="#">Profile</a>
+<div class="w-8 h-8 bg-surface-container-highest border-2 border-outline flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">person</span>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="bg-[#f5f4ef] dark:bg-[#121411] border-[#797c75] border-r-2 flex flex-col w-64 h-screen fixed left-0 top-0 pt-20">
+<div class="px-6 py-8 border-b-2 border-outline mb-4">
+<h2 class="font-['Newsreader'] text-lg font-bold text-on-surface">Settings</h2>
+<p class="font-['Manrope'] uppercase tracking-widest text-[0.65rem] text-secondary mt-1">Manage your account</p>
+</div>
+<nav class="flex flex-col gap-1 px-4">
+<a class="flex items-center gap-3 px-4 py-3 text-[#30332e] dark:text-[#fbf9f5] hover:bg-[#797c75]/10 transition-all snappy duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[0.75rem]">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#30332e] dark:text-[#fbf9f5] hover:bg-[#797c75]/10 transition-all snappy duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[0.75rem]">Notifications</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-[#4d6453] text-[#fbf9f5] dark:bg-[#4d6453] dark:text-[#e5fee8] font-bold transition-all snappy duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="palette">palette</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[0.75rem]">Appearance</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-[#30332e] dark:text-[#fbf9f5] hover:bg-[#797c75]/10 transition-all snappy duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span class="font-['Manrope'] uppercase tracking-widest text-[0.75rem]">About</span>
+</a>
+</nav>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 pt-24 px-12 pb-20">
+<div class="max-w-5xl mx-auto">
+<!-- Header Section -->
+<header class="mb-12">
+<h1 class="serif-headline text-5xl font-medium mb-4 italic">Appearance</h1>
+<p class="font-body text-secondary max-w-2xl">Customize how Lineyard looks on your device. Choose a theme that fits your workflow and adjust the interface density for maximum focus.</p>
+</header>
+<div class="grid grid-cols-12 gap-12">
+<!-- Theme Mode Selector -->
+<section class="col-span-12">
+<h3 class="font-['Manrope'] uppercase tracking-widest text-[0.75rem] font-bold mb-6 flex items-center gap-2">
+<span class="w-2 h-2 bg-primary"></span> Theme Mode
+                    </h3>
+<div class="flex bg-surface-container-low border-2 border-outline p-1 max-w-md">
+<button class="flex-1 py-3 px-4 font-bold uppercase tracking-tighter text-xs bg-primary text-on-primary">Light</button>
+<button class="flex-1 py-3 px-4 font-medium uppercase tracking-tighter text-xs text-on-surface hover:bg-surface-variant transition-colors">System</button>
+<button class="flex-1 py-3 px-4 font-medium uppercase tracking-tighter text-xs text-on-surface hover:bg-surface-variant transition-colors">Dark</button>
+</div>
+</section>
+<!-- Preview Section -->
+<section class="col-span-12">
+<h3 class="font-['Manrope'] uppercase tracking-widest text-[0.75rem] font-bold mb-6">Visual Preview</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Light Shell Preview -->
+<div class="border-2 border-outline bg-[#fbf9f5] flex flex-col h-64 overflow-hidden relative group">
+<div class="absolute inset-0 border-4 border-primary/20 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+<!-- Mock UI -->
+<div class="h-8 border-b-2 border-outline bg-[#f5f4ef] flex items-center px-3 gap-2">
+<div class="w-12 h-2 bg-outline/30"></div>
+<div class="ml-auto w-24 h-4 border-2 border-outline bg-surface"></div>
+</div>
+<div class="flex flex-1">
+<div class="w-12 border-r-2 border-outline bg-[#f5f4ef] flex flex-col items-center py-4 gap-4">
+<div class="w-4 h-4 bg-outline/40"></div>
+<div class="w-4 h-4 bg-outline/40"></div>
+<div class="w-4 h-4 bg-outline/20"></div>
+</div>
+<div class="flex-1 p-6 space-y-4">
+<div class="h-4 w-3/4 border-2 border-outline bg-surface"></div>
+<div class="h-4 w-1/2 border-2 border-outline bg-surface"></div>
+<div class="h-4 w-2/3 border-2 border-outline bg-surface"></div>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 font-['Newsreader'] italic text-sm text-on-surface">Light Shell</div>
+</div>
+<!-- Dark Shell Preview -->
+<div class="border-2 border-outline bg-[#0e0e0d] flex flex-col h-64 overflow-hidden relative">
+<!-- Mock UI -->
+<div class="h-8 border-b-2 border-[#30332e] bg-[#1a1c18] flex items-center px-3 gap-2">
+<div class="w-12 h-2 bg-[#797c75]/30"></div>
+<div class="ml-auto w-24 h-4 border-2 border-[#797c75] bg-[#0e0e0d]"></div>
+</div>
+<div class="flex flex-1">
+<div class="w-12 border-r-2 border-[#30332e] bg-[#1a1c18] flex flex-col items-center py-4 gap-4">
+<div class="w-4 h-4 bg-[#797c75]/40"></div>
+<div class="w-4 h-4 bg-[#797c75]/40"></div>
+<div class="w-4 h-4 bg-[#797c75]/20"></div>
+</div>
+<div class="flex-1 p-6 space-y-4">
+<div class="h-4 w-3/4 border-2 border-[#30332e] bg-[#1a1c18]"></div>
+<div class="h-4 w-1/2 border-2 border-[#30332e] bg-[#1a1c18]"></div>
+<div class="h-4 w-2/3 border-2 border-[#30332e] bg-[#1a1c18]"></div>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 font-['Newsreader'] italic text-sm text-[#fbf9f5]">Dark Shell</div>
+</div>
+</div>
+</section>
+<!-- Density Section -->
+<section class="col-span-12 md:col-span-6">
+<h3 class="font-['Manrope'] uppercase tracking-widest text-[0.75rem] font-bold mb-6">Interface Density</h3>
+<div class="space-y-4">
+<label class="flex items-center gap-4 cursor-pointer group">
+<div class="relative w-6 h-6 border-2 border-outline flex items-center justify-center bg-surface">
+<input checked="" class="sr-only" name="density" type="radio"/>
+<div class="w-2 h-2 bg-primary opacity-100"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-['Newsreader'] font-bold text-lg">Compact</span>
+<span class="text-xs text-secondary uppercase tracking-wider">Tight margins, more information density.</span>
+</div>
+</label>
+<label class="flex items-center gap-4 cursor-pointer group">
+<div class="relative w-6 h-6 border-2 border-outline flex items-center justify-center bg-surface">
+<input class="sr-only" name="density" type="radio"/>
+<div class="w-2 h-2 bg-primary opacity-0 group-hover:opacity-20"></div>
+</div>
+<div class="flex flex-col">
+<span class="font-['Newsreader'] font-bold text-lg">Comfortable</span>
+<span class="text-xs text-secondary uppercase tracking-wider">Spacious layout for a relaxed viewing experience.</span>
+</div>
+</label>
+</div>
+</section>
+<!-- Context Rail Extra Info -->
+<section class="col-span-12 md:col-span-6 border-l-2 border-outline pl-8 flex flex-col justify-center">
+<span class="material-symbols-outlined text-primary text-4xl mb-4">sync</span>
+<h4 class="font-['Newsreader'] italic text-xl mb-2">Cloud Synchronization</h4>
+<p class="text-secondary text-sm leading-relaxed">Lineyard uses real-time sync to ensure your workspace appearance is consistent whether you are on mobile, tablet, or desktop. No manual refreshing required.</p>
+</section>
+</div>
+<!-- Footer -->
+<footer class="mt-20 pt-8 border-t-2 border-outline flex items-center gap-3">
+<span class="material-symbols-outlined text-sm text-primary">info</span>
+<p class="text-xs text-secondary font-['Manrope'] uppercase tracking-widest">Changes apply instantly across devices when sync is on.</p>
+</footer>
+</div>
+</main>
+</body></html>

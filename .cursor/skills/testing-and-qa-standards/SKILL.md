@@ -10,7 +10,7 @@ description: Mandatory unit and integration coverage, container-only integration
 - **`delivery-agent`**, **`architecture-agent`:** when tasks touch tests, CI, coverage, or quality gate; add **`architecture_refs`** ids from this file and acceptance criteria that reference this skill.
 - **`engineering-manager-agent`:** attach this skill path to **`infra-engineer`**, **`backend-agent`**, **`frontend-agent`**, and **`qa-agent`** assignments when tests or QA gates are in scope.
 - **`infra-engineer`:** CI, compose/Kubernetes jobs, coverage enforcement, **integration-test-only** container orchestration.
-- **`qa-agent`:** validation, coverage verification where assigned, and **automated-manual E2E** (Chromium) per §4.
+- **`qa-agent`:** validation, coverage verification where assigned, **automated-manual E2E** (Chromium) per §4, **visual evidence** per §4.1 when design acceptance is in scope, and **Stitch fidelity** per §4.2 when **`design_package.json`** requires it.
 
 ---
 
@@ -61,6 +61,31 @@ This is **not** a substitute for unit/integration coverage; it is an **additiona
 
 ---
 
+## 4.1 QA — visual evidence for design acceptance (when required)
+
+When **`task.json` acceptance** or **`artifacts/design_package.json`** sets **`acceptance.requires_design_visual_acceptance`: `true`** for a surface:
+
+- **`qa-agent`** must produce **`artifacts/qa_visual_evidence.json`** and companion captures under **`artifacts/visual/`**, following **`.cursor/skills/design/design_visual_acceptance.skill.md`**.
+- **Subjective** “brand feel” / discretionary **design judgment** vs Stitch remains **design-owned** when **`design_visual_acceptance`** runs; QA supplies **reproducible captures** + metadata (`build`, `environment`, `viewport`, `route`, `state`).
+- If captures cannot be produced, document blocking reasons in **`qa_visual_evidence.json`** via **`errors`** (string array) and still report to EM.
+
+**Stable id:** `qa-visual-evidence-for-design`
+
+---
+
+## 4.2 QA — Stitch structural fidelity (when `requires_stitch_fidelity_qa`)
+
+When **`artifacts/design_package.json`** sets **`acceptance.requires_stitch_fidelity_qa`: `true`** (default expectation when **`stitch.source_of_truth`** is **`true`** per **`stitch_workflow.skill.md`**):
+
+- **`qa-agent`** must write **`artifacts/stitch_fidelity_report.json`** in the artifact-owning task folder, with at least: **`status`** (`pass` \| `fail`), **`compared_baseline`** (path to **`design/stitch/meta.json`** or equivalent), **`canonical_screen_id`** (usually **`stitch.screen_ids[0]`**), **`viewports[]`**, and **`mismatches[]`** (each item: **`id`**, **`severity`**, **`rule`**, **`evidence`**, **`expected_reference`** e.g. Stitch section vs DOM region).
+- Validate **structure first**: major regions / section order / primary CTA presence vs **`ui_spec.json`** + canonical Stitch export (PNG and/or exported code outline)—**not** pixel-perfect art direction unless acceptance explicitly demands it.
+- **Responsiveness:** exercise the same realistic viewports used for functional E2E where applicable; record breakpoint-specific mismatches.
+- **Relationship to §4.1:** §4.1 can still be mandatory for evidence; §4.2 adds an **objective** pass/fail gate owned by QA for Stitch-backed slices.
+
+**Stable id:** `qa-stitch-fidelity`
+
+---
+
 ## 5. `architecture_refs` (use in `task.json` / delivery JSON)
 
 | Stable id | Meaning |
@@ -69,6 +94,8 @@ This is **not** a substitute for unit/integration coverage; it is an **additiona
 | `integration-tests-full-coverage` | §2 — integration suite + 100% coverage |
 | `integration-tests-isolated-containers` | §3 — integration runs only in multi-service containers |
 | `qa-manual-automated-e2e-chromium` | §4 — QA Chromium E2E over full feature set |
+| `qa-visual-evidence-for-design` | §4.1 — reproducible screenshots + `qa_visual_evidence.json` for design visual acceptance |
+| `qa-stitch-fidelity` | §4.2 — `stitch_fidelity_report.json` + structural/responsive checks vs Stitch + `ui_spec` |
 | `qa-validation` | Alias compatible with `architecture-standards` for **`quality-gate`** rows |
 
 ---

@@ -47,6 +47,13 @@ Variables such as **`TODO_SQLITE_PATH`** are read only in server code (e.g. `src
 | `bun run start` | Serve production build (run after `build`). **Must use Bun** — `bun --bun next start` so `bun:sqlite` resolves (same constraint as `dev`). |
 | `bun run lint` | ESLint (flat config + `eslint-config-next`). |
 | `bun run test` | Bun test runner — smoke tests under `tests/`. |
+| `bun run test:unit` | Unit-only subset (excludes `tests/infrastructure` integration files). |
+| `bun run test:integration:docker` | Integration tests inside **Docker** (`docker-compose.integration.yml`). |
+| `bun run qa:compose` | **Quality gate harness:** isolated app container + **Chromium** (Playwright) per `docker-compose.qa.yml`. |
+
+## QA / CI harness (Docker)
+
+For **`app-ui-design-system`** quality gate and EM → `qa-agent` handoffs, see **`tasks/app-ui-design-system/06-infra-qa-e2e-harness/artifacts/EM_QA_HARNESS.md`**. GitHub Actions workflow: **`.github/workflows/ci.yml`**.
 
 ## Reserved source layout
 

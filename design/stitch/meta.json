@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "feature_slug": "todo-list-personality",
+  "surface_id": "todo-list-mvp",
+  "project_id": "15292424477056339521",
+  "exported_at": "2026-04-13T00:05:00.000Z",
+  "screens": [
+    {
+      "id": "8b2ae450f9e94563ba9ea11d8b02850f",
+      "image": "design/stitch/screens/todo-list-mvp-station-main.png",
+      "code": "design/stitch/code/todo-list-mvp-station-main.html"
+    },
+    {
+      "id": "9a60161d14254fea894488153ccc3a6e",
+      "image": "design/stitch/screens/todo-list-mvp-station-empty.png",
+      "code": "design/stitch/code/todo-list-mvp-station-empty.html"
+    },
+    {
+      "id": "416ef5ea959148ea92a1b447ea061c6b",
+      "image": "design/stitch/screens/todo-list-mvp-station-archive-bside.png",
+      "code": "design/stitch/code/todo-list-mvp-station-archive-bside.html"
+    },
+    {
+      "id": "be3a7c6ffe32420eb18ad44eecbbec97",
+      "image": "design/stitch/screens/todo-list-mvp-station-mobile.png",
+      "code": "design/stitch/code/todo-list-mvp-station-mobile.html"
+    }
+  ]
+}

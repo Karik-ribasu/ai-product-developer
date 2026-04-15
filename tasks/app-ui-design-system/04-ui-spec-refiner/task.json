@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "task_slug": "04-ui-spec-refiner",
+  "title": "ui_spec locked to screen[0] and Stitch fidelity acceptance",
+  "description": "ui-refiner-agent merges critique and tokens into build-oriented artifacts/ui_spec.json whose information architecture, hierarchy, breakpoints, default and key alternate states, accessibility checks, and responsive acceptance criteria align to the canonical Stitch screen at stitch.screen_ids[0] only; updates design_package.json references.ui_spec and encodes acceptance.requires_stitch_fidelity_qa plus explicit written acceptance.fidelity_tier structural (mirrored in quality-gate); sets acceptance.requires_design_visual_acceptance per PO policy (waived/false when structural-only sign-off applies—this iteration assumes waived with stitch-led QA).",
+  "acceptance": [
+    "All work under tasks/app-ui-design-system/01-stitch-design-package/artifacts/; design_package.json references.ui_spec points to ui_spec.json.",
+    "artifacts/ui_spec.json documents breakpoints, states, keyboard/contrast-related acceptance, and responsive criteria consistent with design_system.json and the exported canonical screen[0] structure (no parallel invented layout).",
+    "design_package.json includes acceptance.requires_stitch_fidelity_qa true, explicit acceptance.fidelity_tier structural, and the same fidelity_tier string appears verbatim in tasks/app-ui-design-system/quality-gate/task.json acceptance (mirror for EM/QA).",
+    "design_package.json acceptance.requires_design_visual_acceptance reflects PO policy for this iteration (waived/false for structural tier); QA evidence for layout fidelity flows through stitch_fidelity_report and quality-gate visual artifacts instead of design_visual_acceptance gating.",
+    "design_package.json status suitable for handoff to frontend; retry/exit_reason consistent if no further Stitch attempts."
+  ],
+  "depends_on": ["03-ui-critique"],
+  "status": "planned",
+  "assigned_agent": null,
+  "sector": null,
+  "updated_at": "2026-04-12T21:05:00.000Z"
+}

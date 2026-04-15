@@ -11,17 +11,24 @@ type StyledRegistryProps = {
 };
 
 const GlobalStyle = createGlobalStyle`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
-    padding: 1.5rem;
-    background: ${({ theme }) => theme.colors.background};
-    color: ${({ theme }) => theme.colors.text};
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 0;
+    min-height: 100vh;
+    background: ${({ theme }) => theme.colors.bgApp};
+    color: ${({ theme }) => theme.colors.fgDefault};
+    font-family: ${({ theme }) => theme.fontFamilies.sans};
   }
 
   main {
-    max-width: 48rem;
-    margin: 0 auto;
+    max-width: none;
+    margin: 0;
   }
 `;
 

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "summary": "Iteration refresh: Stitch remains the layout camera with mandatory on-repo exports under design/stitch/ (meta.json, per-screen PNG under design/stitch/screens/, code under design/stitch/code/). design_package.json must record stitch.source_of_truth, stitch.screen_ids (canonical implementation + QA baseline = index 0), stitch.export_paths resolvable on disk, and acceptance.requires_stitch_fidelity_qa plus an explicit fidelity expectation aligned to .cursor/skills/testing-and-qa-standards/SKILL.md section 4.2 (structural default; tighter pixel-level parity only when acceptance states it). ui_spec.json must align to the canonical screen. Frontend implements declared tier only; QA emits stitch_fidelity_report.json and required visual evidence per acceptance. Clean Architecture at the edge, Atomic Design, styled-components with typed theme from design_system.json unchanged.",
+  "clean_architecture": {
+    "layers": [
+      "domain — pure rules and types for tooling concepts (no React/Next/styled-components)",
+      "application — use cases / ports orchestrating domain (no UI imports)",
+      "infrastructure — adapters (HTTP, persistence, external services)",
+      "presentation — Next.js routes, server components/actions where applicable, React UI that calls application layer through ports"
+    ],
+    "dependency_rule": "Source dependencies point inward: presentation and infrastructure depend on application/domain abstractions, never the reverse. For this feature, most churn is in presentation; any new domain vocabulary for the primary surface stays in domain/application without leaking styled-components or Stitch-specific types into core modules. Repository design/stitch/ assets are presentation-adjacent inputs consumed only through documented handoffs (design_package, ui_spec), not as hidden globals in domain code."
+  },
+  "ddd": {
+    "ubiquitous_language_notes": "Treat Stitch baseline, design/stitch/ exports, design_package.json (including stitch.* and acceptance fidelity fields), design_system tokens, ui_spec acceptance criteria, stitch_fidelity_report, quality-gate acceptance, and the single MVP surface as explicit terms in tasks and reviews. Distinguish design-time artifacts (baseline traceability) from runtime theme tokens consumed by styled-components.",
+    "bounded_contexts": [
+      "Design governance — Stitch project 3675777318594458616, MCP generation owned by ui-generator, versioned exports under design/stitch/ plus task artifacts under tasks/app-ui-design-system/<task_slug>/artifacts/",
+      "Application UI — Next.js presentation implementing ui_spec after EM-approved chain and resolvable Stitch exports"
+    ],
+    "tactical": [
+      "Value objects for token scales and breakpoint enums where they cross package boundaries",
+      "No aggregates required for MVP unless a clear invariant emerges beyond layout/tokens",
+      "Application services only if orchestration is needed between ports (e.g. theme provider wiring) without bloating components"
+    ]
+  },
+  "singleton_policy": "No new global mutable singletons for theme, tokens, or layout state. Use React context or Next-compatible styled-components registry/provider per installed version guidance; prefer explicit props and composition. Immutable module-level constants (e.g. frozen token maps re-exported from design_system.json consumers) are acceptable if documented in the implementing task.",
+  "frontend": {
+    "atomic_design": "Classify all new UI under atoms → molecules → organisms with one visual responsibility per component; the MVP primary surface composes from existing tree or documented paths (e.g. components/ui/atoms|molecules|organisms). Pages/templates only orchestrate layout and data wiring—no one-off mega-components that duplicate token usage.",
+    "styling": "styled-components"
+  },
+  "constraints_for_implementation": [
+    "Visual and responsive behavior must remain traceable to Stitch project 3675777318594458616; ui-generator persists exports per .cursor/skills/design/stitch_workflow.skill.md (design/stitch/screens/, design/stitch/code/, design/stitch/meta.json schema_version 1 with screens[].image and screens[].code repo-relative paths).",
+    "Gate: do not assign or start substantive frontend implementation for the SoT surface until design/stitch/ exports exist, design/stitch/meta.json is fully populated per the stitch_workflow meta schema, and artifacts/design_package.json lists stitch.export_paths (meta, images_dir, code_dir) that resolve to committed files; EM must attach stitch_workflow.skill.md to every ui-generator assignment that performs generation or export for this feature.",
+    "design_package.json must set stitch.source_of_truth true for this slice when Stitch is authoritative; include stitch.project_id, stitch.screen_ids with canonical baseline at index 0, stitch.export_paths, and acceptance.requires_stitch_fidelity_qa consistent with SoT. Discovery or PO fidelity tier (structural vs explicit pixel-level) must be written explicitly in design_package.json acceptance and mirrored in quality-gate acceptance—never inferred from defaults; QA depth (structural comparison per testing skill section 4.2 vs any stricter pixel gate) must match that written acceptance.",
+    "ui_spec.json must be aligned to the canonical Stitch screen (stitch.screen_ids[0]); design pipeline consumes exported code/images plus meta.json and must not invent a replacement layout unless EM documents an escalation.",
+    "Author and maintain design_package.json under the assigned task artifacts path with explicit breakpoints and interaction states before coding the surface; normalize design_system.json (color, typography, spacing, radii, elevation) with values traceable to the baseline; frontend theme tokens map from design_system.json (no ad-hoc hex/spacing except documented edge cases in ui_spec).",
+    "Do not begin substantive frontend implementation until ui-critic and ui-refiner have produced ui_spec.json including explicit accessibility and responsive acceptance criteria; EM sequence remains ui-generator (with stitch exports) → design-system → ui-critic → ui-refiner → frontend.",
+    "When acceptance.requires_stitch_fidelity_qa is true, qa-agent must produce artifacts/stitch_fidelity_report.json per testing-and-qa-standards (compared_baseline, canonical_screen_id, viewports, mismatches) and supply visual evidence required by task.json / design_package / quality-gate acceptance (including section 4.1 style evidence when mandated).",
+    "MVP scope is one primary surface; defer additional screens until EM-assigned QA passes on that surface.",
+    "Testing and QA must follow .cursor/skills/testing-and-qa-standards/SKILL.md: unit scope at 100% line coverage where declared; integration only in isolated containers; quality-gate / QA tasks use architecture_refs including qa-stitch-fidelity, qa-manual-automated-e2e-chromium, and coverage ids as applicable.",
+    "Delivery tasks must include architecture_refs from architecture-standards (e.g. atomic-design, styled-components, clean-architecture) and must not mix pure domain work with UI in a single task_slug.",
+    "Styling implementation: co-locate styled components with typed DefaultTheme; centralize theme values from design_system.json. Follow SSR/hydration guidance for styled-components with Next.js App Router. package.json declares styled-components; no alternative CSS stack unless brief is formally amended."
+  ],
+  "delivery_hints": [
+    "Iteration task — ui-generator-agent: re-export Stitch screens to design/stitch/; refresh design/stitch/meta.json; update artifacts/design_package.json with stitch.source_of_truth, stitch.screen_ids (canonical at [0]), stitch.export_paths, acceptance.requires_stitch_fidelity_qa, and explicit written fidelity tier in acceptance matching Discovery; EM payload must include stitch_workflow: source_of_truth and attach stitch_workflow.skill.md.",
+    "Iteration task — design-system-agent → ui-critic-agent → ui-refiner-agent: re-run design pipeline using refreshed exports as primary input; refresh design_system.json, ui_critique, and ui_spec.json locked to canonical screen[0] structure and IA.",
+    "Iteration task — frontend-agent: rework presentation only after meta + export_paths gate passes; implement to ui_spec + declared fidelity tier (no tighter parity than acceptance states).",
+    "Iteration task — qa-agent (via EM): re-run automated-manual E2E; produce updated stitch_fidelity_report.json with Stitch PNG/code comparison vs implementation; attach visual evidence per acceptance; assert console/network clean per qa contract.",
+    "Task template (greenfield slice): ui-generator with bounded Stitch attempt → design pipeline → frontend single surface → qa with stitch comparison.",
+    "Optional infra-engineer: CI or harness updates if new gates validate meta.json / export_paths presence—keep product domain logic out of infra tasks.",
+    "Split shared token loader or theme typing into a small application/presentation boundary task if it would otherwise bloat the main UI task; reference tasks/app-ui-design-system/architecture-brief.json in every EM assignment payload."
+  ]
+}

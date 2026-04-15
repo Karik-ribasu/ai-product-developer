@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ESTAÇÃO FM TODO - Sua mesa está em silêncio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;900&amp;family=Work+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#ab3500",
+                        "inverse-on-surface": "#f8f0e1",
+                        "secondary": "#00696b",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e9e2d3",
+                        "on-tertiary-fixed-variant": "#474746",
+                        "secondary-fixed-dim": "#7ad5d7",
+                        "inverse-surface": "#343026",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#97f2f3",
+                        "surface-dim": "#e1d9cb",
+                        "on-secondary-fixed-variant": "#004f51",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-bright": "#fff8ef",
+                        "on-background": "#1e1b13",
+                        "background": "#fff8ef",
+                        "surface-tint": "#ab3500",
+                        "on-surface-variant": "#594139",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-container": "#323131",
+                        "surface-container-high": "#efe7d9",
+                        "primary-fixed-dim": "#ffb59d",
+                        "outline-variant": "#e1bfb5",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "outline": "#8d7168",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "surface-container": "#f5edde",
+                        "on-surface": "#1e1b13",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#fbf3e4",
+                        "primary-fixed": "#ffdbd0",
+                        "secondary-fixed": "#97f2f3",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#832600",
+                        "on-primary-fixed": "#390c00",
+                        "tertiary-fixed": "#e5e2e1",
+                        "primary-container": "#ff6b35",
+                        "on-secondary-container": "#007072",
+                        "on-primary-container": "#5f1900",
+                        "on-secondary-fixed": "#002020",
+                        "tertiary": "#5f5e5e",
+                        "surface-container-highest": "#e9e2d3",
+                        "surface": "#fff8ef",
+                        "inverse-primary": "#ffb59d",
+                        "tertiary-container": "#9b9999"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Work Sans"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-shift {
+            background-color: #f5edde;
+        }
+        .tape-reel {
+            background: radial-gradient(circle, #1e1b13 30%, #594139 31%, #594139 35%, #1e1b13 36%);
+        }
+        .glass-studio {
+            background: rgba(245, 237, 222, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+<!-- SideNavBar (Execution from JSON) -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] flex flex-col py-8 bg-[#fff8ef] dark:bg-stone-900 tonal-shift">
+<div class="px-8 mb-12">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">radio</span>
+</div>
+<div>
+<h1 class="text-2xl font-black uppercase tracking-tighter text-[#1e1b13] dark:text-[#fff8ef] font-headline">ESTAÇÃO FM TODO</h1>
+<p class="text-[10px] font-bold tracking-[0.2em] text-secondary opacity-80">VINTAGE ARCHIVE v1.0</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<!-- TAB: Todas -->
+<a class="group flex items-center gap-4 py-3 transition-colors hover:bg-[#ff6b35]/10 dark:hover:bg-[#ff6b35]/20 text-[#ff6b35] font-black border-l-4 border-[#ff6b35] pl-4 translate-x-1 duration-150" href="#">
+<span class="material-symbols-outlined">radio</span>
+<span class="font-headline uppercase tracking-tight">Todas</span>
+</a>
+<!-- TAB: Hoje -->
+<a class="group flex items-center gap-4 py-3 transition-colors hover:bg-[#ff6b35]/10 dark:hover:bg-[#ff6b35]/20 text-[#1e1b13]/60 dark:text-[#fff8ef]/60 pl-4" href="#">
+<span class="material-symbols-outlined">today</span>
+<span class="font-headline uppercase tracking-tight">Hoje</span>
+</a>
+<!-- TAB: Pendentes -->
+<a class="group flex items-center gap-4 py-3 transition-colors hover:bg-[#ff6b35]/10 dark:hover:bg-[#ff6b35]/20 text-[#1e1b13]/60 dark:text-[#fff8ef]/60 pl-4" href="#">
+<span class="material-symbols-outlined">pending_actions</span>
+<span class="font-headline uppercase tracking-tight">Pendentes</span>
+</a>
+<!-- TAB: Feitas -->
+<a class="group flex items-center gap-4 py-3 transition-colors hover:bg-[#ff6b35]/10 dark:hover:bg-[#ff6b35]/20 text-[#1e1b13]/60 dark:text-[#fff8ef]/60 pl-4" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="font-headline uppercase tracking-tight">Feitas</span>
+</a>
+</nav>
+<div class="px-6 mt-auto">
+<button class="w-full bg-primary py-4 rounded-sm flex items-center justify-center gap-2 hover:opacity-90 transition-opacity active:scale-95 shadow-[4px_4px_0px_#5f1900]">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">mic</span>
+<span class="text-white font-headline font-bold uppercase tracking-widest text-sm">Gravar na fita</span>
+</button>
+</div>
+</aside>
+<!-- TopAppBar (Execution from JSON) -->
+<header class="fixed top-0 right-0 left-0 flex justify-between items-center pl-[300px] pr-8 py-6 bg-transparent z-10">
+<h2 class="hidden md:block text-xl font-bold text-[#1e1b13] dark:text-[#fff8ef] font-headline">ESTAÇÃO FM TODO</h2>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-sm">search</span>
+</div>
+<input class="bg-surface-container-highest border-none rounded-sm pl-10 pr-4 py-2 text-xs font-headline focus:ring-2 focus:ring-primary w-64 placeholder:text-on-surface-variant/40" placeholder="BUSCAR ARQUIVO..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#ff6b35] hover:opacity-80 transition-opacity active:scale-95 duration-100">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<button class="text-[#ff6b35] hover:opacity-80 transition-opacity active:scale-95 duration-100">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-primary-container p-0.5">
+<img alt="Esta\u00e7\u00e3o FM Logo" class="w-full h-full object-cover rounded-full" data-alt="Close-up portrait of a cool DJ with headphones in a moody vintage radio studio setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCl8lbJcICDz9OxIpPH9YL-9ayUrrvxYVfF17B_FVaqBWApu_VvPl3fkOO-O3jl6sjLhCAi-9VCDD2gU_MOmRjGZuJLJR8K4p7-LR2EhUjEmhV7YstnlHgBiHv1CMq5P-CVyE-3QHAjkyZtU5iwgg9HmgsZKO7Cot8xiYLSmmodeYxfiizpk0Y-lbH1EObn_eaJQFN34gdbvXfsf6FegP23mWupz0bMMyNf2PRkajh8KdOilAmRv_DpLkL2sGc6clRw6vtkrWX3Wl4j"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="ml-[280px] pt-24 min-h-screen flex flex-col items-center justify-center p-12">
+<!-- Empty State Container -->
+<div class="max-w-2xl w-full text-center flex flex-col items-center">
+<!-- Analog Illustration: Tape Deck -->
+<div class="relative w-80 h-52 bg-surface-container-highest rounded-lg shadow-inner mb-12 p-4 flex flex-col justify-between overflow-hidden">
+<!-- Tape Top Label -->
+<div class="flex justify-between items-start">
+<div class="h-6 w-32 bg-secondary-container/30 rounded-sm flex items-center px-2">
+<div class="w-2 h-2 rounded-full bg-secondary mr-2"></div>
+<span class="text-[8px] font-headline font-bold text-secondary-fixed-variant tracking-tighter">SIDE A / MASTER TRACK</span>
+</div>
+<div class="flex gap-1">
+<div class="w-1 h-1 bg-on-surface-variant/20 rounded-full"></div>
+<div class="w-1 h-1 bg-on-surface-variant/20 rounded-full"></div>
+</div>
+</div>
+<!-- Reels -->
+<div class="flex justify-center gap-12 relative">
+<!-- Left Reel -->
+<div class="w-24 h-24 tape-reel rounded-full border-4 border-surface-container-highest flex items-center justify-center relative">
+<div class="absolute inset-0 border-[1px] border-white/10 rounded-full"></div>
+<div class="w-6 h-6 bg-surface-container rounded-full flex items-center justify-center">
+<div class="w-2 h-2 bg-on-surface-variant/30 rounded-sm rotate-45"></div>
+</div>
+</div>
+<!-- Right Reel -->
+<div class="w-24 h-24 tape-reel rounded-full border-4 border-surface-container-highest flex items-center justify-center relative">
+<div class="absolute inset-0 border-[1px] border-white/10 rounded-full"></div>
+<div class="w-6 h-6 bg-surface-container rounded-full flex items-center justify-center">
+<div class="w-2 h-2 bg-on-surface-variant/30 rounded-sm rotate-45"></div>
+</div>
+</div>
+<!-- Tape Connection -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-[1px] bg-on-surface-variant/40"></div>
+</div>
+<!-- Bottom Details -->
+<div class="flex justify-between items-end">
+<span class="text-[8px] font-headline font-bold text-on-surface-variant/40 tracking-widest">ESTAÇÃO FM DIGITAL CORE</span>
+<div class="flex gap-2">
+<div class="w-4 h-1 bg-primary/20 rounded-full"></div>
+<div class="w-4 h-1 bg-primary/20 rounded-full"></div>
+</div>
+</div>
+<!-- Static Noise Overlay -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay">
+<img class="w-full h-full object-cover" data-alt="Grainy film static texture with subtle noise for vintage overlay effect" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcM8iBvaYBJzJ21LZ7yz_n8ZKhn5tQByT8vowlCmzrO0NpLaHHfJPFUYlprUpam9Re7D8VWquOv1YH-tJ6uAahuvj_8EhSuh6glTz8tpVBe9zIIqcFS9p3HlmASrlsJwtagQxHSoOb-umpeanX6Z1D5qfOCh0w4DrNzB9nZzG8wz1kYHEP5VHkI7LXU9W46z0SihDHDYTPaDg1RiDVfrZy4jJIFOIIhjit_92pX035yZYCxLvle5rpoKoH6fm6JDJB58W4qGy3uRCz"/>
+</div>
+</div>
+<!-- Content -->
+<div class="space-y-6">
+<!-- Dymo-style Badge -->
+<div class="inline-block px-3 py-1 bg-secondary text-white font-headline text-[10px] font-black uppercase tracking-widest -rotate-2 mb-4">
+                    SILENCE DETECTED
+                </div>
+<h3 class="text-5xl font-headline font-black text-on-surface uppercase tracking-tighter leading-none">
+                    Sua mesa está em <span class="text-primary">silêncio</span>
+</h3>
+<p class="text-lg text-on-surface-variant font-body max-w-md mx-auto leading-relaxed">
+                    Ainda não há faixas na sua lista. Que tal gravar o primeiro compromisso do dia?
+                </p>
+<div class="pt-8 flex flex-col items-center gap-4">
+<button class="bg-primary hover:bg-[#c23d00] text-white px-10 py-5 rounded-sm font-headline font-black uppercase tracking-[0.2em] text-sm shadow-[8px_8px_0px_rgba(171,53,0,0.2)] active:shadow-none active:translate-x-1 active:translate-y-1 transition-all">
+                        Começar mix do dia
+                    </button>
+<div class="flex items-center gap-2 text-on-surface-variant/60 font-body text-sm italic">
+<span class="material-symbols-outlined text-sm">bedtime</span>
+                        Nada agendado para hoje — respira.
+                    </div>
+</div>
+</div>
+</div>
+<!-- Decorative Equipment Elements -->
+<div class="fixed bottom-12 right-12 flex gap-4">
+<div class="w-16 h-16 rounded-full border-2 border-surface-container-highest flex flex-col items-center justify-center p-2 opacity-40">
+<div class="w-full h-[1px] bg-on-surface-variant -rotate-45 mb-1"></div>
+<span class="text-[8px] font-headline font-bold">VU METER</span>
+</div>
+<div class="w-16 h-16 rounded-full border-2 border-surface-container-highest flex flex-col items-center justify-center p-2 opacity-40">
+<div class="w-full h-[1px] bg-on-surface-variant rotate-12 mb-1"></div>
+<span class="text-[8px] font-headline font-bold">FREQ %</span>
+</div>
+</div>
+</main>
+</body></html>

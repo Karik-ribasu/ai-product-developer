@@ -13,6 +13,8 @@ Before writing or revising tasks for a **`build`**, **read** `.cursor/skills/arc
 
 For **tests, CI, coverage, containerized integration, or `quality-gate`**, also read **`.cursor/skills/testing-and-qa-standards/SKILL.md`** and add the relevant **`architecture_refs`** ids (`unit-tests-full-coverage`, `integration-tests-isolated-containers`, `qa-manual-automated-e2e-chromium`, etc.) to the affected `task.json` rows.
 
+For **new UI surfaces** (screens/flows), read **`.cursor/skills/design/design_package.skill.md`** and related skills under **`.cursor/skills/design/`**. Register **separate** `task_slug` rows for **`ui-generator-agent`** → **`design-system-agent`** → **`ui-critic-agent`** → **`ui-refiner-agent`** (subset allowed if justified) **before** dependent **`frontend-agent`** tasks, with **`depends_on`** wiring. When stakeholders require post-build layout sign-off, set **`acceptance.requires_design_visual_acceptance`** in the owning **`artifacts/design_package.json`** (or mirror the requirement in **`task.json` acceptance** text) and include **`architecture_refs`** **`qa-visual-evidence-for-design`** on the QA / gate task that will produce **`qa_visual_evidence.json`**.
+
 ---
 
 ## Overview
@@ -56,7 +58,7 @@ After tasks are defined (and before finishing your turn):
 1. Choose a **`feature_slug`**: `kebab-case`, stable for the feature (derive from discovery `problem` / MVP name; ASCII only).
 2. For **each** task, choose a unique **`task_slug`** under that feature (`kebab-case`, ASCII; prefix with order if needed, e.g. `01-api-crud`).
 3. Create directory: `tasks/<feature_slug>/<task_slug>/`.
-4. Write **`task.json`** in that directory using the **fixed schema** in `production-workflow` SKILL (*Task registry*). Initial write: set `status` to `planned`, `assigned_agent` and `sector` to `null`, `acceptance` and `depends_on` filled from the plan. Put **`architecture_refs`** on each task in the **delivery JSON** (contract); reflect the same intent in **`acceptance`** strings in `task.json` where it helps implementers (registry schema stays v1).
+4. Write **`task.json`** in that directory using the **fixed schema** in `production-workflow` SKILL (*Task registry*). Initial write: set `status` to `planned`, `assigned_agent` and `sector` to `null`, `acceptance` and `depends_on` filled from the plan; set **`requires_screen_implementation`** to **`true`** when the task clearly owns **new/changed layout** (e.g. registered **`ui-generator-agent`** / **`frontend-agent`** UI slice), otherwise **`false`**; set **`stitch_handoff`** to **`null`** (paths are filled later by **`engineering-manager-agent`** after Stitch export). Put **`architecture_refs`** on each task in the **delivery JSON** (contract); reflect the same intent in **`acceptance`** strings in `task.json` where it helps implementers (registry schema stays v1).
 
 Do not skip files for “small” tasks—**one folder + one `task.json` per task**.
 

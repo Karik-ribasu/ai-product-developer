@@ -1,0 +1,86 @@
+{
+  "kind": "design-visual-acceptance",
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "surface_id": "mvp-primary-dashboard",
+  "compared_to": {
+    "design_package_path": "tasks/app-ui-design-system/01-stitch-design-package/artifacts/design_package.json",
+    "stitch_screen_ids": ["11611814ea7a4a2881d76c0c95fd3066"],
+    "ui_spec_path": "tasks/app-ui-design-system/01-stitch-design-package/artifacts/ui_spec.json"
+  },
+  "verdict": "waived",
+  "fidelity_tier": "structural",
+  "findings": [
+    {
+      "capture_id": "mobile-home-with-task",
+      "severity": "medium",
+      "category": "layout",
+      "summary": "Task row places due/meta line below the title instead of the dedicated meta column implied by card-task-row internal_columns.",
+      "recommendation": "Refine mobile reflow so meta stays in the spec grid lane (truncating with ellipsis) unless ui_spec explicitly documents a stacked variant; update ui_spec if stacking is intentional."
+    },
+    {
+      "capture_id": "tablet-home-empty",
+      "severity": "medium",
+      "category": "layout",
+      "summary": "Persistent nav highlights \"Dashboard\" while the main page_header reads \"Tasks\", weakening scan path and IA clarity versus a single coherent surface label.",
+      "recommendation": "Align selected nav item with the active route/surface title, or rename entries so the highlighted item matches the primary H1 owner in surface-main-column."
+    },
+    {
+      "capture_id": "tablet-home-with-task",
+      "severity": "medium",
+      "category": "layout",
+      "summary": "Same sidebar selection vs main title mismatch as tablet empty: \"Dashboard\" appears active alongside \"Tasks\" heading.",
+      "recommendation": "Same as tablet-home-empty: synchronize nav active state with the Tasks surface."
+    },
+    {
+      "capture_id": "tablet-home-filtered-empty",
+      "severity": "medium",
+      "category": "layout",
+      "summary": "Sidebar active item remains \"Dashboard\" while main content is the Tasks dashboard in a filtered-empty state.",
+      "recommendation": "Synchronize nav active state with the Tasks surface for filtered views."
+    },
+    {
+      "capture_id": "desktop-home-empty",
+      "severity": "medium",
+      "category": "layout",
+      "summary": "Sidebar shows \"Dashboard\" selected while main landmark presents \"Tasks\" as the dominant title.",
+      "recommendation": "Resolve nav vs page title ownership so users see one clear \"where am I\" signal at desktop width."
+    },
+    {
+      "capture_id": "desktop-home-with-task",
+      "severity": "medium",
+      "category": "layout",
+      "summary": "Persistent nav selection does not match the Tasks page header (Dashboard highlighted).",
+      "recommendation": "Match active nav item to Tasks or adjust labels so hierarchy matches ui_spec reading_order."
+    },
+    {
+      "capture_id": "desktop-home-filtered-empty",
+      "severity": "medium",
+      "category": "layout",
+      "summary": "Filtered-empty state retains Dashboard-selected rail while main reads as Tasks dashboard.",
+      "recommendation": "Same nav/title alignment fix as other desktop/tablet captures."
+    },
+    {
+      "capture_id": "mobile-home-filtered-empty",
+      "severity": "low",
+      "category": "chrome",
+      "summary": "Filtered-empty area uses a dashed outline plus a bordered \"Show all tasks\" button; neither matches tokenized list/empty surfaces or the underlined type-label secondary pattern in ui_spec.",
+      "recommendation": "Adopt bg-elevated + border-subtle for the region and a text-link secondary (or amend ui_spec for this state)."
+    },
+    {
+      "capture_id": "tablet-home-filtered-empty",
+      "severity": "low",
+      "category": "chrome",
+      "summary": "Same dashed container and button-styled recovery control as mobile filtered-empty; chrome diverges from spec card language.",
+      "recommendation": "Tokenize the container and align recovery control with empty-task-list secondary guidance or document an exception."
+    },
+    {
+      "capture_id": "desktop-home-filtered-empty",
+      "severity": "low",
+      "category": "chrome",
+      "summary": "Dashed frame around filtered-empty plus secondary-filled recovery button; off-spec versus empty/list organisms.",
+      "recommendation": "Match other dashboard surfaces for borders and prefer underlined type-label secondary per ui_spec."
+    }
+  ],
+  "waiver_reason": "tasks/app-ui-design-system/01-stitch-design-package/artifacts/design_package.json has status \"refining\" and stitch.approved_baseline false (not baseline_frozen). Per design_visual_acceptance.skill.md, full Stitch-backed visual law is out of scope; this record maps QA captures to structural alignment against ui_spec.json only, with no pixel-tolerance strict-visual tier. Verdict waived: baseline not formally approved; medium findings are tracked for ui-refiner/frontend follow-up, not treated as blocking Stitch parity."
+}

@@ -1,0 +1,15 @@
+# Integration tests only: single Bun container (SQLite tests use temp files; no extra DB service).
+name: appui-integration
+
+services:
+  integration-tests:
+    image: oven/bun:1
+    working_dir: /repo
+    volumes:
+      - .:/repo
+      - integration-node-modules:/repo/node_modules
+    command:
+      ["bash", "-lc", "bun install --frozen-lockfile && bun test tests/infrastructure"]
+
+volumes:
+  integration-node-modules:

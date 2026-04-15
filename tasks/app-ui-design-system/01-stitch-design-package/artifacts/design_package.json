@@ -1,0 +1,49 @@
+{
+  "kind": "design-package",
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "surface_id": "mvp-primary-dashboard",
+  "artifact_owner_task_slug": "01-stitch-design-package",
+  "status": "exploring",
+  "stitch": {
+    "project_id": "3675777318594458616",
+    "screen_ids": [
+      "11611814ea7a4a2881d76c0c95fd3066",
+      "206031e3b18b485391e5b04ff2772057",
+      "201a8df1718b4e5f82c56b498338c9b7",
+      "2a16be69a88c49afad66abf4319f5de9"
+    ],
+    "approved_baseline": false,
+    "source_of_truth": true,
+    "export_paths": {
+      "meta": "design/stitch/meta.json",
+      "images_dir": "design/stitch/screens/",
+      "code_dir": "design/stitch/code/"
+    }
+  },
+  "retry": {
+    "attempt": 2,
+    "max_attempts": 4,
+    "exit_reason": null,
+    "last_prompt_delta": "SoT batch (attempt 2): generated 3 new DESKTOP screens via Stitch MCP—Lineyard Auth Hub (Google + email columns), Email Sign-In (email-only path + value-prop rail), Appearance Settings (Light|System|Dark + side-by-side Light/Dark shell previews + density). Kept existing Dashboard as stitch.screen_ids[0] canonical for MVP primary surface. Theme coverage: dashboard remains primary light task surface; appearance screen documents explicit light vs dark previews; no separate full dark dashboard export in this batch."
+  },
+  "references": {
+    "ui_critique": "ui_critique.json",
+    "design_system": "design_system.json",
+    "ui_spec": "ui_spec.json",
+    "normalized_ui": "ui-normalized.md",
+    "layout_analysis": null,
+    "qa_visual_evidence": null,
+    "design_visual_acceptance": "design_visual_acceptance.json"
+  },
+  "blockers": [
+    "stitch.approved_baseline is false: human/EM has not signed off the new SoT screen set as the frozen comparison baseline.",
+    "ui_spec.json and downstream design_system.json may still describe the pre-batch layout; design-system → critic → refiner must re-align to stitch.screen_ids[0] and refreshed exports under design/stitch/.",
+    "Full dark-mode implementation reference is primarily via Appearance Settings previews in this export set; a dedicated full-screen dark dashboard variant was not regenerated here (optional follow-up if EM requires)."
+  ],
+  "acceptance": {
+    "requires_design_visual_acceptance": true,
+    "requires_stitch_fidelity_qa": true,
+    "fidelity_tier": "structural"
+  }
+}

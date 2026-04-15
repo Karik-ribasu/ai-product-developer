@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed": "#d0e9d4",
+                        "surface-variant": "#e2e3db",
+                        "secondary-dim": "#515450",
+                        "tertiary-dim": "#3b594b",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed": "#315042",
+                        "outline-variant": "#b1b3ab",
+                        "primary-container": "#d0e9d4",
+                        "tertiary": "#476657",
+                        "inverse-primary": "#e3fde7",
+                        "on-error-container": "#752121",
+                        "error": "#9f403d",
+                        "on-error": "#fff7f6",
+                        "on-primary-container": "#415747",
+                        "tertiary-fixed": "#d9fce9",
+                        "surface-container-high": "#e8e9e2",
+                        "primary-dim": "#415847",
+                        "on-primary-fixed-variant": "#4a6150",
+                        "surface-container-low": "#f5f4ef",
+                        "on-primary-fixed": "#2f4435",
+                        "primary": "#4d6453",
+                        "on-secondary-fixed-variant": "#595c59",
+                        "on-tertiary-fixed-variant": "#4e6d5e",
+                        "on-tertiary-container": "#436254",
+                        "surface": "#fbf9f5",
+                        "secondary-container": "#e1e3de",
+                        "inverse-surface": "#0e0e0d",
+                        "error-dim": "#4e0309",
+                        "on-surface": "#30332e",
+                        "surface-container-highest": "#e2e3db",
+                        "outline": "#797c75",
+                        "tertiary-container": "#d9fce9",
+                        "on-secondary-container": "#50524f",
+                        "tertiary-fixed-dim": "#cbeddb",
+                        "on-primary": "#e5fee8",
+                        "background": "#fbf9f5",
+                        "secondary-fixed-dim": "#d3d5d0",
+                        "on-tertiary": "#e5fff0",
+                        "error-container": "#fe8983",
+                        "primary-fixed-dim": "#c2dbc6",
+                        "surface-dim": "#d9dbd2",
+                        "on-secondary": "#f8f9f4",
+                        "surface-bright": "#fbf9f5",
+                        "secondary-fixed": "#e1e3de",
+                        "surface-container": "#eeeee8",
+                        "secondary": "#5d605c",
+                        "on-surface-variant": "#5d605a",
+                        "surface-tint": "#4d6453",
+                        "inverse-on-surface": "#9e9d99",
+                        "on-secondary-fixed": "#3d403d",
+                        "on-background": "#30332e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Newsreader"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #fbf9f5; color: #30332e; }
+        .serif-title { font-family: 'Newsreader', serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .btn-shadow:active { transform: translate(2px, 2px); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-[#fbf9f5] dark:bg-[#1a1c18] border-b-2 border-[#797c75] fixed top-0 w-full z-50">
+<div class="flex justify-between items-center w-full px-6 py-4 mx-auto max-w-[1440px]">
+<div class="flex flex-col">
+<span class="text-3xl font-black font-['Newsreader'] text-[#30332e] dark:text-[#fbf9f5] tracking-tight">Lineyard</span>
+</div>
+<div class="hidden md:block">
+<span class="font-['Newsreader'] italic font-medium text-[#4d6453] dark:text-[#e5fee8] text-lg">Ship your day in small yards.</span>
+</div>
+</div>
+</header>
+<!-- Main Content: Split Auth Hub -->
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-6">
+<div class="w-full max-w-[1200px] grid grid-cols-1 md:grid-cols-2 bg-surface border-2 border-outline relative">
+<!-- Center Divider (Desktop) -->
+<div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-outline transform -translate-x-1/2"></div>
+<!-- Left Panel: Fastest -->
+<section class="p-12 md:p-20 flex flex-col justify-center items-start space-y-8 border-b-2 md:border-b-0 border-outline">
+<div class="space-y-2">
+<span class="font-label uppercase tracking-widest text-xs font-bold text-outline">Fastest</span>
+<h1 class="serif-title text-4xl md:text-5xl font-medium leading-tight">Access your yards instantly.</h1>
+</div>
+<div class="w-full space-y-4">
+<button class="w-full group flex items-center justify-center gap-4 bg-primary text-on-primary py-5 border-2 border-outline transition-all active:scale-[0.98] hover:bg-primary-dim">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-bold text-lg">Continue with Google</span>
+</button>
+<p class="text-on-surface-variant text-sm font-medium leading-relaxed max-w-xs">
+                        Uses your Google account—no spam posts. We value the quiet of your digital workspace.
+                    </p>
+</div>
+<!-- Decorative Asset -->
+<div class="pt-8 w-full">
+<div class="aspect-video bg-surface-container-low border-2 border-outline relative overflow-hidden">
+<img alt="Modern minimalist workspace" class="w-full h-full object-cover grayscale opacity-80" data-alt="Modern architectural interior with clean lines, natural light, and minimalist oak desk against a warm stone wall" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDHK5Ww7UDEFSRTpF3--riZ9uDmuILSgkC6sQRts_b_QbS--s1y5jp3rCuGMDSZh2wXeliU-FKhCXI6Ff7O5I36S1uH3LQaXQfOPHrs0oKZqIalNykgviLRPbEj4L6HluoTk2hKPcc4Y8gs6fAOZ8cs0qZvfvfERowk7qg9KE5B1VXllDEOiQNjvp0uyxqgcp2EPCDa2soPzMu192SXLwAHqcEDMQv6l6COJXLmWT_S9LSP1PIRr1iAihWIuCCc9UncI228dpUbOv0"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-multiply"></div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Email sign-in -->
+<section class="p-12 md:p-20 flex flex-col justify-center space-y-10">
+<div class="space-y-2">
+<span class="font-label uppercase tracking-widest text-xs font-bold text-outline">Email sign-in</span>
+<h2 class="serif-title text-3xl font-medium">Welcome back.</h2>
+</div>
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant" for="email">Email Address</label>
+<input class="w-full bg-surface border-2 border-outline p-4 focus:ring-0 focus:border-primary placeholder:text-outline-variant font-body" id="email" placeholder="name@company.com" type="email"/>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<label class="font-label text-xs font-bold uppercase tracking-wider text-on-surface-variant" for="password">Password</label>
+<button class="text-xs font-bold text-primary hover:underline underline-offset-4 uppercase tracking-tighter" type="button">Forgot password?</button>
+</div>
+<input class="w-full bg-surface border-2 border-outline p-4 focus:ring-0 focus:border-primary placeholder:text-outline-variant font-body" id="password" placeholder="••••••••" type="password"/>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 font-bold text-lg border-2 border-outline hover:bg-primary-dim transition-all active:scale-[0.98]" type="submit">
+                        Sign in
+                    </button>
+</form>
+<!-- Divider -->
+<div class="relative flex items-center">
+<div class="flex-grow border-t-2 border-outline"></div>
+<span class="flex-shrink mx-4 font-label text-xs font-bold uppercase tracking-widest text-outline">New here?</span>
+<div class="flex-grow border-t-2 border-outline"></div>
+</div>
+<!-- Secondary Action -->
+<button class="w-full bg-surface text-on-surface py-4 font-bold text-lg border-2 border-outline hover:bg-surface-container-low transition-all active:scale-[0.98]">
+                    Create account with email
+                </button>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#fbf9f5] dark:bg-[#1a1c18] border-t-2 border-[#797c75] mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-8 py-6 gap-4 max-w-[1440px] mx-auto">
+<div class="text-lg font-bold text-[#30332e] dark:text-[#fbf9f5]">© 2024 Lineyard</div>
+<div class="flex gap-8">
+<a class="font-['Manrope'] uppercase tracking-widest text-[10px] text-[#797c75] hover:text-[#30332e] dark:hover:text-[#fbf9f5] transition-colors duration-200" href="#">Privacy</a>
+<a class="font-['Manrope'] uppercase tracking-widest text-[10px] text-[#797c75] hover:text-[#30332e] dark:hover:text-[#fbf9f5] transition-colors duration-200" href="#">Help</a>
+<a class="font-['Manrope'] uppercase tracking-widest text-[10px] text-[#797c75] hover:text-[#30332e] dark:hover:text-[#fbf9f5] transition-colors duration-200" href="#">Status</a>
+</div>
+</div>
+</footer>
+</body></html>

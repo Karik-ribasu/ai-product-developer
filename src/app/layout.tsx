@@ -5,8 +5,8 @@ import { StyledRegistry } from "@/styles/styled-registry";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Local Todo (SQLite)",
-  description: "MVP scaffold — inner layers live under src/domain, src/application, etc.",
+  title: "Smart Task Manager",
+  description: "MVP primary dashboard — tasks backed by local SQLite; governed design_system tokens.",
 };
 
 export default function RootLayout({

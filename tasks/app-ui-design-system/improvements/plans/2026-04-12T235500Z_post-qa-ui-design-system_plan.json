@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "kind": "improvement-plan",
+  "feature_slug": "app-ui-design-system",
+  "created_at": "2026-04-12T23:55:00Z",
+  "execution_summary": "The feature delivered the full design artifact chain under 01-stitch-design-package (design_package → design_system → ui_critique → ui_spec), then shipped the single MVP primary surface with a documented theme mirror and strong unit-test discipline. Infra corrected the QA compose stack so Chromium targets the in-network app service (web). EM/QA reported validation_status pass; design_visual_acceptance.json used verdict waived with structural fidelity_tier because design_package remained refining with stitch.approved_baseline false, matching orchestrator Step 9 allowance while leaving documented medium findings for follow-up refinement.",
+  "what_worked_well": [
+    "Single artifacts root for the design chain reduced forked sources of truth and matched task.json expectations for downstream agents.",
+    "Explicit waiver_reason in design_visual_acceptance.json tied the waived verdict to baseline state and ui_spec structural comparison, improving auditability.",
+    "quality-gate task.json implementation_notes captured the compose re-validation command, environment variables, and ownership split between QA evidence and design verdict.",
+    "architecture-brief.json clearly separated bounded contexts (design governance vs application UI) and stated Clean Architecture + Atomic Design expectations for handoffs."
+  ],
+  "issues_identified": [
+    "design_visual_acceptance.skill.md states required inputs include baseline_frozen and stitch.approved_baseline true, while this feature legitimately completed with verdict waived under refining/unapproved baseline per production-workflow Step 9.",
+    "Per-feature task.json registry entries omit an architecture_refs field even though architecture-brief and architecture-standards emphasize traceable refs on implementation tasks.",
+    "design_package.json can list references.qa_visual_evidence as null while QA has produced evidence elsewhere, creating ambiguity for validators scanning only the package manifest.",
+    "Task 04-ui-spec-refiner acceptance text steers status toward baseline_frozen while design_package.json remained refining with approved_baseline false, which can confuse pass/fail interpretation without an explicit EM waiver note in the registry."
+  ],
+  "root_causes": [
+    "Governance docs evolved (orchestrator accepts waived visual acceptance) faster than the normative design_visual_acceptance.skill.md inputs section, which still reads like a single strict gate.",
+    "tasks/_template/task.json is minimal and does not nudge delivery toward optional coordination fields already expected by broader skills.",
+    "Reference updates in design_package.json are not always treated as part of the QA close-out checklist when requires_design_visual_acceptance is true.",
+    "Language in delivery acceptance sometimes conflates ideal terminal artifact states with shippable interim states when visual law is explicitly deferred."
+  ],
+  "improvement_opportunities": [
+    {
+      "id": "align-visual-acceptance-skill-with-waiver-path",
+      "priority": "high",
+      "category": "skills",
+      "rationale": "Prevents future orchestrator/EM deadlocks where agents treat the skill as forbidding work that the production workflow already allows when verdict is waived with waiver_reason.",
+      "proposed_change": "Edit `.cursor/skills/design/design_visual_acceptance.skill.md`: split normative guidance into (A) full fidelity path when baseline_frozen and approved_baseline are true, and (B) interim structural path documenting verdict waived, required waiver_reason, fidelity_tier structural default, and explicit statement that QA evidence may still be required while design judgment is non-blocking for strict Stitch parity until baseline freezes.",
+      "orchestrator_apply": true,
+      "target_paths": [".cursor/skills/design/design_visual_acceptance.skill.md"]
+    },
+    {
+      "id": "qa-agent-compose-service-contract",
+      "priority": "medium",
+      "category": "agents",
+      "rationale": "The engineering cycle required an infra fix aligning the app compose service name with Chromium BASE_URL; encoding the contract in qa-agent reduces repeated harness churn.",
+      "proposed_change": "Edit `.cursor/agents/qa-agent.md`: under Visual evidence appendix or E2E appendix, add a short normative note that qa_visual_evidence.environment.container_compose_service must match the reachable app service in compose (document common pattern BASE_URL=http://<service>:3000) and that EM/infra should keep runner and app service names stable across features.",
+      "orchestrator_apply": true,
+      "target_paths": [".cursor/agents/qa-agent.md"]
+    },
+    {
+      "id": "task-registry-template-architecture-refs",
+      "priority": "medium",
+      "category": "coordination",
+      "rationale": "Encourages delivery to register architecture-standards ids on tasks that touch implementation without editing per-feature task.json via orchestrator apply.",
+      "proposed_change": "Edit `tasks/_template/task.json` to add an optional `architecture_refs` array (default empty) and optional `implementation_notes` null so new task.json files mirror coordination fields expected by architecture-standards and testing skills.",
+      "orchestrator_apply": true,
+      "target_paths": ["tasks/_template/task.json"]
+    },
+    {
+      "id": "production-workflow-step9-crosslink-waiver",
+      "priority": "low",
+      "category": "skills",
+      "rationale": "Single pointer from orchestrator validation text to the skill waiver subsection reduces misreads during Step 9 validation.",
+      "proposed_change": "Edit `.cursor/skills/production-workflow/SKILL.md` Step 9 bullet on design visual acceptance to reference the skill subsection covering waived verdict and baseline-not-frozen policy after the skill text is updated.",
+      "orchestrator_apply": true,
+      "target_paths": [".cursor/skills/production-workflow/SKILL.md"]
+    }
+  ],
+  "non_apply_recommendations": [
+    {
+      "id": "backfill-architecture-refs-registry",
+      "priority": "medium",
+      "audience": "delivery-agent",
+      "rationale": "Improves traceability from brief to task without touching allowlisted governance paths in Step 11.",
+      "proposed_change": "On the next registry edit pass for app-ui-design-system, add architecture_refs arrays to each task.json per architecture-standards vocabulary (e.g. atomic-design, styled-components, clean-architecture, qa-manual-automated-e2e-chromium) matching each task's surface."
+    },
+    {
+      "id": "design-package-qa-reference-closeout",
+      "priority": "low",
+      "audience": "engineering-manager-agent",
+      "rationale": "Removes ambiguity when validators grep design_package.json only.",
+      "proposed_change": "Add a QA close-out checklist item: when requires_design_visual_acceptance is true and qa_visual_evidence.json exists, update design_package.json references.qa_visual_evidence to the relative path or document why it stays null."
+    },
+    {
+      "id": "resolve-medium-visual-findings",
+      "priority": "low",
+      "audience": "user",
+      "rationale": "Medium findings remain tracked for product polish once IA between nav and page title is decided.",
+      "proposed_change": "Schedule a small follow-up iteration (ui-refiner + frontend) to align nav active state with Tasks surface labels or amend ui_spec if the mismatch is intentional."
+    }
+  ]
+}

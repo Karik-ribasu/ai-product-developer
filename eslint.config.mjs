@@ -18,6 +18,7 @@ const eslintConfig = [
       "tasks/**",
       ".cursor/**",
       "next-env.d.ts",
+      "e2e/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),

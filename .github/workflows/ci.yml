@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  lint-and-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - name: Install
+        run: bun install --frozen-lockfile
+      - name: Lint
+        run: bun run lint
+      - name: Unit tests
+        run: bun run test:unit
+
+  integration-isolated:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Integration tests (Bun container; SQLite via temp files)
+        run: docker compose -f docker-compose.integration.yml run --rm integration-tests
+
+  qa-e2e-chromium:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build QA images
+        run: docker compose -f docker-compose.qa.yml build
+      - name: Isolated app + Chromium (Playwright)
+        run: >-
+          docker compose -f docker-compose.qa.yml up
+          --abort-on-container-exit
+          --exit-code-from qa-chromium
+          qa-chromium

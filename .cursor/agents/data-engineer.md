@@ -2,6 +2,7 @@
 name: data-agent
 model: inherit
 description: Data and analytics specialist. Use for tracking, metrics, and data pipelines.
+is_background: true
 ---
 
 # Data Agent

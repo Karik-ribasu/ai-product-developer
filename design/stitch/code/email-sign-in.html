@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign In | Lineyard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-dim": "#515450",
+                    "error-dim": "#4e0309",
+                    "inverse-primary": "#e3fde7",
+                    "error": "#9f403d",
+                    "tertiary-fixed": "#d9fce9",
+                    "background": "#fbf9f5",
+                    "tertiary-dim": "#3b594b",
+                    "on-primary": "#e5fee8",
+                    "error-container": "#fe8983",
+                    "on-secondary": "#f8f9f4",
+                    "on-secondary-fixed": "#3d403d",
+                    "primary-fixed": "#d0e9d4",
+                    "surface-container": "#eeeee8",
+                    "on-secondary-container": "#50524f",
+                    "tertiary-fixed-dim": "#cbeddb",
+                    "on-primary-container": "#415747",
+                    "secondary": "#5d605c",
+                    "primary-fixed-dim": "#c2dbc6",
+                    "on-tertiary-fixed": "#315042",
+                    "primary-container": "#d0e9d4",
+                    "on-surface": "#30332e",
+                    "surface-dim": "#d9dbd2",
+                    "on-tertiary": "#e5fff0",
+                    "on-primary-fixed": "#2f4435",
+                    "on-surface-variant": "#5d605a",
+                    "inverse-on-surface": "#9e9d99",
+                    "primary-dim": "#415847",
+                    "surface-container-highest": "#e2e3db",
+                    "surface": "#fbf9f5",
+                    "secondary-fixed-dim": "#d3d5d0",
+                    "on-error": "#fff7f6",
+                    "on-background": "#30332e",
+                    "on-tertiary-fixed-variant": "#4e6d5e",
+                    "on-primary-fixed-variant": "#4a6150",
+                    "surface-bright": "#fbf9f5",
+                    "secondary-fixed": "#e1e3de",
+                    "surface-tint": "#4d6453",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#595c59",
+                    "on-error-container": "#752121",
+                    "tertiary": "#476657",
+                    "outline-variant": "#b1b3ab",
+                    "secondary-container": "#e1e3de",
+                    "tertiary-container": "#d9fce9",
+                    "inverse-surface": "#0e0e0d",
+                    "surface-container-low": "#f5f4ef",
+                    "on-tertiary-container": "#436254",
+                    "primary": "#4d6453",
+                    "surface-container-high": "#e8e9e2",
+                    "surface-variant": "#e2e3db",
+                    "outline": "#797c75"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0px",
+                    "lg": "0px",
+                    "xl": "0px",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Newsreader"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fbf9f5;
+            color: #30332e;
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col overflow-x-hidden">
+<!-- Primary Layout Container -->
+<main class="flex-grow flex flex-col md:flex-row">
+<!-- LEFT RAIL (30%): Why Lineyard -->
+<section class="md:w-[30%] bg-surface-container-low border-r-2 border-outline flex flex-col p-8 md:p-12 lg:p-16 justify-between">
+<div class="space-y-12">
+<!-- Brand Anchor -->
+<div class="flex items-center gap-2">
+<span class="text-3xl font-headline font-bold italic text-on-surface tracking-tight">Lineyard</span>
+</div>
+<div class="space-y-8">
+<h2 class="text-4xl font-headline italic font-medium text-on-surface leading-tight">Why Lineyard</h2>
+<ul class="space-y-6">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary pt-1" data-icon="grid_view">grid_view</span>
+<span class="text-on-surface-variant font-body leading-relaxed">Turn messy lists into finishable yards</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary pt-1" data-icon="keyboard">keyboard</span>
+<span class="text-on-surface-variant font-body leading-relaxed">Keyboard-first filters</span>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary pt-1" data-icon="cloud_off">cloud_off</span>
+<span class="text-on-surface-variant font-body leading-relaxed">Offline-friendly drafts</span>
+</li>
+</ul>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t-2 border-outline">
+<p class="text-[0.7rem] font-label uppercase tracking-widest text-secondary-dim leading-loose">
+                    Security-first infrastructure for your digital workspace.
+                </p>
+</div>
+</section>
+<!-- RIGHT MAIN (70%): Sign In Form -->
+<section class="md:w-[70%] bg-surface flex flex-col items-center justify-center p-8 md:p-12 lg:p-24">
+<div class="w-full max-w-md space-y-10">
+<header class="space-y-3">
+<h1 class="text-5xl font-headline font-bold text-on-surface">Sign in with email</h1>
+<div class="bg-surface-container-high border-2 border-outline px-4 py-3 flex gap-3 items-center">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+<p class="text-sm font-body text-on-surface-variant">We’ll email a code if your workspace requires it.</p>
+</div>
+</header>
+<form class="space-y-6">
+<div class="space-y-4">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="text-xs font-label uppercase tracking-wider font-bold text-on-surface" for="email">Email Address</label>
+<input class="w-full bg-surface border-2 border-outline px-4 py-3 focus:border-primary focus:ring-0 outline-none transition-colors duration-150 text-on-surface placeholder:text-outline-variant" id="email" name="email" placeholder="name@company.com" type="email"/>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<label class="text-xs font-label uppercase tracking-wider font-bold text-on-surface" for="password">Password</label>
+<a class="text-xs font-label uppercase tracking-wider text-primary hover:underline decoration-2 transition-all" href="#">Forgot password?</a>
+</div>
+<input class="w-full bg-surface border-2 border-outline px-4 py-3 focus:border-primary focus:ring-0 outline-none transition-colors duration-150 text-on-surface placeholder:text-outline-variant" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<!-- Persistence -->
+<div class="flex items-center gap-3">
+<div class="relative flex items-center">
+<input class="peer h-5 w-5 border-2 border-outline bg-surface checked:bg-primary checked:border-primary focus:ring-0 transition-colors duration-150 cursor-pointer appearance-none rounded-none" id="remember" name="remember" type="checkbox"/>
+<span class="material-symbols-outlined absolute text-on-primary text-base pointer-events-none opacity-0 peer-checked:opacity-100 left-[2px]" data-icon="check">check</span>
+</div>
+<label class="text-sm font-body text-on-surface-variant cursor-pointer select-none" for="remember">Keep me signed in on this device</label>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary text-on-primary border-2 border-primary py-4 font-label uppercase tracking-[0.15em] font-bold hover:bg-primary-dim transition-colors duration-150 active:translate-y-[1px] shadow-[4px_4px_0px_0px_rgba(48,51,46,1)] hover:shadow-none" type="submit">
+                        Sign in
+                    </button>
+</form>
+<div class="pt-8 border-t-2 border-outline flex flex-col sm:flex-row justify-between items-center gap-4">
+<p class="text-sm font-body text-on-surface-variant">New to Lineyard?</p>
+<a class="text-sm font-label uppercase tracking-widest font-bold text-primary hover:underline decoration-2" href="#">Create account</a>
+</div>
+</div>
+</section>
+</main>
+<!-- FOOTER: Global Utility -->
+<footer class="w-full bg-surface-container-low border-t-2 border-outline flex flex-col md:flex-row justify-between items-center px-8 py-6 gap-4">
+<div class="flex items-center gap-6">
+<a class="text-[0.7rem] font-label uppercase tracking-widest text-secondary hover:text-primary transition-colors flex items-center gap-2 group" href="#">
+<span class="material-symbols-outlined text-sm group-hover:-translate-x-1 transition-transform" data-icon="arrow_back">arrow_back</span>
+                Back to all sign-in options
+            </a>
+</div>
+<div class="flex items-center gap-8">
+<span class="text-[0.7rem] font-label uppercase tracking-widest text-outline-variant">© 2024 Lineyard</span>
+<div class="flex gap-4">
+<a class="text-[0.7rem] font-label uppercase tracking-widest text-secondary hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="text-[0.7rem] font-label uppercase tracking-widest text-secondary hover:text-primary transition-colors" href="#">Terms</a>
+</div>
+</div>
+</footer>
+</body></html>

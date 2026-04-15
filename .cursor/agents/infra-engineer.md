@@ -2,6 +2,7 @@
 name: infra-engineer
 model: inherit
 description: Infrastructure specialist. Use for deployment, CI/CD, environments, and system reliability.
+is_background: true
 ---
 
 # Infra Engineer

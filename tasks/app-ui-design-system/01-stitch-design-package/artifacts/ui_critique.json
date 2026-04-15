@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "artifact_ids": [
+      "design_package.json",
+      "design_system.json",
+      "ui-normalized.md",
+      "ui-exploration.md"
+    ],
+    "viewport": "multi",
+    "critique_version": "1.0.0"
+  },
+  "summary": {
+    "top_issues": [
+      "Fixed 264px sidebar without documented mobile reflow risks unusable main column below ~768px.",
+      "Steady-state-only inventory omits empty, loading, and error recovery for the task list.",
+      "Primary CTA vs filter cluster reading order is unspecified for narrow widths."
+    ],
+    "risk_statement": "Without breakpoint-specific layout rules and non-happy-path states, the MVP dashboard cannot meet the brief’s responsive and QA-ready acceptance bar: users may be unable to complete core task actions on small viewports and will hit dead ends when lists are empty or requests fail."
+  },
+  "findings": [
+    {
+      "id": "H-001",
+      "category": "hierarchy",
+      "severity": "medium",
+      "title": "Banner title tier competes with main page title tier",
+      "evidence": "shell-app-header maps to type-title-capable roles (type-display optional) while surface-main-column page_header also maps to type-title in ui-normalized §3 table; both sit above the fold with no stated single H1 owner.",
+      "impact": "Users get two same-weight orientation anchors and a broken scan path before reaching task rows.",
+      "recommendation": "Declare one dominant page title per viewport: demote shell product label to type-label or reserve type-title exclusively for the main column header.",
+      "related_sections": ["shell-app-header", "surface-main-column"]
+    },
+    {
+      "id": "H-002",
+      "category": "hierarchy",
+      "severity": "medium",
+      "title": "Primary CTA ordering relative to filters is undefined",
+      "evidence": "ui-normalized lists CTA primária and Filtros/chips as separate regions without a toolbar reading order tying button-primary to chip-filter above/below or left/right across breakpoints.",
+      "impact": "Implementations can place the primary action after a wide chip cluster, burying the core create-task path on narrow layouts.",
+      "recommendation": "Specify a single focal path in the toolbar: keep button-primary first in DOM/visual order before filter chips on mobile, with sticky placement if the filter row grows.",
+      "related_sections": ["button-primary", "chip-filter", "surface-main-column"]
+    },
+    {
+      "id": "S-001",
+      "category": "spacing",
+      "severity": "high",
+      "title": "Fixed 264px sidebar collides with mobile gutters without reflow",
+      "evidence": "nav-sidebar layout_rules.width_px is 264 while architecture requires responsive behavior; at 320px width, 264px rail leaves ~56px before surface-main-column padding space-6 (32px) totals, violating practical content min-widths for card-task-row min_height_px 72.",
+      "impact": "Mis-taps, clipped labels, and illegible meta lines on small phones block the dashboard task on mobile-class viewports.",
+      "recommendation": "Document collapse to icon rail, drawer, or bottom nav under a breakpoint with a measured minimum main-column width token and transition behavior.",
+      "related_sections": ["nav-sidebar", "surface-main-column", "card-task-row"]
+    },
+    {
+      "id": "S-002",
+      "category": "spacing",
+      "severity": "medium",
+      "title": "Horizontal rhythm inside task rows vs chips is inconsistent",
+      "evidence": "card-task-row layout_rules.gap is space-3 (12px) across anatomy slots while chip-filter uses space-3 horizontal padding with space-1 vertical padding; nav-sidebar uses gap_items space-2 (8px) vertical stack.",
+      "impact": "Related metadata can appear optically closer to neighboring rows than to its own title block during fast scanning.",
+      "recommendation": "Introduce a fixed meta column or 12-column subgrid inside card-task-row so status, title, and meta share one horizontal rhythm distinct from filter chips.",
+      "related_sections": ["card-task-row", "chip-filter"]
+    },
+    {
+      "id": "U-001",
+      "category": "ux",
+      "severity": "high",
+      "title": "Empty, loading, and error paths are absent from the component model",
+      "evidence": "design_system.json components array lists shell, nav, main, card, button, chip, badge only; ui-normalized §2 enumerates steady-state regions without skeletons, empty lists, or fetch failure panels.",
+      "impact": "Users encounter dead ends without recovery affordances; QA cannot assert console/network-clean flows against explicit acceptance for non-happy paths per testing-and-qa standards expectations for shipped capabilities.",
+      "recommendation": "Add P0 organisms for list-loading skeleton, zero-task empty state, and recoverable error with retry aligned to tokenized spacing and the main landmark.",
+      "related_sections": ["surface-main-column", "card-task-row"]
+    },
+    {
+      "id": "C-001",
+      "category": "clarity",
+      "severity": "low",
+      "title": "Active chip state relies mainly on hue flip",
+      "evidence": "chip-filter tokens set active_fg and neutral_fg both to fg-default on active_bg accent-primary vs neutral_bg bg-subtle; only background hue differentiates pressed state.",
+      "impact": "Color-only differentiation weakens pressed clarity for users who distinguish state poorly.",
+      "recommendation": "Pair active chips with a leading check icon, weight shift on type-label, or visible border token so pressed state is not hue-alone.",
+      "related_sections": ["chip-filter"]
+    },
+    {
+      "id": "C-002",
+      "category": "clarity",
+      "severity": "medium",
+      "title": "Supporting stats panels lack a canonical component mapping",
+      "evidence": "ui-exploration.md §1 lists supporting panels (stats, filters) but design_system.json has no stats/kpi organism and ui-normalized §2 omits a stats region while filters are specified.",
+      "impact": "Frontend drift: ad-hoc spacing and typography outside the token table, breaking atomic-design single-responsibility boundaries in the brief.",
+      "recommendation": "Add a named organism (for example kpi-strip or stats-panel) with anatomy, layout_rules, and type roles so supporting panels serialize like other dashboard regions.",
+      "related_sections": ["surface-main-column"]
+    }
+  ]
+}

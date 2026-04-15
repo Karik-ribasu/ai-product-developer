@@ -106,6 +106,10 @@ User input → **Exploration** → Discovery → **Architecture** → Delivery �
 - Every task has exactly one accountable **owner agent** and exactly one **`sector`** (each row references an existing **`task_slug`**).
 - Assignments must not bundle multiple sectors; if work crosses sectors, **delivery/engineering manager** must split into separate assignments (each with its own `agent` + `sector`) before implementation.
 - `execution_order` respects dependencies; parallel work is explicit; **`qa-agent`** appears in the plan where validation is required (typically after implementation tasks), using `quality-engineering`.
+- **Design before frontend (new surfaces):** when delivery registers UI design tasks for new screens/features, **`execution_order`** must run **`ui-generator-agent`** → **`design-system-agent`** → **`ui-critic-agent`** → **`ui-refiner-agent`** (or the subset delivery defines) **before** dependent **`frontend-agent`** tasks, so **`artifacts/design_package.json`** and **`ui_spec.json`** exist as handoff inputs (see **`.cursor/skills/design/design_package.skill.md`**).
+- **Stitch source-of-truth (layout-bearing UI):** when tasks introduce or materially change **layout/structure**, **`engineering-manager-agent`** must attach **`.cursor/skills/design/stitch_workflow.skill.md`**, set **`stitch_workflow: source_of_truth`** on **`ui-generator-agent`**, and block **`frontend-agent`** until **`design/stitch/`** exports + **`meta.json`** exist and **`design_package.json`** reflects **`stitch.source_of_truth`** (see same skill for QA fidelity expectations).
+- **Screen implementation flag:** for **every** task in the slice, EM must set **`requires_screen_implementation`** in the matching **`task.json`** (`true` | `false`) when moving a task to **`assigned`**—see [Task registry](#task-registry-on-disk).
+- **Stitch path registration:** when SoT applies, EM must ensure **`design_package.json`** includes **`stitch.screens`** (per-screen **image** + **code** paths) after generator export, and must populate **`stitch_handoff`** on relevant **`task.json`** rows (**canonical** `canonical_image_path` + **`canonical_code_path`** minimum). **`assignments[]`** in the EM plan should mirror the same paths for auditability.
 
 **Iterate note (quality gate proportionality):** When Discovery returns **`decision: iterate`** with a small delta, **delivery** (with EM alignment) may narrow **`quality-gate`** acceptance in the matching **`task.json`** to the **commands and surfaces touched** by that delta (for example lint/tests plus a documented smoke path) as long as the written acceptance reflects that scope. For cross-cutting risk, keep the broader gate. This clarifies proportionality; it does **not** waive the requirement for a QA **`pass`** before **`improvement-agent`**.
 
@@ -117,7 +121,7 @@ User input → **Exploration** → Discovery → **Architecture** → Delivery �
 
 For each assignment in `execution_order`:
 
-**Delegates to:** the assigned specialist only (`frontend-agent`, `backend-agent`, `infra-engineer`, `data-engineer`, `blockchain-developer`, **`qa-agent`**, …).  
+**Delegates to:** the assigned specialist only (`ui-generator-agent`, `design-system-agent`, `ui-critic-agent`, `ui-refiner-agent`, `frontend-agent`, `backend-agent`, `infra-engineer`, `data-engineer`, `blockchain-developer`, **`qa-agent`**, …).  
 **Input:** task title/description + acceptance + **`task_slug`** + path to `tasks/.../task.json` + **`agent` + `sector`** + path to **`tasks/<feature_slug>/architecture-brief.json`** + pointer to **`.cursor/skills/architecture-standards/SKILL.md`** + exploration/discovery context as needed (do not invent scope).  
 **Rules (for EM, not orchestrator):**
 
@@ -142,12 +146,13 @@ For each assignment in `execution_order`:
 
 - Do **not** invoke `qa-agent` from the orchestrator. Confirm the EM report includes QA results: **`validation_status`**: `pass` | `fail`, **`issues`**: structured list.
 - If **fail** → return control to **`engineering-manager-agent`** with the QA `issues` and affected `task_slug` list; EM re-invokes the responsible specialists, then **`qa-agent`** again. Repeat until pass or explicit user stop.
+- **Design visual acceptance (optional gate):** when **`design_package.json`** sets **`acceptance.requires_design_visual_acceptance`: `true`**, confirm the EM report (or linked artifacts) includes **`qa_visual_evidence.json`** from **`qa-agent`** and **`design_visual_acceptance.json`** from the assigned **design** agent (`ui-critic-agent` unless delivery specifies otherwise), per **`.cursor/skills/design/design_visual_acceptance.skill.md`**. A **`fail`** verdict is a **return-to-EM** signal (same as functional QA fail) for frontend/design rework—not an orchestrator delegation change. For **`verdict: waived`** while the baseline is not yet frozen or approved, use **Path B — Waiver and interim baseline** in that skill so validators do not treat `refining` / `approved_baseline: false` as a hard blocker when Step 10’s `pass` or `waived` policy applies.
 
 ---
 
 ## Step 10 — Invoke improvement-agent (orchestrator)
 
-**When:** only on **`decision: build`** paths where Step 9 confirms QA **`pass`** in the EM-furnished report.
+**When:** only on **`decision: build`** paths where Step 9 confirms QA **`pass`** in the EM-furnished report **and**, when **`design_package.json`** requires design visual acceptance, the EM report shows **`design_visual_acceptance.json`** with **`verdict`**: `pass` or `waived` (otherwise return to EM—do not invoke **`improvement-agent`** yet).
 
 **Target:** `improvement-agent` (see `.cursor/agents/improvement-agent.md`).
 
@@ -299,7 +304,10 @@ Expected:
       "task_slug": "string",
       "task": "string",
       "agent": "string",
-      "sector": "string"
+      "sector": "string",
+      "requires_screen_implementation": false,
+      "stitch_handoff": null,
+      "design_package_path": null
     }
   ],
   "execution_order": ["string"],
@@ -314,6 +322,14 @@ Expected:
 ```
 
 `execution_order` is an ordered list of **`task_slug`** values (including the QA **`task_slug`** when QA is in scope). `engineering_execution_report` is required when the engineering cycle is reported back to the orchestrator; **`issues`** follows the QA agent’s structured format.
+
+**Assignment extensions (layout traceability):**
+
+| Field | Type | Required | Notes |
+|--------|------|----------|-------|
+| `requires_screen_implementation` | boolean | yes | `true` when the task changes or implements **layout/UI**; otherwise `false`. |
+| `design_package_path` | string \| null | yes | Repository-relative path to **`artifacts/design_package.json`** when the assignment is part of the design/Stitch pipeline; else `null`. |
+| `stitch_handoff` | object \| null | yes | When SoT exports exist, same shape as **`task.json` → `stitch_handoff`** (canonical **image** + **code** paths required for frontend-bound rows); else `null`. |
 
 Field names are stable; empty arrays/objects are allowed only when explicitly justified by upstream agents.
 
@@ -348,15 +364,31 @@ Field names are stable; empty arrays/objects are allowed only when explicitly ju
 | `assigned_agent` | string \| null | yes | Agent id after EM assigns; `null` until then |
 | `sector` | string \| null | yes | English sector after EM assigns; `null` until then |
 | `updated_at` | string | yes | ISO-8601 UTC timestamp of last registry write |
+| `requires_screen_implementation` | boolean | yes | **`engineering-manager-agent`:** `true` if the task ships or materially changes **user-facing layout** (including **`frontend-agent`** on a new/changed surface); `false` for logic-only / backend / infra / docs-only work. |
+| `stitch_handoff` | object \| null | yes | **`engineering-manager-agent`** after SoT exports: see **`tasks/_template/task.json`** for shape; use **`null`** until exports exist, then set **canonical** PNG + code paths. **`delivery-agent`** may leave **`null`**. |
 
 **Who writes what**
 
 - **`delivery-agent`:** creates the directory and initial `task.json` (`status`: `planned`, `assigned_agent` / `sector`: `null`, `schema_version`: `1`, `updated_at` set).
-- **`engineering-manager-agent`:** sets `assigned_agent`, `sector`, `status` → `assigned` when dispatching; may set `blocked` with notes in `description` only if policy allows (prefer a new chat turn to delivery for scope change).
+- **`engineering-manager-agent`:** sets `assigned_agent`, `sector`, `status` → `assigned` when dispatching; sets **`requires_screen_implementation`**; sets **`stitch_handoff`** when Stitch SoT paths are known (copy from **`design_package.json` → `stitch.screens`**); may set `blocked` with notes in `description` only if policy allows (prefer a new chat turn to delivery for scope change).
 - **Assignee specialist (one task at a time):** sets `status` to `in_progress` when starting, `done` when complete, or `failed_qa` / `blocked` when appropriate; refreshes `updated_at`.
 - **`qa-agent`:** may set `failed_qa` or leave `done` unchanged after verification; updates `updated_at`; records details in the EM **engineering_execution_report** / QA output, not only in JSON, if space is tight.
 
-Keep extra fields out of `task.json` for now—**only** the table above.
+Do not add **ad-hoc** keys beyond this table and the documented **`stitch_handoff`** sub-schema below.
+
+#### `stitch_handoff` object (when not `null`)
+
+All paths are **repository-root-relative**.
+
+| Field | Type | Required when handoff set | Notes |
+|--------|------|---------------------------|-------|
+| `project_id` | string | yes | Stitch project id (same **`feature_slug`** default policy—see **`stitch_workflow.skill.md`**). |
+| `design_package_path` | string | yes | e.g. `tasks/<feature>/<task>/artifacts/design_package.json`. |
+| `meta_path` | string | yes | e.g. `design/stitch/meta.json`. |
+| `canonical_screen_id` | string | yes | Must equal **`stitch.screen_ids[0]`** in the package. |
+| `canonical_image_path` | string | yes | PNG (or raster) for canonical screen. |
+| `canonical_code_path` | string | yes | HTML or exported layout code for canonical screen. |
+| `screens` | array | no | Optional copy of **`design_package.json` → `stitch.screens`** (all variants). |
 
 ### Sector vocabulary (English)
 
@@ -370,8 +402,9 @@ Use these **canonical** `sector` values (extend only if discovery/delivery docum
 | `infrastructure-engineering` | `infra-engineer` |
 | `blockchain-engineering` | `blockchain-developer` |
 | `quality-engineering` | `qa-agent` |
+| `product-design` | `ui-generator-agent`, `design-system-agent`, `ui-critic-agent`, `ui-refiner-agent` |
 
-`qa-agent` is invoked **only by `engineering-manager-agent`**, in execution order, for the registered QA **`task_slug`** (e.g. `quality-gate`). Implementation tasks use the other sectors. **`sector` must be English** even when user-facing text is another language.
+`qa-agent` is invoked **only by `engineering-manager-agent`**, in execution order, for the registered QA **`task_slug`** (e.g. `quality-gate`). Implementation tasks use the other sectors. Design prep tasks use **`product-design`** with the agents above. **`sector` must be English** even when user-facing text is another language.
 
 ---
 

@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "task_slug": "05-frontend-mvp-primary-surface",
+  "title": "Frontend parity to declared Stitch fidelity tier",
+  "description": "frontend-agent reworks the single MVP primary surface in the Next.js presentation layer only after the 01 meta/export_paths gate and 04 ui_spec handoff; implements Atomic Design (atoms/molecules/organisms), styled-components with typed DefaultTheme fed from published design_system.json, and clean edge wiring per architecture-brief.json; parity is limited to the explicit fidelity_tier structural documented in design_package.json and mirrored in quality-gate (no undocumented pixel-perfect requirements).",
+  "acceptance": [
+    "Implementation matches tasks/app-ui-design-system/01-stitch-design-package/artifacts/ui_spec.json for the MVP surface, including breakpoints, default and key alternate states, and documented a11y expectations, without exceeding the written structural fidelity tier.",
+    "Theme and spacing/color/radii/elevation values consumed from artifacts/design_system.json (or a checked-in loader path documented in EM notes) with no undocumented ad-hoc token usage except ui_spec-documented edge cases.",
+    "Components classified under the repo Atomic Design tree; presentation calls application/domain through ports—no domain imports of react or styled-components.",
+    "Unit tests for new/changed unit scope meet 100% line coverage where declared per testing-and-qa-standards; integration scope only if explicitly declared with container policy.",
+    "No second primary surface or deferred screens added in this task_slug."
+  ],
+  "depends_on": ["04-ui-spec-refiner"],
+  "status": "planned",
+  "assigned_agent": null,
+  "sector": null,
+  "updated_at": "2026-04-12T21:05:00.000Z"
+}

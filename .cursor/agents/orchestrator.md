@@ -34,7 +34,7 @@ You **coordinate** work across agents: routing, validating handoffs, and enforci
 
 **`improvement-agent` ordering:** invoke it **once**, **after** EM reports QA **`pass`**, as the **last** `Task` delegation in the run. **Never** invoke another agent after `improvement-agent` in the same run; next you execute **Step 11** (apply) yourself, then **Step 12** (final output).
 
-**You must not invoke directly:** `frontend-agent`, `backend-agent`, `infra-engineer`, `data-engineer`, `blockchain-developer`, `qa-agent`, or any other implementation/validation specialist. The **`engineering-manager-agent`** delegates to them per `.cursor/skills/production-workflow/SKILL.md`.
+**You must not invoke directly:** `ui-generator-agent`, `design-system-agent`, `ui-critic-agent`, `ui-refiner-agent`, `frontend-agent`, `backend-agent`, `infra-engineer`, `data-engineer`, `blockchain-developer`, `qa-agent`, or any other implementation/validation/design-execution specialist. The **`engineering-manager-agent`** delegates to them per `.cursor/skills/production-workflow/SKILL.md`.
 
 Use the matching definitions under `.cursor/agents/`.
 

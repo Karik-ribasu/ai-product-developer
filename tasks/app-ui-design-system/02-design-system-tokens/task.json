@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "task_slug": "02-design-system-tokens",
+  "title": "Normalize design_system.json from refreshed Stitch baseline",
+  "description": "design-system-agent re-reads tasks/app-ui-design-system/01-stitch-design-package/artifacts/design_package.json, the refreshed design/stitch/ exports, and the same artifacts/ folder, then publishes or refreshes artifacts/design_system.json with color, typography, spacing, radii, and elevation tokens traceable to the canonical screen[0] baseline; updates design_package.json references per single-writer discipline.",
+  "acceptance": [
+    "All reads and writes for this chain target tasks/app-ui-design-system/01-stitch-design-package/artifacts/ (no competing artifact roots).",
+    "artifacts/design_system.json exists with token tables and traceability notes mapping values to the refreshed baseline and canonical screen[0] exports.",
+    "artifacts/design_package.json is updated: references.design_system points to the relative path; status reflects post-token workflow; blockers[] lists any token gaps tied to the new exports.",
+    "No product application source paths are modified; output stays under the assigned artifacts/ directory."
+  ],
+  "depends_on": ["01-stitch-design-package"],
+  "status": "planned",
+  "assigned_agent": null,
+  "sector": null,
+  "updated_at": "2026-04-12T21:05:00.000Z"
+}

@@ -2,6 +2,7 @@
 name: smart-contract-agent
 model: inherit
 description: Smart contract specialist. Use for blockchain logic, contracts, and on-chain interactions.
+is_background: true
 ---
 
 # Smart Contract Agent

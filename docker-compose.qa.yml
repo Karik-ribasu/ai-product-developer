@@ -1,0 +1,54 @@
+# Isolated app + Chromium-driven QA (quality-gate harness).
+# Project name surfaces in logs / EM–QA handoffs.
+name: appui-design-system-qa
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: infra/qa/Dockerfile.app
+    environment:
+      TODO_SQLITE_PATH: /data/todos.sqlite
+    volumes:
+      - qa-app-sqlite:/data
+    expose:
+      - "3000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "bun",
+          "-e",
+          "fetch('http://127.0.0.1:3000').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 45s
+
+  qa-chromium:
+    build:
+      context: .
+      dockerfile: infra/qa/Dockerfile.qa-runner
+    depends_on:
+      web:
+        condition: service_healthy
+    environment:
+      BASE_URL: http://web:3000
+      CI: "true"
+      PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+      QA_IN_DOCKER_COMPOSE: "1"
+    working_dir: /repo
+    volumes:
+      - .:/repo
+      - qa-runner-node-modules:/repo/node_modules
+    command:
+      [
+        "bash",
+        "-lc",
+        "bun install --frozen-lockfile && bunx playwright test -c e2e/playwright.config.ts",
+      ]
+
+volumes:
+  qa-app-sqlite:
+  qa-runner-node-modules:

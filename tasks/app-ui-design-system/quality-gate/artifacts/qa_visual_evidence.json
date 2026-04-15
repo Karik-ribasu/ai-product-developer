@@ -1,0 +1,102 @@
+{
+  "kind": "qa-visual-evidence",
+  "schema_version": 1,
+  "feature_slug": "app-ui-design-system",
+  "surface_id": "mvp-primary-dashboard",
+  "build": {
+    "git_sha": "43d32e31c19e29422178186b15a37e5c8d788b24",
+    "captured_at": "2026-04-12T18:58:04.526Z"
+  },
+  "environment": {
+    "base_url": "http://web:3000",
+    "container_compose_service": "qa-chromium",
+    "chromium_version": "147.0.7727.15",
+    "compose_project": "appui-design-system-qa",
+    "app_compose_service": "web",
+    "qa_in_docker_compose": true
+  },
+  "captures": [
+    {
+      "capture_id": "mobile-home-empty",
+      "viewport": "mobile",
+      "width_px": 390,
+      "route": "/",
+      "state": "empty",
+      "file_path": "artifacts/visual/mobile-home-empty.png",
+      "notes": "Fresh QA SQLite volume; anonymous demo data (empty task list)."
+    },
+    {
+      "capture_id": "tablet-home-empty",
+      "viewport": "tablet",
+      "width_px": 768,
+      "route": "/",
+      "state": "empty",
+      "file_path": "artifacts/visual/tablet-home-empty.png",
+      "notes": "Fresh QA SQLite volume; anonymous demo data (empty task list)."
+    },
+    {
+      "capture_id": "desktop-home-empty",
+      "viewport": "desktop",
+      "width_px": 1280,
+      "route": "/",
+      "state": "empty",
+      "file_path": "artifacts/visual/desktop-home-empty.png",
+      "notes": "Fresh QA SQLite volume; anonymous demo data (empty task list)."
+    },
+    {
+      "capture_id": "mobile-home-with-task",
+      "viewport": "mobile",
+      "width_px": 390,
+      "route": "/",
+      "state": "default",
+      "file_path": "artifacts/visual/mobile-home-with-task.png",
+      "notes": "Single untitled task after first create."
+    },
+    {
+      "capture_id": "tablet-home-with-task",
+      "viewport": "tablet",
+      "width_px": 768,
+      "route": "/",
+      "state": "default",
+      "file_path": "artifacts/visual/tablet-home-with-task.png",
+      "notes": "Single untitled task after first create."
+    },
+    {
+      "capture_id": "desktop-home-with-task",
+      "viewport": "desktop",
+      "width_px": 1280,
+      "route": "/",
+      "state": "default",
+      "file_path": "artifacts/visual/desktop-home-with-task.png",
+      "notes": "Single untitled task after first create."
+    },
+    {
+      "capture_id": "mobile-home-filtered-empty",
+      "viewport": "mobile",
+      "width_px": 390,
+      "route": "/",
+      "state": "filtered-empty",
+      "file_path": "artifacts/visual/mobile-home-filtered-empty.png",
+      "notes": "Open filter while all tasks are done."
+    },
+    {
+      "capture_id": "tablet-home-filtered-empty",
+      "viewport": "tablet",
+      "width_px": 768,
+      "route": "/",
+      "state": "filtered-empty",
+      "file_path": "artifacts/visual/tablet-home-filtered-empty.png",
+      "notes": "Open filter while all tasks are done."
+    },
+    {
+      "capture_id": "desktop-home-filtered-empty",
+      "viewport": "desktop",
+      "width_px": 1280,
+      "route": "/",
+      "state": "filtered-empty",
+      "file_path": "artifacts/visual/desktop-home-filtered-empty.png",
+      "notes": "Open filter while all tasks are done."
+    }
+  ],
+  "errors": []
+}

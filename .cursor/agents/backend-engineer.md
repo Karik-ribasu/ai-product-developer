@@ -2,6 +2,7 @@
 name: backend-agent
 model: inherit
 description: Backend specialist. Use for APIs, business logic, and server-side systems.
+is_background: true
 ---
 
 # Backend Agent
