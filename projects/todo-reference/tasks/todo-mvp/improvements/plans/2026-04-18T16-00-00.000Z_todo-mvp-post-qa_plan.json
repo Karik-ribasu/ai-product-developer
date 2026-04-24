@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "kind": "improvement-plan",
+  "feature_slug": "todo-mvp",
+  "created_at": "2026-04-18T16:00:00.000Z",
+  "execution_summary": "The todo-reference todo-mvp slice reached EM validation_status pass after infra alignment (Bun→Node in Docker, better-sqlite3 rebuild, Next force-dynamic on the page). QA surfaced a low-severity process tension: empty and error flows were well covered at integration/API boundaries but E2E literal assertions (user-visible copy, empty state, retry) were thinner than the architecture brief’s combined integration+E2E expectation. Stitch was waived per delivery; governance artifacts otherwise held. This plan captures governance edits so the next cycle wastes less time reconciling “who must prove what” and avoids repeating native-runtime container pitfalls.",
+  "what_worked_well": [
+    "Clean Architecture + declared coverage scopes in architecture-brief.json gave auditable unit vs integration gates.",
+    "Container-only integration discipline matched testing-and-qa-standards and caught persistence/runtime issues early once the image used a Node-compatible toolchain for native addons.",
+    "EM→QA handoff with structured validation_status and issues allowed pass with an explicit, low-severity cross-layer note instead of silent drift."
+  ],
+  "issues_identified": [
+    "Ambiguity between integration coverage of error paths and E2E obligation for user-visible empty/error/retry states produced last-mile friction in the EM report.",
+    "Bun-oriented container base vs better-sqlite3 (native module) forced an unplanned runtime switch—risk of recurrence on future SQLite features if runtime is not pinned in skills.",
+    "Next.js static/cache defaults interacting with dynamic server data sometimes require explicit dynamic routing; this was fixed in product code but not reflected in governance guidance for App Router + server actions patterns."
+  ],
+  "root_causes": [
+    "testing-and-qa-standards §4 mandates full-feature E2E but does not spell out a crisp split vs integration for empty-state UX vs transport errors, so teams can over-invest in one layer.",
+    "Architecture brief names Node SQLite drivers but repo skills did not warn against Bun-only images for native addons in CI/Docker.",
+    "quality-gate acceptance templates do not nudge explicit “E2E must assert literal UI states named in brief” vs “integration must assert status codes/mappers”."
+  ],
+  "improvement_opportunities": [
+    {
+      "id": "clarify-e2e-vs-integration-empty-error-flows",
+      "priority": "high",
+      "category": "skills",
+      "rationale": "Reduces EM/QA noise when integration proves server-side failure handling but E2E omits literal UI assertions (or the reverse), matching the low-severity issue from this cycle.",
+      "proposed_change": "In `.cursor/skills/testing-and-qa-standards/SKILL.md`, add a short subsection after §4 (e.g. §4.3) stating: (1) integration scope owns HTTP/Server Action contracts, status codes, and error mapping to application errors; (2) E2E owns every user-visible outcome named in acceptance—empty list states, user-readable error surfaces, and retry/recovery affordances; (3) duplication is allowed but not substitutable—missing E2E proof of a brief-mandated visible state remains a QA finding even if integration lines are covered. Reference stable id `qa-manual-automated-e2e-chromium` and cross-link `integration-tests-full-coverage`.",
+      "orchestrator_apply": true,
+      "target_paths": [".cursor/skills/testing-and-qa-standards/SKILL.md"]
+    },
+    {
+      "id": "em-consolidate-cross-layer-test-gaps",
+      "priority": "medium",
+      "category": "coordination",
+      "rationale": "Forces a single, labeled consolidation in the engineering_execution_report when QA notes overlap or gaps between layers.",
+      "proposed_change": "In `.cursor/agents/engineering-manager.md`, under Output Requirements (or Execution Flow near QA completion), add a bullet: when `qa-agent` reports cross-layer test gaps (e.g. integration-heavy error handling vs thin E2E UI assertions), the EM report must tag each issue with `layer: integration` | `e2e` | `both` and point assignees to the testing skill subsection on E2E vs integration responsibilities; do not close the cycle with pass unless severity and residual risk are explicit.",
+      "orchestrator_apply": true,
+      "target_paths": [".cursor/agents/engineering-manager.md"]
+    },
+    {
+      "id": "document-node-native-sqlite-docker-runtime",
+      "priority": "medium",
+      "category": "skills",
+      "rationale": "Prevents repeat of Bun base image + native rebuild surprises for SQLite stacks documented in architecture briefs.",
+      "proposed_change": "In `.cursor/skills/architecture-standards/SKILL.md`, add a concise bullet under baseline or a new “Runtime / native adapters” note: when the brief selects SQLite via native drivers (e.g. better-sqlite3), CI/Docker images must use a supported Node (or compatible) runtime and libc/musl pairing; document in the brief or infra notes that Bun-only images are a mismatch unless an alternative driver is chosen. Optionally one sentence cross-linking `.cursor/skills/testing-and-qa-standards/SKILL.md` §3 container parity.",
+      "orchestrator_apply": true,
+      "target_paths": [".cursor/skills/architecture-standards/SKILL.md"]
+    }
+  ],
+  "non_apply_recommendations": [
+    {
+      "id": "quality-gate-acceptance-bullets-empty-error-e2e",
+      "priority": "medium",
+      "audience": "delivery-agent",
+      "rationale": "Per-feature task.json is outside orchestrator apply allowlist; future quality-gate rows can still remove ambiguity early.",
+      "proposed_change": "For UI MVPs, add acceptance bullets that name exact E2E-visible checks for empty state and error/retry (strings or ARIA roles) separately from integration checks for API/action failure codes—mirroring architecture-brief constraints_for_implementation."
+    },
+    {
+      "id": "brief-next-dynamic-data-fetching",
+      "priority": "low",
+      "audience": "architecture-agent",
+      "rationale": "architecture-brief.json is not allowlisted for Step 11; optional future briefs can call out App Router caching defaults when server actions + dynamic lists apply.",
+      "proposed_change": "When Server Actions or dynamic todo lists must reflect DB state on every navigation, note in constraints whether routes should opt into dynamic rendering (e.g. `dynamic = 'force-dynamic'` or equivalent) to avoid stale shell issues—so implementation does not rediscover via production bugs."
+    }
+  ]
+}

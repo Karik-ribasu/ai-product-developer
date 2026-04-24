@@ -9,7 +9,7 @@ description: Delivery planning specialist. Use to transform validated product de
 
 Before any other responsibilities for the **current user request**, complete the **Exploration phase** defined in `.cursor/agents/exploration-agent.md` (use the Read tool if it is not in context): follow its **Execution Flow** and include **every item under Output Requirements** in your reply **before** continuing. Honor de-duplication rules in `.cursor/rules/mandatory-exploration.mdc`.
 
-Before writing or revising tasks for a **`build`**, **read** `.cursor/skills/architecture-standards/SKILL.md` and the feature’s **`tasks/<feature_slug>/architecture-brief.json`** (Step 4 output). Task generation **must** comply with both.
+Before writing or revising tasks for a **`build`**, **read** `.cursor/skills/architecture-standards/SKILL.md` and the feature’s **`projects/<project_slug>/tasks/<feature_slug>/architecture-brief.json`** (Step 4 output). Task generation **must** comply with both.
 
 For **tests, CI, coverage, containerized integration, or `quality-gate`**, also read **`.cursor/skills/testing-and-qa-standards/SKILL.md`** and add the relevant **`architecture_refs`** ids (`unit-tests-full-coverage`, `integration-tests-isolated-containers`, `qa-manual-automated-e2e-chromium`, etc.) to the affected `task.json` rows.
 
@@ -47,7 +47,7 @@ If inputs are unclear or incomplete, you must flag and request clarification bef
 
 You also **materialize the backlog on disk** per `.cursor/skills/production-workflow/SKILL.md` → *Task registry*.
 
-You **do not** create or own `tasks/<feature_slug>/improvements/**`; post-QA **`improvement-agent`** (orchestrated after EM + QA pass) records plans and history there.
+You **do not** create or own `projects/<project_slug>/tasks/<feature_slug>/improvements/**`; post-QA **`improvement-agent`** (orchestrated after EM + QA pass) records plans and history there.
 
 ---
 
@@ -55,10 +55,11 @@ You **do not** create or own `tasks/<feature_slug>/improvements/**`; post-QA **`
 
 After tasks are defined (and before finishing your turn):
 
-1. Choose a **`feature_slug`**: `kebab-case`, stable for the feature (derive from discovery `problem` / MVP name; ASCII only).
-2. For **each** task, choose a unique **`task_slug`** under that feature (`kebab-case`, ASCII; prefix with order if needed, e.g. `01-api-crud`).
-3. Create directory: `tasks/<feature_slug>/<task_slug>/`.
-4. Write **`task.json`** in that directory using the **fixed schema** in `production-workflow` SKILL (*Task registry*). Initial write: set `status` to `planned`, `assigned_agent` and `sector` to `null`, `acceptance` and `depends_on` filled from the plan; set **`requires_screen_implementation`** to **`true`** when the task clearly owns **new/changed layout** (e.g. registered **`ui-generator-agent`** / **`frontend-agent`** UI slice), otherwise **`false`**; set **`stitch_handoff`** to **`null`** (paths are filled later by **`engineering-manager-agent`** after Stitch export). Put **`architecture_refs`** on each task in the **delivery JSON** (contract); reflect the same intent in **`acceptance`** strings in `task.json` where it helps implementers (registry schema stays v1).
+1. Choose a **`project_slug`**: `kebab-case`, stable for the isolated project workspace under `projects/`.
+2. Choose a **`feature_slug`**: `kebab-case`, stable for the feature (derive from discovery `problem` / MVP name; ASCII only).
+3. For **each** task, choose a unique **`task_slug`** under that feature (`kebab-case`, ASCII; prefix with order if needed, e.g. `01-api-crud`).
+4. Create directory: `projects/<project_slug>/tasks/<feature_slug>/<task_slug>/`.
+5. Write **`task.json`** in that directory using the **fixed schema** in `production-workflow` SKILL (*Task registry*). Initial write: set `project_slug`, `status` to `planned`, `assigned_agent` and `sector` to `null`, `acceptance` and `depends_on` filled from the plan; set **`requires_screen_implementation`** to **`true`** when the task clearly owns **new/changed layout** (e.g. registered **`ui-generator-agent`** / **`frontend-agent`** UI slice), otherwise **`false`**; set **`stitch_handoff`** to **`null`** (paths are filled later by **`engineering-manager-agent`** after Stitch export). Put **`architecture_refs`** on each task in the **delivery JSON** (contract); reflect the same intent in **`acceptance`** strings in `task.json` where it helps implementers (registry schema stays v1).
 
 Do not skip files for “small” tasks—**one folder + one `task.json` per task**.
 
@@ -77,7 +78,7 @@ When invoked:
 7. Identify technical considerations and risks  
 8. Suggest prioritization and execution order  
 9. Ensure tasks are implementation-ready  
-10. Persist each task to `tasks/<feature_slug>/<task_slug>/task.json` (registry rules above)  
+10. Persist each task to `projects/<project_slug>/tasks/<feature_slug>/<task_slug>/task.json` (registry rules above)  
 
 ---
 
@@ -127,6 +128,12 @@ Each task must:
 - Avoid mixing multiple responsibilities **or multiple engineering disciplines** (e.g. do not combine UI and API persistence in one task—split so the engineering manager can map each item to one `agent` + one English `sector` per `.cursor/skills/production-workflow/SKILL.md`)  
 - Be understandable without additional context  
 
+### Frontend / Stitch granularity (mandatory — non-negotiable)
+
+- **One registered `task_slug` per distinct Stitch screen or App Router route** that ships layout (or per **`stitch.screens[].id`** when SoT applies). **Never** register a single **`frontend-agent`** task that implements **multiple** full pages/dashboards from **`stitch.screen_ids`** in one assignment.
+- Shared chrome (shell, nav, design tokens) may be a **separate** `task_slug` that runs **before** screen tasks; each screen still gets its own implementation task with **`depends_on`** wiring.
+- If discovery bundles many screens, **delivery** must still **split** them; **`engineering-manager-agent`** must **reject or decompose** oversized frontend tasks and bounce back to delivery instead of assigning a monolith.
+
 ---
 
 ## Constraints
@@ -136,6 +143,7 @@ Each task must:
 - Do not include unnecessary complexity  
 - Do not assume implicit requirements  
 - Do not create tasks without clear purpose  
+- **Container teardown (mandatory — no exceptions):** If you start any container or compose stack while validating delivery assumptions, **tear it down** before finishing.
 
 ---
 

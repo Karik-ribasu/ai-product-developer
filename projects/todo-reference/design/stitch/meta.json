@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "project_id": "3675777318594458616",
+  "exported_at": "2026-04-18T16:34:00.000Z",
+  "screens": [
+    {
+      "id": "11611814ea7a4a2881d76c0c95fd3066",
+      "title": "Dashboard",
+      "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+      "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+    },
+    {
+      "id": "ed27f21d8f24440a940099c842b535bf",
+      "title": "Social Login",
+      "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+      "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+    },
+    {
+      "id": "eeb35234b6764d199f5085e69e9cc0fc",
+      "title": "Social Activity Feed",
+      "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+      "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+    },
+    {
+      "id": "0caac050ee504d6ebca41d202bbd1ca7",
+      "title": "Task Creation (Dark Mode)",
+      "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+      "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+    }
+  ]
+}

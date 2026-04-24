@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "07-ui-generator-stitch-four-screens",
+  "title": "Stitch SoT: four screens, exports, meta.json, design_package owner",
+  "description": "ui-generator-agent runs stitch_workflow with source_of_truth for Stitch project 3675777318594458616. Produce or refresh a single artifacts/design_package.json (this task_slug owns projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/) listing four stitch.screens 1:1 with Dashboard, Social Login, Social Activity Feed, and Task Creation (Dark), with canonical screen_id first per brief. Persist PNG and code exports under projects/todo-reference/design/stitch/ (screens/, code/) and write projects/todo-reference/design/stitch/meta.json. Set stitch.source_of_truth true, stitch.export_paths, acceptance.requires_stitch_fidelity_qa true (default for SoT), and retry metadata per design_package skill.",
+  "acceptance": [
+    "artifacts/design_package.json exists at projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/design_package.json with kind design-package, schema_version 1, feature_slug todo-mvp, artifact_owner_task_slug 07-ui-generator-stitch-four-screens.",
+    "stitch.project_id is 3675777318594458616; stitch.screen_ids lists exactly four ids in canonical-first order matching architecture-brief screen ids (Dashboard 11611814ea7a4a2881d76c0c95fd3066; Social Login ed27f21d8f24440a940099c842b535bf; Social Activity Feed eeb35234b6764d199f5085e69e9cc0fc; Task Creation (Dark) 0caac050ee504d6ebca41d202bbd1ca7).",
+    "stitch.screens (or equivalent index in package) references repo-root-relative image and code paths for every screen_id; projects/todo-reference/design/stitch/meta.json exists with schema_version 1, matching project_slug, feature_slug, project_id, screens[].id/image/code paths.",
+    "stitch.source_of_truth is true; stitch.export_paths lists meta, images_dir, and code_dir under projects/todo-reference/design/stitch/; acceptance.requires_stitch_fidelity_qa is true unless EM records an explicit waiver in the package blockers.",
+    "retry sub-object populated (attempt, max_attempts, exit_reason, last_prompt_delta) per design_package skill."
+  ],
+  "depends_on": ["01-infra-project-scaffold"],
+  "architecture_refs": ["atomic-design"],
+  "implementation_notes": "Exports ingested via user-stitch MCP get_screen; PNG/HTML saved under projects/todo-reference/design/stitch/.",
+  "status": "done",
+  "assigned_agent": "ui-generator-agent",
+  "sector": "product-design",
+  "requires_screen_implementation": true,
+  "stitch_handoff": {
+    "project_id": "3675777318594458616",
+    "design_package_path": "projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/design_package.json",
+    "meta_path": "projects/todo-reference/design/stitch/meta.json",
+    "canonical_screen_id": "11611814ea7a4a2881d76c0c95fd3066",
+    "canonical_image_path": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+    "canonical_code_path": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html",
+    "screens": [
+      {
+        "id": "11611814ea7a4a2881d76c0c95fd3066",
+        "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+        "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+      },
+      {
+        "id": "ed27f21d8f24440a940099c842b535bf",
+        "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+        "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+      },
+      {
+        "id": "eeb35234b6764d199f5085e69e9cc0fc",
+        "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+        "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+      },
+      {
+        "id": "0caac050ee504d6ebca41d202bbd1ca7",
+        "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+        "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+      }
+    ]
+  },
+  "updated_at": "2026-04-18T16:45:00.000Z"
+}

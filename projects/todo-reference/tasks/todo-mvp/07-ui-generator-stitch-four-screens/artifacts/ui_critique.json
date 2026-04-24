@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "artifact_ids": [
+      "11611814ea7a4a2881d76c0c95fd3066",
+      "ed27f21d8f24440a940099c842b535bf",
+      "eeb35234b6764d199f5085e69e9cc0fc",
+      "0caac050ee504d6ebca41d202bbd1ca7"
+    ],
+    "viewport": "desktop",
+    "critique_version": "1.0.0"
+  },
+  "summary": {
+    "top_issues": [
+      "Stub login must expose a single obvious primary path into the app shell without implying real OAuth security.",
+      "Activity feed should tolerate empty fixture states and surface fetch failures with retry aligned to Neubrutalism banners.",
+      "Task Creation (Dark) must not leak dark tokens into the three light routes—scope theme to /tasks/new subtree only."
+    ],
+    "risk_statement": "If hierarchy between marketing-style hero blocks and operational controls is unclear, users may miss the todo CRUD path on Dashboard or confuse stub login with production-ready auth."
+  },
+  "findings": [
+    {
+      "id": "H-001",
+      "category": "hierarchy",
+      "severity": "high",
+      "title": "Dashboard: operational todo workspace competes with editorial hero density",
+      "evidence": "Stitch Dashboard stacks large typographic blocks and KPI-like chips above the task workspace; H1 scale may rival section labels for the todo list region in implementation.",
+      "impact": "Users may scan past the create/list affordances and perceive the page as marketing-only.",
+      "recommendation": "Keep a single dominant H1 for the workspace and demote decorative metrics to secondary weight per design_system label role.",
+      "related_sections": ["dashboard.hero", "dashboard.workspace"]
+    },
+    {
+      "id": "S-002",
+      "category": "spacing",
+      "severity": "medium",
+      "title": "Social Login: provider grid rhythm must stay on the 8px/neubrutal grid",
+      "evidence": "Exports use thick strokes and tight clusters of provider tiles; inconsistent vertical gaps will read as misaligned rather than intentional brutalism.",
+      "impact": "Mis-taps on dense mobile breakpoints if spacing drifts from the export rhythm.",
+      "recommendation": "Lock vertical spacing between provider rows to token steps and preserve minimum 44px hit targets even when borders are 2px.",
+      "related_sections": ["login.providers"]
+    },
+    {
+      "id": "U-003",
+      "category": "ux",
+      "severity": "high",
+      "title": "Stub auth cannot mirror OAuth security copy",
+      "evidence": "Screen title reads Social Login; MVP is stub-only per architecture brief.",
+      "impact": "Users may assume real federation and session hardening.",
+      "recommendation": "Add explicit stub copy and a single Continue control that sets a non-sensitive cookie/session flag documented for QA.",
+      "related_sections": ["login.header", "login.primary_cta"]
+    },
+    {
+      "id": "U-004",
+      "category": "ux",
+      "severity": "medium",
+      "title": "Activity feed depends on fixture handler—empty and error states are mandatory",
+      "evidence": "Feed layout assumes a vertical timeline; fixture may be empty during early QA seeds.",
+      "impact": "Blank screens without explanation read as broken rather than intentionally empty.",
+      "recommendation": "Implement empty state copy and retry for non-OK responses from /api/activity-feed per ui_spec.",
+      "related_sections": ["feed.timeline", "feed.empty"]
+    },
+    {
+      "id": "C-005",
+      "category": "clarity",
+      "severity": "medium",
+      "title": "Task Creation (Dark): accent orange must retain contrast on dark surfaces",
+      "evidence": "Dark surfaces in export pair with high-contrast strokes; orange accent sits on near-black fields.",
+      "impact": "WCAG failures on focused inputs or primary CTA if orange is used for small text on dark bg.",
+      "recommendation": "Reserve accent for strokes, focus rings, and large button labels; pair with light ink for microcopy on dark.",
+      "related_sections": ["task_dark.form", "task_dark.primary"]
+    },
+    {
+      "id": "H-006",
+      "category": "hierarchy",
+      "severity": "low",
+      "title": "Cross-route navigation should remain visible in the authenticated shell",
+      "evidence": "Four routes are peer surfaces; users will jump between dashboard, feed, and composer during demos.",
+      "impact": "Hidden navigation increases back-button reliance and breaks the stitched IA.",
+      "recommendation": "Provide a persistent AppShell nav with clear current-route indication using label typography role.",
+      "related_sections": ["shell.nav"]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "22-frontend-api-consumer-social-login-stub",
+  "title": "Social Login route: stub auth alignment with API-backed session (no real OAuth)",
+  "description": "For the Social Login screen (Stitch screen id ed27f21d8f24440a940099c842b535bf), ensure the route remains stub-only per brief: no production OAuth. If optional stub user/session metadata was added in Prisma seed, wire only the minimal client/server reads needed for navigation or placeholder state without coupling layout to fixtures. Preserve Stitch fidelity from task 14; avoid introducing a second persistence story beyond documented stub + API.",
+  "acceptance": [
+    "No real OAuth provider integration; any login affordance remains stub or simulated per MVP.",
+    "If seed exposes a stub session or user id, Social Login route behavior is consistent with that contract and documented in README or task notes.",
+    "Route does not depend on activity-feed.json or SQLite for core navigation.",
+    "Stitch layout and tokens for Social Login unchanged except for data wiring touchpoints required for stub consistency.",
+    "E2E-relevant navigation from this route to other MVP routes still works without manual cookie hacks beyond documented test setup."
+  ],
+  "depends_on": [
+    "14-frontend-stitch-fidelity-social-login",
+    "20-backend-http-json-api-todos-activity-feed"
+  ],
+  "architecture_refs": ["clean-architecture", "atomic-design", "singleton-policy"],
+  "implementation_notes": "Login: page padding 1.5rem (Tailwind p-6), CTA vertical padding aligned to py-5; stub disclaimer omitted when STITCH_BASELINE_UI=1 for PNG alignment. §4.2 pixel parity still subject to font/image raster differences.",
+  "status": "assigned",
+  "assigned_agent": "frontend-agent",
+  "sector": "frontend-engineering",
+  "requires_screen_implementation": true,
+  "stitch_handoff": {
+    "project_id": "3675777318594458616",
+    "design_package_path": "projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/design_package.json",
+    "meta_path": "projects/todo-reference/design/stitch/meta.json",
+    "canonical_screen_id": "ed27f21d8f24440a940099c842b535bf",
+    "canonical_image_path": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+    "canonical_code_path": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html",
+    "screens": [
+      {
+        "id": "11611814ea7a4a2881d76c0c95fd3066",
+        "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+        "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+      },
+      {
+        "id": "ed27f21d8f24440a940099c842b535bf",
+        "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+        "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+      },
+      {
+        "id": "eeb35234b6764d199f5085e69e9cc0fc",
+        "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+        "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+      },
+      {
+        "id": "0caac050ee504d6ebca41d202bbd1ca7",
+        "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+        "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+      }
+    ]
+  },
+  "updated_at": "2026-04-19T15:00:00.000Z"
+}

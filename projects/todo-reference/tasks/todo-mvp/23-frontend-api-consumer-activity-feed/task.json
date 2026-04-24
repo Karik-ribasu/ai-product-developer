@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "23-frontend-api-consumer-activity-feed",
+  "title": "Social Activity Feed route: load feed via HTTP API",
+  "description": "For the Social Activity Feed screen (Stitch screen id eeb35234b6764d199f5085e69e9cc0fc), replace consumption of the static fixture route or embedded JSON with the persisted activity feed HTTP API from task 20. Preserve editorial grid layout from task 15; implement loading, empty, and error/retry UX for feed fetch failures.",
+  "acceptance": [
+    "Activity Feed route loads items from the HTTP JSON activity feed endpoint backed by PostgreSQL, not from src/fixtures/activity-feed.json on the default runtime path.",
+    "Ordering matches API contract (e.g. chronological by occurredAt or server-defined sort).",
+    "Failed fetch shows user-visible error state with recovery/retry per brief.",
+    "Stitch structure and tokens for this screen preserved per task 15 baseline.",
+    "Deterministic seed data supports stable screenshots when STITCH_BASELINE_UI or equivalent is documented for QA."
+  ],
+  "depends_on": [
+    "15-frontend-stitch-fidelity-activity-feed",
+    "20-backend-http-json-api-todos-activity-feed"
+  ],
+  "architecture_refs": ["clean-architecture", "atomic-design", "singleton-policy"],
+  "implementation_notes": "STITCH_BASELINE_UI=1 serves ActivityFeedStitchBaseline (full Stitch shell + feed grid + sidebar). Default path still uses API-backed ActivityFeedContent. §4.2 raster compare may not reach diff_ratio 0 cross-platform.",
+  "status": "assigned",
+  "assigned_agent": "frontend-agent",
+  "sector": "frontend-engineering",
+  "requires_screen_implementation": true,
+  "stitch_handoff": {
+    "project_id": "3675777318594458616",
+    "design_package_path": "projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/design_package.json",
+    "meta_path": "projects/todo-reference/design/stitch/meta.json",
+    "canonical_screen_id": "eeb35234b6764d199f5085e69e9cc0fc",
+    "canonical_image_path": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+    "canonical_code_path": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html",
+    "screens": [
+      {
+        "id": "11611814ea7a4a2881d76c0c95fd3066",
+        "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+        "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+      },
+      {
+        "id": "ed27f21d8f24440a940099c842b535bf",
+        "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+        "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+      },
+      {
+        "id": "eeb35234b6764d199f5085e69e9cc0fc",
+        "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+        "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+      },
+      {
+        "id": "0caac050ee504d6ebca41d202bbd1ca7",
+        "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+        "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+      }
+    ]
+  },
+  "updated_at": "2026-04-19T15:00:00.000Z"
+}

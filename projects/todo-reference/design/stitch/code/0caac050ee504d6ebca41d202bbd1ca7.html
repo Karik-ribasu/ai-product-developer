@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Klockwork Neo | Task Curator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#80deff",
+                      "on-tertiary-fixed-variant": "#3f00ae",
+                      "on-secondary-container": "#004e61",
+                      "primary-container": "#ff7948",
+                      "on-surface-variant": "#5c5b5b",
+                      "on-error": "#ffefee",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#37d4ff",
+                      "surface-dim": "#d6d4d3",
+                      "primary-dim": "#922c00",
+                      "on-primary-container": "#451000",
+                      "on-tertiary": "#f7f0ff",
+                      "secondary-dim": "#00576c",
+                      "on-tertiary-container": "#360097",
+                      "tertiary-fixed": "#b7a3ff",
+                      "surface-container-highest": "#dfdcdc",
+                      "error-container": "#fb5151",
+                      "surface-container-high": "#e4e2e1",
+                      "tertiary-dim": "#571ed8",
+                      "primary": "#a63400",
+                      "inverse-on-surface": "#9e9c9c",
+                      "on-background": "#2f2f2e",
+                      "surface-tint": "#a63400",
+                      "on-primary": "#ffefeb",
+                      "on-secondary-fixed": "#003a48",
+                      "secondary": "#00647b",
+                      "inverse-primary": "#fe5e1e",
+                      "outline": "#787676",
+                      "on-tertiary-fixed": "#1b0056",
+                      "inverse-surface": "#0e0e0e",
+                      "primary-fixed-dim": "#fe5e1e",
+                      "on-secondary": "#e2f6ff",
+                      "on-primary-fixed": "#000000",
+                      "surface-variant": "#dfdcdc",
+                      "tertiary-fixed-dim": "#aa93ff",
+                      "surface-container": "#eae7e7",
+                      "on-primary-fixed-variant": "#551600",
+                      "outline-variant": "#afadac",
+                      "background": "#f9f6f5",
+                      "on-surface": "#2f2f2e",
+                      "surface": "#f9f6f5",
+                      "on-error-container": "#570008",
+                      "surface-bright": "#f9f6f5",
+                      "tertiary-container": "#b7a3ff",
+                      "on-secondary-fixed-variant": "#00586d",
+                      "surface-container-low": "#f3f0ef",
+                      "tertiary": "#6332e4",
+                      "error-dim": "#9f0519",
+                      "primary-fixed": "#ff7948",
+                      "secondary-fixed": "#80deff",
+                      "error": "#b31b25"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0px",
+                      "lg": "0px",
+                      "xl": "0px",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Newsreader"],
+                      "body": ["Plus Jakarta Sans"],
+                      "label": ["Space Grotesk"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .editorial-shadow {
+            box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+        }
+        .dark .editorial-shadow {
+            box-shadow: 8px 8px 0px 0px rgba(255,255,255,1);
+        }
+        .heavy-stroke {
+            border-width: 2px;
+        }
+    </style>
+</head>
+<body class="bg-background dark:bg-inverse-surface text-on-background dark:text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar from JSON -->
+<aside class="hidden md:flex flex-col fixed left-0 top-0 h-full z-40 bg-[#f9f6f5] dark:bg-[#0e0e0e] h-screen w-64 border-r-4 border-black dark:border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]">
+<div class="p-6">
+<div class="text-xl font-black text-black dark:text-white font-sans uppercase tracking-wider mb-2">The Curator</div>
+<div class="text-xs opacity-60 font-label tracking-widest uppercase">Stay Bold.</div>
+</div>
+<nav class="flex-1 mt-8">
+<a class="flex items-center gap-3 text-black dark:text-white p-4 hover:italic hover:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-sans font-bold uppercase tracking-wider">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 bg-[#a63400] text-white dark:bg-[#fe5e1e] border-2 border-black m-2 p-4 Active: scale-95 duration-75" href="#">
+<span class="material-symbols-outlined" data-icon="checklist">checklist</span>
+<span class="font-sans font-bold uppercase tracking-wider">Tasks</span>
+</a>
+<a class="flex items-center gap-3 text-black dark:text-white p-4 hover:italic hover:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="rss_feed">rss_feed</span>
+<span class="font-sans font-bold uppercase tracking-wider">Activity</span>
+</a>
+<a class="flex items-center gap-3 text-black dark:text-white p-4 hover:italic hover:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-sans font-bold uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<button class="w-full py-4 bg-primary text-on-primary font-bold uppercase tracking-widest border-2 border-on-primary-fixed hover:bg-primary-dim transition-colors">
+                    New Project
+                </button>
+</div>
+</aside>
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar from JSON -->
+<header class="flex justify-between items-center w-full px-6 py-4 sticky top-0 z-50 bg-[#f9f6f5] dark:bg-[#0e0e0e] border-b-2 border-black dark:border-white">
+<div class="font-serif font-bold text-2xl tracking-tight text-[#a63400] dark:text-[#fe5e1e] italic">Klockwork Neo</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container-low px-4 py-2 border-2 border-black dark:border-white">
+<span class="material-symbols-outlined text-sm" data-icon="search">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-label w-48" placeholder="Search Curator..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-[#a63400] hover:text-white dark:hover:bg-[#fe5e1e] transition-colors p-2 flex items-center Active: translate-x-0.5 translate-y-0.5 transition-transform">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="hover:bg-[#a63400] hover:text-white dark:hover:bg-[#fe5e1e] transition-colors p-2 flex items-center Active: translate-x-0.5 translate-y-0.5 transition-transform">
+<span class="material-symbols-outlined" data-icon="add_box">add_box</span>
+</button>
+<div class="w-10 h-10 border-2 border-black dark:border-white overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a stylish man with a clean beard and minimalist aesthetic, soft studio lighting with high contrast" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjNWbK2Uo8oBXAHwaGLqrtoOl5F-k5Q9pd6E6zrcleKuC-fwRnoM4WnEHctbZTecRYKFQiQ3DFnMnGHIV6lNJT4gdxEQdqCTsMND6D5vWGcgE_-jy5OZxnCjV__xBR039k3Bj-YgQQIzTq9bPNDQA9Y7L0NT8iRgFPB75QbZ9kNjLbsG7W6ViuSr8gL_us4sw8Icn8nWx5Gb5C670Tj-rY5WOBv2D_0_F8OjL2ZXvXbemcye-gXFOdxNTA5DqEaLeIytLHLgJVre8"/>
+</div>
+</div>
+</div>
+</header>
+<div class="p-6 md:p-12 lg:p-20 max-w-7xl mx-auto w-full">
+<div class="mb-12">
+<div class="font-label text-xs uppercase tracking-[0.3em] text-primary dark:text-inverse-primary mb-4 font-bold">New Entry — Task-294</div>
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tight mb-4">Curate your next objective.</h1>
+<p class="font-body text-lg text-on-surface-variant max-w-2xl leading-relaxed">
+                        Precision in definition leads to excellence in execution. Define the parameters of your next architectural milestone.
+                    </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Main Input Column -->
+<div class="lg:col-span-8 space-y-12">
+<!-- Task Name -->
+<section class="space-y-4">
+<label class="font-label text-sm uppercase font-bold tracking-wider">Task Title</label>
+<input class="w-full text-3xl md:text-4xl font-headline bg-transparent border-b-2 border-black dark:border-white focus:border-primary dark:focus:border-inverse-primary focus:ring-0 px-0 py-4 transition-all placeholder:opacity-20 italic" placeholder="Title of the curator's masterpiece..." type="text"/>
+</section>
+<!-- Description -->
+<section class="space-y-4">
+<label class="font-label text-sm uppercase font-bold tracking-wider">Context &amp; Details</label>
+<textarea class="w-full font-body text-lg bg-surface-container-lowest dark:bg-black/40 border-2 border-black dark:border-white p-6 focus:ring-0 focus:border-primary dark:focus:border-inverse-primary transition-all placeholder:opacity-30 leading-relaxed" placeholder="Articulate the vision behind this task. Be precise, be bold." rows="6"></textarea>
+</section>
+<!-- Meta Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<section class="space-y-4">
+<label class="font-label text-sm uppercase font-bold tracking-wider">Target Date</label>
+<div class="relative group">
+<input class="w-full bg-surface-container-low dark:bg-black border-2 border-black dark:border-white p-4 font-label uppercase text-sm focus:border-primary transition-all" type="date"/>
+<div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+<span class="material-symbols-outlined" data-icon="event">event</span>
+</div>
+</div>
+</section>
+<section class="space-y-4">
+<label class="font-label text-sm uppercase font-bold tracking-wider">Priority Tier</label>
+<div class="flex gap-2">
+<button class="flex-1 py-3 border-2 border-black dark:border-white font-label text-xs uppercase tracking-widest hover:bg-secondary-container dark:hover:bg-secondary-dim transition-all">Low</button>
+<button class="flex-1 py-3 border-2 border-primary dark:border-inverse-primary bg-primary/10 dark:bg-inverse-primary/10 font-label text-xs uppercase tracking-widest font-black italic">Urgent</button>
+<button class="flex-1 py-3 border-2 border-black dark:border-white font-label text-xs uppercase tracking-widest hover:bg-tertiary-container dark:hover:bg-tertiary-dim transition-all">Critical</button>
+</div>
+</section>
+</div>
+</div>
+<!-- Sidebar / Chips Column -->
+<div class="lg:col-span-4 space-y-8">
+<div class="bg-surface-container dark:bg-[#1a1a1a] p-8 border-2 border-black dark:border-white editorial-shadow relative overflow-hidden">
+<div class="absolute -top-4 -right-4 w-24 h-24 bg-primary/5 dark:bg-inverse-primary/5 rotate-12 -z-10"></div>
+<h3 class="font-label text-sm uppercase font-black tracking-[0.2em] mb-6">Categorization</h3>
+<div class="flex flex-wrap gap-2 mb-8">
+<span class="px-4 py-2 bg-secondary-container text-on-secondary-container font-label text-xs font-bold uppercase">Editorial</span>
+<span class="px-4 py-2 bg-tertiary-container text-on-tertiary-container font-label text-xs font-bold uppercase">Strategy</span>
+<span class="px-4 py-2 bg-surface-container-highest dark:bg-surface-container text-on-surface font-label text-xs font-bold uppercase">+ Add Tag</span>
+</div>
+<div class="space-y-6 pt-6 border-t-2 border-black/10 dark:border-white/10">
+<div>
+<div class="text-[10px] uppercase font-bold tracking-[0.2em] opacity-50 mb-2">Assigned Architect</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary flex items-center justify-center text-white text-xs font-bold">JD</div>
+<div class="font-body text-sm font-bold">Julianne Deville</div>
+</div>
+</div>
+<div>
+<div class="text-[10px] uppercase font-bold tracking-[0.2em] opacity-50 mb-2">Project Stream</div>
+<div class="font-body text-sm font-bold flex items-center gap-2">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+                                        Neo-Modernism 2024
+                                    </div>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="sticky bottom-6">
+<button class="w-full py-6 bg-primary dark:bg-inverse-primary text-on-primary dark:text-on-primary-fixed font-headline text-2xl font-black italic border-4 border-black dark:border-white editorial-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-all flex items-center justify-center gap-4">
+                                SAVE TASK
+                                <span class="material-symbols-outlined" data-icon="send">send</span>
+</button>
+<p class="text-center font-label text-[10px] uppercase tracking-widest mt-4 opacity-50">Autosave active — v.4.0.1</p>
+</div>
+</div>
+</div>
+<!-- Footer Visual Element -->
+<div class="mt-32 border-t-4 border-black dark:border-white pt-12 grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="space-y-4">
+<div class="h-1 bg-primary w-12"></div>
+<h4 class="font-headline text-2xl font-bold">The Vision</h4>
+<p class="font-body text-sm opacity-70">Curating the future means documenting every step with brutalist honesty and editorial flair.</p>
+</div>
+<div class="space-y-4">
+<div class="h-1 bg-secondary w-12"></div>
+<h4 class="font-headline text-2xl font-bold">The Method</h4>
+<p class="font-body text-sm opacity-70">No soft edges. No blurred lines. Only direct action and clear typographic hierarchies.</p>
+</div>
+<div class="space-y-4">
+<div class="h-1 bg-tertiary w-12"></div>
+<h4 class="font-headline text-2xl font-bold">The Output</h4>
+<p class="font-body text-sm opacity-70">Your dashboard is a magazine where your life is the lead story. Make it count.</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Floating Action Button for Task Creation Focus (Suppressed as per rules on detail page, but kept in code logic for reference) -->
+<!-- The FAB is suppressed because this is a Detail/Creation Task screen -->
+</body></html>

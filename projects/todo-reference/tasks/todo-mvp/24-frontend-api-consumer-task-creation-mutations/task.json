@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "24-frontend-api-consumer-task-creation-mutations",
+  "title": "Task Creation (Dark) route: create todos via HTTP API",
+  "description": "For the Task Creation (Dark) screen (Stitch screen id 0caac050ee504d6ebca41d202bbd1ca7), ensure new task submission persists via the HTTP JSON API (or Server Action that delegates to the same use cases as task 20). Keep dark theme scoped to this route subtree per brief. Preserve Stitch layout from task 16; surface validation and save errors to the user.",
+  "acceptance": [
+    "Creating a task from this route persists through the HTTP API layer documented in task 20, not through better-sqlite3 or offline mocks on the default path.",
+    "Dark theme applies only within this route segment, not globally.",
+    "Form validation errors and API failures are visible and actionable.",
+    "Stitch structure and tokens for this screen preserved per task 16 baseline.",
+    "Post-create navigation or list refresh behavior matches MVP acceptance (e.g. user sees new todo on Dashboard when returning, if applicable)."
+  ],
+  "depends_on": [
+    "16-frontend-stitch-fidelity-task-creation-dark",
+    "20-backend-http-json-api-todos-activity-feed"
+  ],
+  "architecture_refs": ["clean-architecture", "atomic-design", "singleton-policy"],
+  "implementation_notes": "STITCH_BASELINE_UI=1 serves TaskCreationStitchBaseline (Stitch shell + static dark form); segment layout wrapper skipped. Default path uses TaskComposerClient + HTTP API. §4.2 may still differ slightly from PNG.",
+  "status": "assigned",
+  "assigned_agent": "frontend-agent",
+  "sector": "frontend-engineering",
+  "requires_screen_implementation": true,
+  "stitch_handoff": {
+    "project_id": "3675777318594458616",
+    "design_package_path": "projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/design_package.json",
+    "meta_path": "projects/todo-reference/design/stitch/meta.json",
+    "canonical_screen_id": "0caac050ee504d6ebca41d202bbd1ca7",
+    "canonical_image_path": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+    "canonical_code_path": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html",
+    "screens": [
+      {
+        "id": "11611814ea7a4a2881d76c0c95fd3066",
+        "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+        "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+      },
+      {
+        "id": "ed27f21d8f24440a940099c842b535bf",
+        "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+        "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+      },
+      {
+        "id": "eeb35234b6764d199f5085e69e9cc0fc",
+        "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+        "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+      },
+      {
+        "id": "0caac050ee504d6ebca41d202bbd1ca7",
+        "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+        "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+      }
+    ]
+  },
+  "updated_at": "2026-04-19T15:00:00.000Z"
+}

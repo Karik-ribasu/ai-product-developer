@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "19-backend-prisma-repositories-idempotent-seed",
+  "title": "Prisma repository adapters, remove SQLite default path, idempotent seed",
+  "description": "Implement application repository ports for Todo and ActivityFeedItem in infrastructure using Prisma; replace better-sqlite3-backed persistence as the default application path for todos per architecture-brief. Provide an idempotent seed (prisma db seed via package.json prisma.seed or npm run db:seed) that loads deterministic todos, activity feed items, and optional stub user rows for QA/STITCH_BASELINE_UI. Obtain PrismaClient via factory/createDb(env) per brief singleton policy—no mutable global singleton.",
+  "acceptance": [
+    "Infrastructure implements Todo and ActivityFeedItem repositories mapping domain/application types to Prisma models; application layer depends only on ports, not Prisma.",
+    "Runtime todo persistence uses PostgreSQL via Prisma; better-sqlite3 is removed from the default path or isolated to documented legacy/tests only if brief allows (goal: single credible path per brief).",
+    "Seed script is idempotent (safe to run twice without duplicate logical rows or with documented upsert keys) and documented in README quickstart: compose up, migrate, seed.",
+    "Seed populates todos and activity feed items sufficient for Dashboard, Activity Feed route, and E2E empty/happy paths per MVP.",
+    "Unit tests for domain/application remain green; new adapter code is covered under integration scope where exercised.",
+    "Integration tests for repositories run only in containerized jobs with test DATABASE_URL per testing skill."
+  ],
+  "depends_on": ["18-backend-prisma-schema-migrate-todo-feed"],
+  "architecture_refs": [
+    "clean-architecture",
+    "ddd-tactical",
+    "singleton-policy",
+    "persistence-prisma-isolated-db",
+    "unit-tests-full-coverage",
+    "integration-tests-full-coverage",
+    "integration-tests-isolated-containers"
+  ],
+  "implementation_notes": null,
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T19:20:00.000Z"
+}

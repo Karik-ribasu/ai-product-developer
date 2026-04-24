@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "status": "fail",
+  "compared_baseline": "projects/todo-reference/design/stitch/meta.json",
+  "ui_spec_path": "projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/ui_spec.json",
+  "comparison_tool_default": "pixelmatch",
+  "viewports": [
+    {
+      "id": "ed27f21d8f24440a940099c842b535bf",
+      "route": "/login",
+      "viewport": {
+        "width": 512,
+        "height": 410
+      }
+    },
+    {
+      "id": "11611814ea7a4a2881d76c0c95fd3066",
+      "route": "/dashboard",
+      "viewport": {
+        "width": 512,
+        "height": 474
+      }
+    },
+    {
+      "id": "eeb35234b6764d199f5085e69e9cc0fc",
+      "route": "/activity-feed",
+      "viewport": {
+        "width": 496,
+        "height": 512
+      }
+    },
+    {
+      "id": "0caac050ee504d6ebca41d202bbd1ca7",
+      "route": "/tasks/new",
+      "viewport": {
+        "width": 456,
+        "height": 512
+      }
+    }
+  ],
+  "per_screen": [
+    {
+      "id": "ed27f21d8f24440a940099c842b535bf",
+      "route": "/login",
+      "stitch_png_path": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+      "app_screenshot_path": "projects/todo-reference/tasks/todo-mvp/quality-gate/artifacts/visual/app-ed27f21d8f24440a940099c842b535bf.png",
+      "viewport": {
+        "width": 512,
+        "height": 410
+      },
+      "comparison_tool": "pixelmatch",
+      "diff_ratio": 0.14190644,
+      "pass": false,
+      "mismatches": [
+        "Pixel difference count: 29789 (diff image: projects/todo-reference/tasks/todo-mvp/quality-gate/artifacts/visual/diff-ed27f21d8f24440a940099c842b535bf.png)"
+      ]
+    },
+    {
+      "id": "11611814ea7a4a2881d76c0c95fd3066",
+      "route": "/dashboard",
+      "stitch_png_path": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+      "app_screenshot_path": "projects/todo-reference/tasks/todo-mvp/quality-gate/artifacts/visual/app-11611814ea7a4a2881d76c0c95fd3066.png",
+      "viewport": {
+        "width": 512,
+        "height": 474
+      },
+      "comparison_tool": "pixelmatch",
+      "diff_ratio": 0.32418167,
+      "pass": false,
+      "mismatches": [
+        "Pixel difference count: 78675 (diff image: projects/todo-reference/tasks/todo-mvp/quality-gate/artifacts/visual/diff-11611814ea7a4a2881d76c0c95fd3066.png)"
+      ]
+    },
+    {
+      "id": "eeb35234b6764d199f5085e69e9cc0fc",
+      "route": "/activity-feed",
+      "stitch_png_path": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+      "app_screenshot_path": "projects/todo-reference/tasks/todo-mvp/quality-gate/artifacts/visual/app-eeb35234b6764d199f5085e69e9cc0fc.png",
+      "viewport": {
+        "width": 496,
+        "height": 512
+      },
+      "comparison_tool": "pixelmatch",
+      "diff_ratio": 0.40728169,
+      "pass": false,
+      "mismatches": [
+        "Pixel difference count: 103430 (diff image: projects/todo-reference/tasks/todo-mvp/quality-gate/artifacts/visual/diff-eeb35234b6764d199f5085e69e9cc0fc.png)"
+      ]
+    },
+    {
+      "id": "0caac050ee504d6ebca41d202bbd1ca7",
+      "route": "/tasks/new",
+      "stitch_png_path": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+      "app_screenshot_path": "projects/todo-reference/tasks/todo-mvp/quality-gate/artifacts/visual/app-0caac050ee504d6ebca41d202bbd1ca7.png",
+      "viewport": {
+        "width": 456,
+        "height": 512
+      },
+      "comparison_tool": "pixelmatch",
+      "diff_ratio": 0.13560084,
+      "pass": false,
+      "mismatches": [
+        "Pixel difference count: 31659 (diff image: projects/todo-reference/tasks/todo-mvp/quality-gate/artifacts/visual/diff-0caac050ee504d6ebca41d202bbd1ca7.png)"
+      ]
+    }
+  ],
+  "console_issues": [],
+  "network_issues": [],
+  "generated_at": "2026-04-18T19:54:45.949Z",
+  "base_url": "http://127.0.0.1:3000"
+}

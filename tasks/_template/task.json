@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "project_slug": "example-project",
   "feature_slug": "example-feature",
   "task_slug": "example-task",
   "title": "Replace with task title",
@@ -7,7 +8,7 @@
   "acceptance": ["Replace with testable acceptance strings."],
   "depends_on": [],
   "architecture_refs": [],
-  "implementation_notes": null,
+  "implementation_notes": "When this task owns artifacts/design_package.json, record acceptance.requires_stitch_fidelity_qa and acceptance.requires_design_visual_acceptance explicitly; QA artifact obligations follow .cursor/skills/testing-and-qa-standards/SKILL.md (Stitch fidelity vs design visual acceptance matrix under §4.2).",
   "status": "planned",
   "assigned_agent": null,
   "sector": null,

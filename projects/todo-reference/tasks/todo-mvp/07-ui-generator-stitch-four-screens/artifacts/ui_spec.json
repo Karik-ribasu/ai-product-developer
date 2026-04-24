@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "feature_slug": "todo-mvp",
+  "routes": [
+    {
+      "path": "/login",
+      "stitch_screen_id": "ed27f21d8f24440a940099c842b535bf",
+      "title": "Social Login (stub)",
+      "layout": "light",
+      "sections": [
+        { "id": "login.header", "description": "Editorial headline + stub disclaimer (no real OAuth)." },
+        { "id": "login.providers", "description": "Optional decorative provider tiles; non-functional except primary Continue." },
+        { "id": "login.primary_cta", "description": "Primary control sets stub auth cookie via server action and redirects to /dashboard." }
+      ]
+    },
+    {
+      "path": "/dashboard",
+      "stitch_screen_id": "11611814ea7a4a2881d76c0c95fd3066",
+      "title": "Dashboard",
+      "layout": "light",
+      "sections": [
+        { "id": "dashboard.hero", "description": "Curator-style intro band; must not obscure todo workspace below." },
+        { "id": "dashboard.workspace", "description": "TodoWorkspace organism: list/create/toggle/edit/delete with existing server actions." }
+      ]
+    },
+    {
+      "path": "/activity-feed",
+      "stitch_screen_id": "eeb35234b6764d199f5085e69e9cc0fc",
+      "title": "Social Activity Feed",
+      "layout": "light",
+      "sections": [
+        { "id": "feed.header", "description": "Feed title + subtitle." },
+        { "id": "feed.timeline", "description": "Ordered cards from GET /api/activity-feed JSON." },
+        { "id": "feed.empty", "description": "Copy when items array length is 0." },
+        { "id": "feed.error", "description": "Banner + retry when fetch not ok." }
+      ]
+    },
+    {
+      "path": "/tasks/new",
+      "stitch_screen_id": "0caac050ee504d6ebca41d202bbd1ca7",
+      "title": "Task Creation (Dark)",
+      "layout": "dark_segment",
+      "theme_scope": "Route subtree only: apply dark tokens under /tasks/new via nested layout; do not set global dark on html/body for other routes.",
+      "sections": [
+        { "id": "task_dark.header", "description": "Dark surface header + back link to dashboard." },
+        { "id": "task_dark.form", "description": "Composer using Neubrutal controls; submits createTodoAction." },
+        { "id": "task_dark.primary", "description": "High-contrast primary save CTA." }
+      ]
+    }
+  ],
+  "auth": {
+    "mode": "stub",
+    "cookie_name": "stub-auth",
+    "cookie_value": "1",
+    "notes": "Middleware redirects protected routes to /login when cookie absent. Logout clears cookie."
+  },
+  "activity_feed_api": {
+    "method": "GET",
+    "path": "/api/activity-feed",
+    "response_json": {
+      "version": 1,
+      "items": [
+        {
+          "id": "string",
+          "author": { "name": "string", "handle": "string" },
+          "body": "string",
+          "createdAt": "ISO-8601 string",
+          "mediaLabel": "string | null"
+        }
+      ]
+    },
+    "empty_state": "items.length === 0",
+    "errors": {
+      "500": { "body": { "error": "feed_unavailable" } }
+    }
+  },
+  "accessibility": {
+    "requirements": [
+      "Semantic landmarks: main, header, nav, article per route.",
+      "Visible focus styles on all interactive controls (2px offset ring using accent).",
+      "Dialogs retain aria-modal and labelled headings."
+    ]
+  }
+}

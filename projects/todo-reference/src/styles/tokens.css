@@ -1,0 +1,53 @@
+:root {
+  --color-bg: #f9f6f5;
+  --color-surface: #f9f6f5;
+  --color-text: #2f2f2e;
+  --color-muted: #5c5b5b;
+  --color-accent: #a63400;
+  --color-danger: #b31b25;
+  --color-danger-bg: rgba(179, 27, 37, 0.12);
+  --color-border: #000000;
+  --font-sans: var(--font-body), system-ui, sans-serif;
+  --font-heading: var(--font-newsreader), Georgia, serif;
+  --font-label: var(--font-space), system-ui, sans-serif;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 1.75rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --radius-sm: 0;
+  --shadow-brutal: 4px 4px 0 0 var(--color-border);
+
+  /* Stitch export roles (Dashboard / Feed light surfaces) */
+  --stitch-bg: #f9f6f5;
+  --stitch-surface: #f9f6f5;
+  --stitch-surface-dim: #d6d4d3;
+  --stitch-surface-container-low: #f3f0ef;
+  --stitch-surface-container-high: #e4e2e1;
+  --stitch-on-background: #2f2f2e;
+  --stitch-on-surface: #2f2f2e;
+  --stitch-on-surface-variant: #5c5b5b;
+  --stitch-outline-variant: #afadac;
+  --stitch-surface-container-lowest: #ffffff;
+  --stitch-on-primary-fixed: #000000;
+  --stitch-on-primary: #ffefeb;
+  --stitch-primary: #a63400;
+  --stitch-primary-dim: #922c00;
+  --stitch-primary-container: #ff7948;
+  --stitch-secondary: #00647b;
+  --stitch-on-secondary: #e2f6ff;
+  --stitch-secondary-container: #80deff;
+  --stitch-on-secondary-container: #004e61;
+  --stitch-tertiary: #6332e4;
+  --stitch-tertiary-container: #b7a3ff;
+  --stitch-on-tertiary-container: #360097;
+  --stitch-border: #000000;
+}

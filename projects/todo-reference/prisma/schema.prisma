@@ -1,0 +1,41 @@
+// PostgreSQL persistence for todo-mvp (see tasks/todo-mvp/architecture-brief.json).
+// StubUser exists only for deterministic QA/E2E seeding — not production identity.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Todo {
+  id        String   @id @db.Uuid
+  content   String
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("todos")
+}
+
+model ActivityFeedItem {
+  id           String   @id
+  authorName   String   @map("author_name")
+  authorHandle String   @map("author_handle")
+  body         String
+  occurredAt   DateTime @map("occurred_at")
+  mediaLabel   String?  @map("media_label")
+
+  @@index([occurredAt(sort: Desc)])
+  @@map("activity_feed_items")
+}
+
+/// StubUser — minimal row for stub auth / seed scenarios (no OAuth; see architecture brief).
+model StubUser {
+  id          String @id @db.Uuid
+  displayName String @map("display_name")
+
+  @@map("stub_users")
+}

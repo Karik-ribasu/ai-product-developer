@@ -1,0 +1,324 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: var(--stitch-bg);
+  color: var(--stitch-on-background);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.main {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.brandBlock {
+  margin-bottom: var(--space-12);
+  text-align: center;
+}
+
+.brand {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 3.75rem;
+  line-height: 1;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.05em;
+  color: var(--stitch-primary);
+}
+
+.tagline {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-label);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  color: var(--stitch-on-surface-variant);
+}
+
+.stubDisclaimer {
+  margin: var(--space-10) 0 0;
+  padding: var(--space-4);
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--stitch-on-surface-variant);
+  border: 2px dashed var(--stitch-border);
+  background: var(--stitch-secondary-container);
+  width: 100%;
+  max-width: 30rem;
+}
+
+.stubDisclaimer code {
+  font-size: 0.8em;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  background: var(--stitch-surface);
+  border: 3px solid var(--stitch-on-background);
+  padding: var(--space-10);
+  box-shadow: 8px 8px 0 0 var(--stitch-border);
+}
+
+.cardGlow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: var(--space-4);
+  opacity: 0.1;
+  pointer-events: none;
+}
+
+.cardGlowIcon {
+  font-size: 7.5rem !important;
+  line-height: 1;
+}
+
+.cardInner {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  margin: 0 0 var(--space-8);
+  font-family: var(--font-heading);
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: 700;
+  color: var(--stitch-on-background);
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.provider {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  background: var(--stitch-surface-container-lowest);
+  border: 2px solid var(--stitch-on-background);
+  padding: var(--space-4);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  cursor: default;
+  box-shadow: 4px 4px 0 0 var(--stitch-border);
+}
+
+.providerIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+}
+
+.dividerLine {
+  flex: 1;
+  height: 2px;
+  background: var(--stitch-on-background);
+  opacity: 0.2;
+}
+
+.dividerLabel {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--stitch-on-surface-variant);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.label {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--stitch-on-background);
+}
+
+.input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid var(--stitch-on-background);
+  background: var(--stitch-surface-container-lowest);
+  padding: var(--space-3) 0;
+  font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--stitch-outline-variant);
+}
+
+.input:focus {
+  border-bottom-width: 4px;
+}
+
+.primaryCta {
+  width: 100%;
+  border: 2px solid var(--stitch-on-primary-fixed);
+  background: var(--stitch-primary);
+  color: var(--stitch-on-primary);
+  padding: 1.25rem var(--space-4);
+  font-family: var(--font-sans);
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  letter-spacing: -0.025em;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 0 var(--stitch-border);
+}
+
+.primaryCta:active {
+  transform: translate(4px, 4px);
+  box-shadow: none;
+}
+
+.postCard {
+  margin-top: var(--space-10);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.footerNote {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--stitch-on-surface-variant);
+  font-size: 1rem;
+}
+
+.inlineLink {
+  color: var(--stitch-primary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.inlineLink:hover {
+  color: var(--stitch-primary-dim);
+}
+
+.legalRow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.legalLink {
+  font-family: var(--font-label);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--stitch-on-surface-variant);
+  text-decoration: none;
+}
+
+.legalLink:hover {
+  color: var(--stitch-on-background);
+}
+
+.legalDot {
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 9999px;
+  background: var(--stitch-outline-variant);
+}
+
+.footer {
+  margin-top: var(--space-16);
+  width: 100%;
+  max-width: 56rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  padding: 0 var(--space-6);
+}
+
+@media (min-width: 768px) {
+  .footer {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.footerTile {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  border: 2px solid var(--stitch-on-background);
+  background: var(--stitch-surface-container-low);
+  padding: var(--space-4);
+}
+
+.footerIcon {
+  font-size: 1.5rem !important;
+  color: var(--stitch-tertiary);
+}
+
+.footerIconSecondary {
+  font-size: 1.5rem !important;
+  color: var(--stitch-secondary);
+}
+
+.footerIconPrimary {
+  font-size: 1.5rem !important;
+  color: var(--stitch-primary);
+}
+
+.footerKicker {
+  margin: 0;
+  font-family: var(--font-label);
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--stitch-on-surface-variant);
+}
+
+.footerTitle {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "10-ui-refiner-stitch-ui-spec",
+  "title": "UI refiner: build-oriented ui_spec for four App Router routes",
+  "description": "ui-refiner-agent merges critique + design_system + Stitch section order into artifacts/ui_spec.json (build contract for frontend). Updates design_package.json references.ui_spec, documents route-to-screen mapping (four segments 1:1), activity feed data projection expectations for the fixture handler, and route-scoped dark theming notes for Task Creation (Dark). No Stitch regeneration.",
+  "acceptance": [
+    "artifacts/ui_spec.json exists; design_package.json references.ui_spec is non-null with portable relative path.",
+    "ui_spec explicitly maps four App Router routes to the four stitch screens (paths named in spec; stable for EM/frontend handoff).",
+    "ui_spec defines activity feed list/empty states and JSON field expectations consumed by the feed Route Handler contract.",
+    "ui_spec states Task Creation (Dark) uses route-scoped dark theme only (no global dark requirement for other routes).",
+    "design_package.json blockers is accurate; status suitable for frontend handoff (e.g. refining or baseline_frozen per policy)."
+  ],
+  "depends_on": ["09-ui-critic-stitch-four-screens"],
+  "architecture_refs": ["atomic-design"],
+  "implementation_notes": "ui_spec.json defines /login, /dashboard, /activity-feed, /tasks/new and /api/activity-feed contract.",
+  "status": "done",
+  "assigned_agent": "ui-refiner-agent",
+  "sector": "product-design",
+  "requires_screen_implementation": true,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T16:45:00.000Z"
+}

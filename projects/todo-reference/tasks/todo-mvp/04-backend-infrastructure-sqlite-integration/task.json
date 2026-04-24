@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "04-backend-infrastructure-sqlite-integration",
+  "title": "SQLite repository adapter, schema bootstrap, and containerized integration tests",
+  "description": "Implement infrastructure layer: SQLite access (maintained Node driver per brief), schema initialization/migrations, row-to-domain mappers, and concrete repository implementing the application port. Database path from SQLITE_PATH with injectable path for tests. Integration tests run only in isolated containers against real SQLite files/volumes; achieve 100% line coverage on projects/todo-reference/src/infrastructure/**/*.ts per coverage config. No UI or Server Actions in this task.",
+  "acceptance": [
+    "All persistence I/O is confined to projects/todo-reference/src/infrastructure; application use cases are invoked only through public repository implementation or test harness, not from React.",
+    "Schema/bootstrap is repeatable and safe for fresh test databases in CI containers.",
+    "SQLITE_PATH is read from environment with documented defaults for local dev and explicit paths in container jobs.",
+    "Integration tests execute only via the containerized workflow defined in task 02; no bare-metal integration that leaks state.",
+    "Integration coverage report shows 100% line coverage for src/infrastructure/**/*.ts.",
+    "Dependency direction: infrastructure depends on application/domain interfaces, not the reverse."
+  ],
+  "depends_on": ["02-infra-testing-docker-coverage", "03-backend-domain-application-unit"],
+  "architecture_refs": [
+    "clean-architecture",
+    "singleton-policy",
+    "integration-tests-full-coverage",
+    "integration-tests-isolated-containers"
+  ],
+  "implementation_notes": null,
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T16:01:00.000Z"
+}

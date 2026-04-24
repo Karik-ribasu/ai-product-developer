@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "11-backend-activity-feed-fixture-route",
+  "title": "Route Handler: static activity feed JSON fixture (edge)",
+  "description": "backend-agent implements a Next.js App Router Route Handler under projects/todo-reference/src/app that serves Social Activity Feed data from static fixture JSON (no SQLite social persistence). Handler lives at the edge/runtime boundary per Next conventions; response shape matches ui_spec.json from task 10. Justification: isolates HTTP contract, MIME/status behavior, and integration-test coverage for the feed API from React presentation in task 12.",
+  "acceptance": [
+    "GET handler returns JSON derived from a checked-in fixture under the project (e.g. projects/todo-reference/src or a dedicated fixtures path documented in task notes) with stable schema aligned to 10-ui-refiner-stitch-ui-spec ui_spec feed projection.",
+    "No social domain aggregates or SQLite tables for posts/users; fixture-only MVP per architecture-brief.",
+    "Integration tests (container-only per testing skill) cover success response, Content-Type, and declared error/limit behavior if any; 100% line coverage for declared integration scope includes this handler module path as listed in quality-gate or brief.",
+    "Unit tests or pure parsers for fixture loading stay free of network; no mutable global singletons for DB (N/A for fixture file path — use explicit resolution).",
+    "Clean Architecture: no react imports; handler may call thin server utilities only; domain/application remain free of Next-specific imports in new modules."
+  ],
+  "depends_on": [
+    "01-infra-project-scaffold",
+    "02-infra-testing-docker-coverage",
+    "10-ui-refiner-stitch-ui-spec"
+  ],
+  "architecture_refs": [
+    "clean-architecture",
+    "singleton-policy",
+    "unit-tests-full-coverage",
+    "integration-tests-full-coverage",
+    "integration-tests-isolated-containers"
+  ],
+  "implementation_notes": "GET /api/activity-feed reads src/fixtures/activity-feed.json; ACTIVITY_FEED_FIXTURE_PATH override for tests; Dockerfile copies fixtures into runtime image.",
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T16:45:00.000Z"
+}

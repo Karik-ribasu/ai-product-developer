@@ -37,6 +37,9 @@ yarn-error.log*
 # local SQLite database (runtime; never commit)
 .data/
 
+# local project workspaces (not tracked)
+# /projects/
+
 # vercel
 .vercel
 

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "coverage_scope_exclusions": {
+    "unit_globs_excluded": [],
+    "integration_globs_excluded": [],
+    "rationale": "No generated sources or ambient shims are excluded at infra scaffold time; Vitest unit coverage includes src/domain/**/*.ts, src/application/**/*.ts, and src/lib/server/todo-http.ts (HTTP error mapping helper). Integration coverage includes src/infrastructure/**/*.ts, src/lib/server/**/*.ts except src/lib/server/app-origin.ts (env-default helper, excluded as non-persistence glue), src/app/**/actions.ts, src/app/todo-action-contract.ts, and src/app/api/**/route.ts. Prisma Client remains generated under node_modules and is not part of the integration line-coverage glob."
+  },
+  "summary": "Discovery decision: iterate — unify todo-reference on a single credible path: Docker-isolated PostgreSQL with Prisma, HTTP APIs for todos and social activity feed, and UI that consumes those APIs (replacing better-sqlite3 + JSON fixture as the default happy path for core flows). Stitch SoT, §4.2 pixel fidelity, and optional STITCH_BASELINE_UI remain mandatory; deterministic seed and/or injectable clock support stable baselines for QA without conflicting persistence stories.",
+  "decision_rationale": [
+    "Three authorities (SQLite + fixtures in code, brief vs skills Postgres baseline) blocked one reference narrative; aligning code and brief to Postgres + Prisma + HTTP restores a single onboarding path: compose up, migrate, seed, API + UI smoke/E2E.",
+    "Clean Architecture keeps domain/application free of Next/Prisma imports; infrastructure holds Prisma repositories and HTTP route adapters so todos and feed items are first-class persisted aggregates/read models with testable use cases.",
+    "Activity feed moves from static JSON to persisted ActivityFeedItem (or equivalent read model) so the same API contract backs integration tests and the browser—fixtures remain acceptable only for tests via seed, not as the production default.",
+    "Repo architecture-standards mandate Prisma and isolated DB in dev/test; this iteration closes the documented gap versus legacy better-sqlite3 and static feed handlers.",
+    "Stitch remediation (four routes, tokens, §4.2) continues in parallel with data-plane work; visual SoT is unchanged—data must be API-backed while pixel/compare rules stay machine-checkable.",
+    "Optional minimal persisted auth-stub metadata (e.g. session or stub user row) enables realistic seeds and E2E without OAuth; scope stays stub-only—no production identity provider integration."
+  ],
+  "clean_architecture": {
+    "selected": true,
+    "notes": "Lightweight CA: domain holds Todo aggregate (identity, content, completion, timestamps as needed) and ActivityFeedItem (or FeedEntry) as a persisted entity or read-model entity with stable identity and ordering fields. Application exposes use cases: todo CRUD/list, feed list/append if mutations exist, plus mappers/DTOs for HTTP. Infrastructure implements Prisma repositories and maps to PostgreSQL; Route Handlers or thin BFF handlers in src/app call application services—no SQL or Prisma in domain/application. Next.js App Router, Server Actions, and client fetch target HTTP endpoints (or server-only orchestration that delegates to the same use cases) so the UI is not coupled to SQLite files or ad-hoc JSON fixtures for core flows.",
+    "layers": [
+      "Presentation / delivery mechanism: Next.js App Router (React components, Server Actions, Route Handlers) — four routes mapped 1:1 to Stitch screens; HTTP client/server calls into application for todos and feed",
+      "Application: use cases + repository ports + application services for todo and feed operations + DTOs",
+      "Domain: Todo aggregate; ActivityFeedItem (feed entry) entity; domain errors; optional minimal StubSession or StubUser value/entity if persistence is required for seed/QA",
+      "Infrastructure: Prisma client, PostgreSQL repositories, seed scripts, HTTP wiring as adapters"
+    ],
+    "dependency_rule": "Dependencies point inward: infrastructure implements ports defined by application; application depends on domain and abstractions only. No imports of react, next/*, or @prisma/client from domain/ or application/."
+  },
+  "ddd": {
+    "selected": true,
+    "ubiquitous_language_notes": "Todo: user-scoped task with content, completion flag, stable id, and timestamps for ordering/audit. Activity feed item: chronological social-style entry with stable id, display fields, and sort key (e.g. occurredAt). Auth in MVP remains stub-only; if the model stores a placeholder user or session id for seeding and QA, name it explicitly in tasks (e.g. StubUser, AuthStubContext)—no real OAuth or production session security claims.",
+    "bounded_contexts": [
+      "Todo management (PostgreSQL + Prisma-backed persistence, HTTP API)",
+      "Social activity feed (PostgreSQL + Prisma-backed persistence, HTTP API — not a static file as the default runtime source)",
+      "Authenticated shell / social presentation (MVP: stub auth; routing and layout shared with Stitch-aligned UI)"
+    ],
+    "tactical": [
+      "Aggregate: Todo with identity and completion/content invariants per acceptance.",
+      "Entity: ActivityFeedItem (feed entry) with identity and ordering; avoid over-modeling social domain beyond MVP needs.",
+      "Repository ports in application for Todo and ActivityFeedItem persistence; Prisma adapters in infrastructure.",
+      "Optional: minimal persisted metadata for auth stub (session key, fake user id) only if required for seed/E2E—document in delivery tasks.",
+      "Do not introduce event sourcing or microservices; keep boundaries monolith-friendly."
+    ]
+  },
+  "singleton_policy": "No mutable global singletons. Obtain PrismaClient (or a thin db module) via factory/createDb(env) per request or explicit scope in route handlers/tests; prefer dependency injection in application constructors or factory functions. Tests use container DATABASE_URL and disposable DB state—never a shared developer default inside integration jobs.",
+  "persistence": {
+    "orm": "prisma",
+    "database_provider": "postgresql",
+    "dev_isolation": "Docker Compose (or repo-standard compose) runs a dedicated PostgreSQL service; developers set DATABASE_URL on the host to that service (dedicated database name per developer/worktree as documented in infra tasks). Forbidden: pointing local dev at shared production/staging databases.",
+    "test_isolation": "Integration and E2E jobs use a separate PostgreSQL service (or disposable database) in the test compose stack only; DATABASE_URL must reference that test-scoped instance—never the developer workstation default—per .cursor/skills/testing-and-qa-standards/SKILL.md §3. Reset via migrate/seed or test harness between runs."
+  },
+  "frontend": {
+    "component_strategy": "Atomic Design under src/components: ui/atoms, ui/molecules, ui/organisms composed to match Stitch screen structures from design_package exports; App Router routes assemble organisms per screen. Core flows load todos and activity feed via HTTP API (fetch from client or server) rather than embedded fixtures. Remediation continues for Dashboard sidebar + bento, Social Login layout parity, Activity Feed editorial grid, and Task Creation (Dark) form; reconcile tokens across routes. Accessibility: semantic structure, labels, keyboard flows, and focus management per acceptance and ui-refiner spec.",
+    "styling": "CSS Modules co-located with components plus shared tokens (CSS custom properties) under src/styles/tokens.css (and/or tokens derived from design/stitch exports). Align to exported designMd/HTML: Editorial Neubrutalism “Modern Curator”—Newsreader for headlines, Plus Jakarta Sans for body, Space Grotesk for labels; seed orange #FF5F1F; namedColors; 2px+ strokes, 0px radius, hard-offset shadows. No Material Design visual language; do not default to Material components for these surfaces.",
+    "design_system_strategy": "Stitch design_package.json and exports under projects/todo-reference/design/stitch/ remain the product-level SoT for layout, typography, color roles, and component boundaries. QA must run full §4.2 Stitch fidelity (pixel diff + structured report). When STITCH_BASELINE_UI or equivalent baseline mode is used, document it in task acceptance so raster compare stays deterministic alongside API-backed data (seed + clock)."
+  },
+  "technology_choices": [
+    "Next.js (App Router) + TypeScript",
+    "React (version pinned in project package.json when scaffolded)",
+    "PostgreSQL + Prisma (schema, migrate, client) as the only application persistence path for todos and activity feed items",
+    "Docker Compose (repo-standard) for local dev DB and CI test DB services",
+    "HTTP JSON API (Route Handlers or equivalent) for todos and activity feed consumed by the frontend—no default better-sqlite3 or static activity-feed.json for those runtime flows after migration",
+    "Idempotent seed: todos, activity feed items, optional minimal auth-stub rows/metadata for QA",
+    "Stitch alignment: single design_package.json with four stitch.screens; canonical exports and meta.json per Stitch workflow under projects/todo-reference/design/stitch/; ui_spec.json maps routes/viewports for QA",
+    "Auth: stub implementation only (no real OAuth in MVP); persist metadata only if needed for seed/E2E",
+    "Typography: Next/font or CSS per token strategy to match Plus Jakarta Sans, Space Grotesk, Newsreader roles from design exports",
+    "npm/pnpm package manager per repo root convention when scaffolded",
+    "Unit/integration test runners and coverage tooling as established in repo; 100% line coverage on declared scopes",
+    "E2E: Playwright (or repo-standard Chromium driver) against app + Postgres in isolated container/stack",
+    "QA §4.2: automated raster compare per .cursor/skills/testing-and-qa-standards/SKILL.md; deterministic seed and/or clock for STITCH_BASELINE_UI when required to hold diff_ratio at 0",
+    "Container orchestration for integration/E2E per .cursor/skills/testing-and-qa-standards/SKILL.md"
+  ],
+  "deviations_from_baseline": [
+    "Strict Stitch pixel parity: no stitch_qa_pixel_diff waiver in this brief—per-screen diff_ratio must be 0 (or tool-equivalent zero differing pixels) for an overall pass unless a future brief adds an explicit numeric waiver with rationale.",
+    "Styling uses CSS Modules + CSS variables rather than styled-components default in the baseline skill: reduces SSR provider surface while meeting token goals; tokens must still reflect Stitch Neubrutalism roles.",
+    "Stitch/design_package is mandatory SoT for the four routes; delivery must not treat ui-generator as optional for structural layout changes.",
+    "Optional STITCH_BASELINE_UI (or documented baseline flag) is a QA/determinism aid for §4.2 alongside persisted API data—not a substitute for Postgres + Prisma as the persistence baseline."
+  ],
+  "constraints_for_implementation": [
+    "Stitch project id 3675777318594458616 is authoritative for the four MVP screens; screen ids for cross-reference: Dashboard 11611814ea7a4a2881d76c0c95fd3066; Social Login ed27f21d8f24440a940099c842b535bf; Social Activity Feed eeb35234b6764d199f5085e69e9cc0fc; Task Creation (Dark) 0caac050ee504d6ebca41d202bbd1ca7.",
+    "Maintain exactly one design_package.json and four stitch.screens (Dashboard, Social Login, Social Activity Feed, Task Creation Dark); store exports under projects/todo-reference/design/stitch/ and include meta.json for each Stitch workflow as required by the pipeline.",
+    "Engineering-manager handoff order before frontend work that consumes layout: ui-generator (stitch_workflow: source_of_truth per .cursor/skills/production-workflow/SKILL.md) → design-system → ui-critic → ui-refiner as needed to refresh ui_spec/tokens; frontend implements against refined spec and SoT assets.",
+    "Implement four App Router routes 1:1 with the four screens; Task Creation (Dark) must apply dark theme only within that route subtree (layout or segment theming), not globally.",
+    "Auth: stub only—no production OAuth providers or session security claims in MVP; persist stub metadata only if acceptance requires it for seed/E2E.",
+    "Todos and activity feed: persisted in PostgreSQL via Prisma; expose HTTP APIs; replace default better-sqlite3 todo store and static activity-feed.json serving for production-style runs—tests may use the same stack with seeded data.",
+    "Server-only DB access: clients never hold Prisma or raw DB credentials; mutations go through Server Actions and/or HTTP handlers that invoke application use cases.",
+    "Document single-path quickstart: Docker Postgres up, prisma migrate (or db push per task), seed applied, app serves API and UI reads todos/feed via HTTP (smoke or E2E proves the path).",
+    "Declare coverage scopes in quality-gate task acceptance and coverage config; CI must fail below 100% line coverage for those scopes.",
+    "Integration tests run only in isolated containers with test DATABASE_URL pointing at the compose Postgres service for that job.",
+    "Chromium E2E must exercise every user-visible MVP capability for todos, feed visibility, and navigation across the four routes per delivery acceptance.",
+    "Mandatory QA §4.2 (per .cursor/skills/testing-and-qa-standards/SKILL.md): produce artifacts/stitch_fidelity_report.json with at least status, compared_baseline (e.g. meta.json path), per_screen[] (id, stitch_png_path, app_screenshot_path, viewport, comparison_tool, diff_ratio, pass, mismatches[]), and summary viewports[]—do not accept pass if any required field is missing or if pass is claimed without per-screen pixel comparison evidence.",
+    "For every compared screen, run automated pixel/raster diff against design/stitch/screens/<screen_id>.png at the viewport in ui_spec.json; store captures under artifacts/visual/ (e.g. app-<screen_id>.png and stitch-ref-<screen_id>.png).",
+    "Pass rule: overall status pass only if every compared screen has per_screen[].pass true with diff_ratio 0 (no stitch_qa_pixel_diff in this brief); use deterministic seed and/or fixed clock and STITCH_BASELINE_UI when documented so API-backed data does not destabilize baselines.",
+    "Visual and layout acceptance: QA compares implementation to Stitch exports and ui_spec.json—list mismatches in mismatches[] even when pixel diff is zero."
+  ],
+  "delivery_hints": [
+    "Split infra/backend delivery: (1) Prisma schema + migrations + Docker compose Postgres for dev/test, (2) repositories + seed (todos, feed items, optional stub auth metadata), (3) HTTP routes for todos and activity feed with integration tests in containers, (4) frontend tasks switch data fetching from fixtures/SQLite to API—one task_slug per Stitch screen / primary route for UI work.",
+    "Keep quality-gate (qa-agent) as its own task_slug: coverage, Chromium E2E, full §4.2 Stitch fidelity with stitch_fidelity_report.json + artifacts/visual/.",
+    "Register persistence-facing tasks with architecture_refs including persistence-prisma-isolated-db.",
+    "Map routes explicitly to screens: Dashboard, Social Login, Social Activity Feed, Task Creation (Dark)—stable paths documented in task acceptance.",
+    "E2E lives under projects/todo-reference/e2e/ (or repo convention) against containerized app + test DB; document base URL, DATABASE_URL, and idempotent seed.",
+    "Error UX: surface load/save failures for todos and feed with recovery/retry per MVP acceptance; cover in integration and E2E.",
+    "Document EM payloads: this brief path, design/stitch paths, API contracts (OpenAPI or shared types optional), seed contract, and §4.2 artifact contract including STITCH_BASELINE_UI/deterministic clock when used."
+  ]
+}

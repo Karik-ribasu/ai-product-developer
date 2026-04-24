@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "02-infra-testing-docker-coverage",
+  "title": "Test runners, 100% coverage config, Docker/compose for integration and E2E",
+  "description": "Add unit and integration test tooling (e.g. Vitest + coverage provider or repo standard), declare auditable coverage scopes: unit = projects/todo-reference/src/domain/**/*.ts and projects/todo-reference/src/application/**/*.ts (excluding only documented generated/ambient files); integration = projects/todo-reference/src/infrastructure/**/*.ts plus Server Action modules under projects/todo-reference/src/app/**/actions.ts. Provide Docker Compose (or CI job definitions) so integration tests and E2E run only in isolated containers; document SQLITE_PATH and base URL for E2E; add npm scripts for unit, integration (container), coverage reports, and e2e.",
+  "acceptance": [
+    "Coverage configuration enforces 100% line coverage for the declared unit scope and fails CI below that threshold.",
+    "Coverage configuration enforces 100% line coverage for the declared integration scope when collected from the containerized integration job.",
+    "Integration test execution is documented and wired to run only inside isolated containers per testing skill (compose services or equivalent CI matrix).",
+    "E2E (Playwright or repo-standard Chromium driver) has a documented command targeting the app served from the compose stack with a stable base URL.",
+    "Documented exclusions from coverage (if any) are listed with rationale and mirrored in quality-gate acceptance or architecture brief.",
+    "projects/todo-reference/e2e/ (or equivalent) exists as the home for Chromium tests with seed/reset strategy documented."
+  ],
+  "depends_on": ["01-infra-project-scaffold"],
+  "architecture_refs": [
+    "unit-tests-full-coverage",
+    "integration-tests-full-coverage",
+    "integration-tests-isolated-containers",
+    "qa-manual-automated-e2e-chromium"
+  ],
+  "implementation_notes": "QA retry 2026-04-19: align root .github/workflows/ci.yml with projects/todo-reference test:unit:coverage + integration/E2E paths per quality-gate.",
+  "status": "done",
+  "assigned_agent": "infra-engineer",
+  "sector": "infrastructure-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T18:30:00.000Z"
+}

@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "name": "todo-reference-modern-curator",
+  "aesthetic": "Editorial Neubrutalism — Modern Curator",
+  "source_screens": [
+    "11611814ea7a4a2881d76c0c95fd3066",
+    "ed27f21d8f24440a940099c842b535bf",
+    "eeb35234b6764d199f5085e69e9cc0fc",
+    "0caac050ee504d6ebca41d202bbd1ca7"
+  ],
+  "typography": {
+    "display": { "role": "headlines", "family": "Newsreader", "fallback": "Georgia, serif" },
+    "body": { "role": "paragraph", "family": "Plus Jakarta Sans", "fallback": "system-ui, sans-serif" },
+    "label": { "role": "ui_label", "family": "Space Grotesk", "fallback": "system-ui, sans-serif" }
+  },
+  "color": {
+    "seed_accent": "#FF5F1F",
+    "light": {
+      "bg": "#f6f0e6",
+      "surface": "#fffdf8",
+      "ink": "#181611",
+      "muted": "#5c554c",
+      "border": "#181611",
+      "accent": "#FF5F1F"
+    },
+    "dark_segment": {
+      "bg": "#0f1210",
+      "surface": "#1a1f1c",
+      "ink": "#f3f4ef",
+      "muted": "#a8b0a7",
+      "border": "#f3f4ef",
+      "accent": "#FF5F1F"
+    }
+  },
+  "shape": {
+    "radius_px": 0,
+    "stroke_px": 2,
+    "shadow": "hard_offset",
+    "shadow_notes": "Use 2px solid offset shadows (no diffuse blur) consistent with Stitch exports."
+  },
+  "components": {
+    "atoms": ["Button", "TextField", "Checkbox", "Badge", "Avatar"],
+    "molecules": ["NavLink", "FeedPostCard", "AuthProviderButton", "StatChip"],
+    "organisms": ["AppShellNav", "TodoWorkspace", "LoginPanel", "ActivityFeedList", "TaskComposerPanel"]
+  },
+  "non_goals": ["Material Design component visuals", "Rounded pill buttons as default", "Soft elevation without stroke"]
+}

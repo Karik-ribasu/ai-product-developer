@@ -84,6 +84,7 @@ For each exploration task, provide:
 - Do not make final product decisions  
 - Do not assume unverified information  
 - Do not overload with unnecessary details  
+- **Container teardown (mandatory — no exceptions):** If you start any container or compose stack for research, **stop and remove** it before finishing and note that teardown completed.
 
 ---
 

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "13-frontend-stitch-fidelity-dashboard",
+  "title": "Stitch fidelity: Dashboard (/dashboard)",
+  "description": "frontend-agent remediates the Dashboard route only: sidebar, bento grid, and hero per Stitch SoT. Align layout, typography, strokes, shadows, and spacing to projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png and matching HTML export; implement with CSS Modules and shared design tokens (no Material). Preserve todo Server Actions integration from prior work.",
+  "acceptance": [
+    "Route /dashboard matches canonical Stitch screen id 11611814ea7a4a2881d76c0c95fd3066: visual and structural parity with projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png and projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html for sidebar, bento, and hero regions.",
+    "Section order, hierarchy, and primary affordances match the Dashboard slice in projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/ui_spec.json (no missing or reordered major blocks vs spec).",
+    "Styling uses CSS Modules co-located with components and token-driven CSS custom properties from the design-system path; no Material Design components or default Material visual language on this surface.",
+    "Dashboard todo workspace remains wired to Server Actions from 05-backend-server-actions-integration; CRUD behavior unchanged aside from presentation fixes required for Stitch parity.",
+    "Accessibility: semantic landmarks, labels, and keyboard reachability for interactive controls on this route per ui_spec and prior critique constraints.",
+    "100% unit test line coverage maintained for any new or changed pure UI logic in the declared unit scope per architecture-brief and repo coverage config.",
+    "Visual acceptance for implementers: downstream QA will assert §4.2 pixel diff vs the canonical PNG at zero diff_ratio; implement to that bar."
+  ],
+  "depends_on": [
+    "05-backend-server-actions-integration",
+    "08-design-system-stitch-tokens",
+    "10-ui-refiner-stitch-ui-spec"
+  ],
+  "architecture_refs": [
+    "clean-architecture",
+    "atomic-design",
+    "singleton-policy",
+    "unit-tests-full-coverage"
+  ],
+  "implementation_notes": "Single-screen scope only; do not bundle fixes for /login, /activity-feed, or /tasks/new in this task.",
+  "status": "failed_qa",
+  "assigned_agent": "frontend-agent",
+  "sector": "frontend-engineering",
+  "requires_screen_implementation": true,
+  "stitch_handoff": {
+    "project_id": "3675777318594458616",
+    "design_package_path": "projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/design_package.json",
+    "meta_path": "projects/todo-reference/design/stitch/meta.json",
+    "canonical_screen_id": "11611814ea7a4a2881d76c0c95fd3066",
+    "canonical_image_path": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+    "canonical_code_path": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html",
+    "screens": [
+      {
+        "id": "11611814ea7a4a2881d76c0c95fd3066",
+        "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+        "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+      },
+      {
+        "id": "ed27f21d8f24440a940099c842b535bf",
+        "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+        "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+      },
+      {
+        "id": "eeb35234b6764d199f5085e69e9cc0fc",
+        "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+        "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+      },
+      {
+        "id": "0caac050ee504d6ebca41d202bbd1ca7",
+        "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+        "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+      }
+    ]
+  },
+  "updated_at": "2026-04-18T18:46:00.000Z"
+}

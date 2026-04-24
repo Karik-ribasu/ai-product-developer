@@ -1,0 +1,216 @@
+/* Stitch task creation dark screen shell — `0caac050ee504d6ebca41d202bbd1ca7` */
+
+.root {
+  display: flex;
+  min-height: 100vh;
+  background: #0e0e0e;
+  color: #f3f4ef;
+}
+
+.aside {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 40;
+  width: 16rem;
+  height: 100vh;
+  flex-direction: column;
+  border-right: 4px solid #fff;
+  box-shadow: 8px 8px 0 0 #fff;
+  background: #0e0e0e;
+}
+
+@media (min-width: 768px) {
+  .aside {
+    display: flex;
+  }
+}
+
+.asideTop {
+  padding: var(--space-6);
+}
+
+.asideBrand {
+  font-family: var(--font-sans);
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+  margin-bottom: var(--space-2);
+}
+
+.asideTag {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  color: #f3f4ef;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-8);
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.875rem;
+}
+
+.navActive {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  margin: var(--space-2);
+  background: #a63400;
+  border: 2px solid #000;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.875rem;
+}
+
+.navCta {
+  padding: var(--space-4);
+  margin-top: auto;
+}
+
+.newProject {
+  width: 100%;
+  padding: var(--space-4);
+  border: 2px solid #000;
+  background: #a63400;
+  color: #ffefeb;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: var(--font-sans);
+  cursor: default;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .main {
+    margin-left: 16rem;
+  }
+}
+
+.topHeader {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border-bottom: 2px solid #fff;
+  background: #0e0e0e;
+}
+
+.topBrand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  letter-spacing: -0.02em;
+  color: #fe5e1e;
+  font-style: italic;
+}
+
+.topTools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.searchWrap {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid #fff;
+  background: var(--stitch-surface-container-low);
+}
+
+@media (min-width: 1024px) {
+  .searchWrap {
+    display: flex;
+  }
+}
+
+.searchInput {
+  width: 12rem;
+  border: none;
+  background: transparent;
+  font-family: var(--font-label);
+  font-size: 0.875rem;
+  outline: none;
+  color: #2f2f2e;
+}
+
+.iconBtn {
+  border: none;
+  background: transparent;
+  padding: var(--space-2);
+  color: #f3f4ef;
+  display: inline-flex;
+  cursor: default;
+}
+
+.avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 2px solid #fff;
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inner {
+  padding: var(--space-6);
+  max-width: 80rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    padding: var(--space-12);
+  }
+}
+
+@media (min-width: 1024px) {
+  .inner {
+    padding: 5rem;
+  }
+}

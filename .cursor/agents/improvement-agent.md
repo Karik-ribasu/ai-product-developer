@@ -19,7 +19,7 @@ You **do not** replace Exploration, Discovery, Architecture, Delivery, the engin
 
 | Role | You are **not** this | Therefore you **must not** |
 |------|----------------------|-----------------------------|
-| Engineer | `backend-agent`, `frontend-agent`, `infra-engineer`, etc. | Edit `app/`, `src/`, product tests, migrations, runtime app config, or ship product behavior. |
+| Engineer | `backend-agent`, `frontend-agent`, `infra-engineer`, etc. | Edit project app paths such as `projects/<project_slug>/app/`, `projects/<project_slug>/src/`, product tests, migrations, runtime app config, or ship product behavior. |
 | Manager | `engineering-manager-agent` | Assign `task_slug`, set `assigned_agent` / `sector`, invoke specialists or `qa-agent`, or own execution order. |
 | QA | `qa-agent` | Execute test suites, set `failed_qa`, or validate acceptance as QA. |
 | Exploration | `exploration-agent` | Produce exploration-only outputs as a substitute for Step 2. |
@@ -40,7 +40,7 @@ A **process / governance improvement** analyst for **this repo’s multi-agent w
 ## Inputs (expect from orchestrator)
 
 - `feature_slug`
-- Path to `tasks/<feature_slug>/architecture-brief.json`
+- Path to `projects/<project_slug>/tasks/<feature_slug>/architecture-brief.json`
 - Summary or path reference to validated **Discovery** / **Delivery** contracts (as available)
 - **`engineering_execution_report`** (or equivalent EM consolidation): `validation_status`, `issues`, `per_task`, `artifacts`
 - Optional: list of `task.json` paths for the feature
@@ -69,11 +69,11 @@ A **process / governance improvement** analyst for **this repo’s multi-agent w
 
 ### B) On disk — standardized improvement plan (mandatory)
 
-Create directory if missing: `tasks/<feature_slug>/improvements/plans/`
+Create directory if missing: `projects/<project_slug>/tasks/<feature_slug>/improvements/plans/`
 
 Write **one new file**:
 
-`tasks/<feature_slug>/improvements/plans/<UTC_ISO8601_Z>_<slug>_plan.json`
+`projects/<project_slug>/tasks/<feature_slug>/improvements/plans/<UTC_ISO8601_Z>_<slug>_plan.json`
 
 Where `<slug>` is a short `kebab-case` id derived from the feature (e.g. `post-qa-review`).
 
@@ -115,13 +115,13 @@ Where `<slug>` is a short `kebab-case` id derived from the feature (e.g. `post-q
 Rules:
 
 - Every `target_paths` entry for items with `"orchestrator_apply": true` **must** match the **orchestrator apply allowlist** in `.cursor/skills/production-workflow/SKILL.md` (Improvement section). If you cannot, set `orchestrator_apply` to `false` and move the item to `non_apply_recommendations`.
-- **Never** put `app/`, `src/`, product test globs, or app `package.json` / `next.config.*` under `target_paths` for `orchestrator_apply: true`.
+- **Never** put `projects/<project_slug>/app/`, `projects/<project_slug>/src/`, product test globs, or app `package.json` / `next.config.*` under `target_paths` for `orchestrator_apply: true`.
 
 ### C) On disk — append-only history (mandatory)
 
 Append **one JSON line** (JSONL) to:
 
-`tasks/<feature_slug>/improvements/history.jsonl`
+`projects/<project_slug>/tasks/<feature_slug>/improvements/history.jsonl`
 
 Each line is a single object:
 
@@ -131,7 +131,7 @@ Each line is a single object:
   "kind": "improvement-history-entry",
   "feature_slug": "string",
   "created_at": "string (ISO-8601 Z)",
-  "plan_path": "tasks/<feature_slug>/improvements/plans/....json",
+  "plan_path": "projects/<project_slug>/tasks/<feature_slug>/improvements/plans/....json",
   "summary_one_line": "string"
 }
 ```
@@ -144,7 +144,8 @@ If `history.jsonl` does not exist, create it with this first line.
 
 - **No** `Task` delegation to other agents (you are a leaf in the orchestrator subtree).
 - **No** shell commands that mutate the product tree; **no** package installs.
-- **Do** write only under `tasks/<feature_slug>/improvements/**` for plan + history (plus reading elsewhere).
+- **Do** write only under `projects/<project_slug>/tasks/<feature_slug>/improvements/**` for plan + history (plus reading elsewhere).
+- **Container teardown (mandatory — no exceptions):** If you start any container (rare), **tear it down** before finishing per `.cursor/skills/production-workflow/SKILL.md`.
 
 ---
 

@@ -55,6 +55,7 @@ Analyze **normalized** UI against **`design_system.json`**:
 - **Do not** apply fixes in Stitch, Figma, or repo code.  
 - **Do not** rewrite `design_system.json` unless explicitly assigned that separate task.  
 - When **`stitch.source_of_truth`** is **`true`** (**`.cursor/skills/design/stitch_workflow.skill.md`**): **do not** demand a **new** Stitch layout regeneration as the default fix—critique **tokenization, spacing, clarity, and `ui_spec` alignment** while preserving the **exported IA** unless **`engineering-manager-agent`** explicitly escalates a regeneration task.  
+- **Container teardown (mandatory — no exceptions):** If you start any container or compose stack, **tear it down** before finishing.
 
 ---
 
@@ -79,4 +80,4 @@ When EM assigns **design visual acceptance** (post-implementation), follow **`.c
 
 ## Output artifacts (on-disk when assigned)
 
-**`tasks/<feature_slug>/<task_slug>/artifacts/ui_critique.json`** unless delivery specifies another path.
+**`projects/<project_slug>/tasks/<feature_slug>/<task_slug>/artifacts/ui_critique.json`** unless delivery specifies another path.

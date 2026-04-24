@@ -1,0 +1,66 @@
+{
+  "kind": "design-package",
+  "schema_version": 1,
+  "feature_slug": "todo-mvp",
+  "surface_id": "todo-mvp-stitch-four-screens",
+  "artifact_owner_task_slug": "07-ui-generator-stitch-four-screens",
+  "status": "baseline_frozen",
+  "stitch": {
+    "project_id": "3675777318594458616",
+    "screen_ids": [
+      "11611814ea7a4a2881d76c0c95fd3066",
+      "ed27f21d8f24440a940099c842b535bf",
+      "eeb35234b6764d199f5085e69e9cc0fc",
+      "0caac050ee504d6ebca41d202bbd1ca7"
+    ],
+    "approved_baseline": true,
+    "source_of_truth": true,
+    "export_paths": {
+      "meta": "projects/todo-reference/design/stitch/meta.json",
+      "images_dir": "projects/todo-reference/design/stitch/screens",
+      "code_dir": "projects/todo-reference/design/stitch/code"
+    },
+    "screens": [
+      {
+        "id": "11611814ea7a4a2881d76c0c95fd3066",
+        "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+        "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+      },
+      {
+        "id": "ed27f21d8f24440a940099c842b535bf",
+        "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+        "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+      },
+      {
+        "id": "eeb35234b6764d199f5085e69e9cc0fc",
+        "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+        "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+      },
+      {
+        "id": "0caac050ee504d6ebca41d202bbd1ca7",
+        "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+        "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+      }
+    ]
+  },
+  "retry": {
+    "attempt": 1,
+    "max_attempts": 4,
+    "exit_reason": "accepted",
+    "last_prompt_delta": "Initial export from Stitch MCP get_screen for project 3675777318594458616; four screens saved under design/stitch with PNG+HTML."
+  },
+  "references": {
+    "ui_critique": "ui_critique.json",
+    "design_system": "design_system.json",
+    "ui_spec": "ui_spec.json",
+    "normalized_ui": null,
+    "layout_analysis": null,
+    "qa_visual_evidence": null,
+    "design_visual_acceptance": null
+  },
+  "blockers": [],
+  "acceptance": {
+    "requires_design_visual_acceptance": false,
+    "requires_stitch_fidelity_qa": true
+  }
+}

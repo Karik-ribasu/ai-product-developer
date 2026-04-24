@@ -11,13 +11,13 @@ Define the **one authoritative design delivery bundle** per `surface_id` (screen
 
 ## When to use
 
-- **Every** design pipeline run for a registered `tasks/<feature_slug>/<task_slug>/`.
+- **Every** design pipeline run for a registered `projects/<project_slug>/tasks/<feature_slug>/<task_slug>/`.
 - After **`ui-generator-agent`** completes a Stitch attempt (including **`stitch_workflow`** exports); after each **retry**; when **`design-system-agent`**, **`ui-critic-agent`**, or **`ui-refiner-agent`** updates artifacts.
 
 ## Inputs (required)
 
 - **`feature_slug`**, **`task_slug`** (or dedicated design `task_slug` that owns artifacts).
-- **Artifact root:** default `tasks/<feature_slug>/<artifact_owner_task_slug>/artifacts/` (EM/delivery names the owner task).
+- **Artifact root:** default `projects/<project_slug>/tasks/<feature_slug>/<artifact_owner_task_slug>/artifacts/` (EM/delivery names the owner task).
 
 ## Outputs (required)
 
@@ -44,7 +44,7 @@ Write or merge **`artifacts/design_package.json`** at the artifact root. All oth
 | Field | Type | Required | Notes |
 |--------|------|----------|--------|
 | `requires_design_visual_acceptance` | boolean | no | Default `false`. When `true`, **`qa-agent`** must emit `qa_visual_evidence.json` and design must emit `design_visual_acceptance.json` per `design_visual_acceptance.skill.md`. |
-| `requires_stitch_fidelity_qa` | boolean | no | Default `false` unless **`stitch.source_of_truth`** is `true`. When `true`, **`qa-agent`** must emit **`artifacts/stitch_fidelity_report.json`** per **`stitch_workflow.skill.md`** + **`.cursor/skills/testing-and-qa-standards/SKILL.md`** §4.2. |
+| `requires_stitch_fidelity_qa` | boolean | no | **Must be `true`** when **`stitch.source_of_truth`** is **`true`**. When `true`, **`qa-agent`** must emit **`artifacts/stitch_fidelity_report.json`** and **compare running-app screenshots to `design/stitch/screens/*.png`** per **`stitch_workflow.skill.md`** + **`.cursor/skills/testing-and-qa-standards/SKILL.md`** §4.2 (default: **no pixel divergence**). |
 
 **Stitch sub-object**
 
@@ -55,7 +55,7 @@ Write or merge **`artifacts/design_package.json`** at the artifact root. All oth
 | `approved_baseline` | boolean | yes | `true` only when EM/human policy marks the current Stitch reference as the comparison baseline (usually when `status` → `baseline_frozen`). |
 | `source_of_truth` | boolean | no | Default `false`. When `true`, Stitch exports under **`design/stitch/`** are mandatory layout input for **`frontend-agent`**; set via **`stitch_workflow.skill.md`**. |
 | `export_paths` | object | no | Required when **`source_of_truth`** is `true`: repository-relative paths `{ "meta", "images_dir", "code_dir" }` per **`stitch_workflow.skill.md`**. |
-| `screens` | array | no | **Strongly recommended when `source_of_truth` is `true`:** ordered list mirroring `screen_ids`, each `{ "id", "image", "code" }` with **repository-root-relative** paths to the exported **PNG** (or raster) and **HTML** (or code) files. Duplicates `design/stitch/meta.json` screen index for a **single handoff bundle** so **`engineering-manager-agent`** can copy paths into **`task.json`** / EM reports without opening `meta.json`. |
+| `screens` | array | no | **Strongly recommended when `source_of_truth` is `true`:** ordered list mirroring `screen_ids`, each `{ "id", "image", "code" }` with **repository-root-relative** paths to the exported **PNG** (or raster) and **HTML** (or code) files, typically under `projects/<project_slug>/design/stitch/`. Duplicates the project-scoped `design/stitch/meta.json` screen index for a **single handoff bundle** so **`engineering-manager-agent`** can copy paths into **`task.json`** / EM reports without opening `meta.json`. |
 
 **Retry sub-object**
 

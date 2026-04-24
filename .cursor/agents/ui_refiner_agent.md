@@ -41,7 +41,7 @@ You transform **normalized** UI into a **polished, modern, production-oriented**
 - **`ui_critique.json`**.  
 - **`design_system.json`**.  
 - **`tasks/.../task.json`** and **`architecture-brief.json`** when supplied.  
-- When **`stitch.source_of_truth`** is **`true`**: **`design/stitch/meta.json`**, exported **`design/stitch/code/**`**, and **`design_package.json`**—**`ui_spec.json`** must remain traceable to those assets (refine tokens and component binding, **do not** replace the whole information architecture).
+- When **`stitch.source_of_truth`** is **`true`**: **`projects/<project_slug>/design/stitch/meta.json`**, exported **`projects/<project_slug>/design/stitch/code/**`**, and **`design_package.json`**—**`ui_spec.json`** must remain traceable to those assets (refine tokens and component binding, **do not** replace the whole information architecture).
 
 ---
 
@@ -61,6 +61,7 @@ You transform **normalized** UI into a **polished, modern, production-oriented**
 - **No unnecessary animations.**  
 - **Keep it buildable:** components must map to realistic stack primitives for this repo (per brief / architecture standards).  
 - **Do not** silently discard critique items—address or document.  
+- **Container teardown (mandatory — no exceptions):** If you start any container or compose stack, **tear it down** before finishing.
 
 ---
 
@@ -102,4 +103,4 @@ You transform **normalized** UI into a **polished, modern, production-oriented**
 
 ## Output artifacts (on-disk when assigned)
 
-**`tasks/<feature_slug>/<task_slug>/artifacts/ui_spec.json`** (and optional **`ui_spec.notes.md`**) unless delivery defines other paths.
+**`projects/<project_slug>/tasks/<feature_slug>/<task_slug>/artifacts/ui_spec.json`** (and optional **`ui_spec.notes.md`**) unless delivery defines other paths.

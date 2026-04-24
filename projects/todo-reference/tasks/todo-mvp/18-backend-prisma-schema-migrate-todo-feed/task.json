@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "18-backend-prisma-schema-migrate-todo-feed",
+  "title": "Prisma schema and migrations for Todo and ActivityFeedItem (PostgreSQL)",
+  "description": "Introduce or extend Prisma for projects/todo-reference with PostgreSQL provider. Model Todo and ActivityFeedItem (feed entry) per architecture-brief DDD notes, including stable ids, ordering fields (e.g. occurredAt for feed), and optional minimal StubUser or session metadata if required for seed/E2E. Generate and commit migrations; no Prisma imports in domain/application layers. Document prisma migrate workflow against the compose DATABASE_URL.",
+  "acceptance": [
+    "Prisma schema defines PostgreSQL models for Todo and ActivityFeedItem consistent with ubiquitous language in tasks/todo-mvp/architecture-brief.json (ids, content/completion for todos, display/sort fields for feed items).",
+    "Optional stub-auth tables or columns are included only if needed for seed/E2E and are named explicitly (e.g. StubUser) in schema comments or delivery notes—no production OAuth.",
+    "Initial migration(s) are committed; prisma migrate deploy (or documented equivalent) applies cleanly against a fresh compose Postgres instance.",
+    "Generated Prisma Client paths and any coverage exclusions are documented in architecture-brief coverage_scope_exclusions if integration coverage scope changes.",
+    "No @prisma/client imports under src/domain/ or src/application/."
+  ],
+  "depends_on": ["17-infra-docker-postgres-compose-dev-test", "03-backend-domain-application-unit"],
+  "architecture_refs": [
+    "clean-architecture",
+    "ddd-tactical",
+    "singleton-policy",
+    "persistence-prisma-isolated-db",
+    "unit-tests-full-coverage"
+  ],
+  "implementation_notes": null,
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T23:45:00.000Z"
+}

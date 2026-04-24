@@ -1,0 +1,22 @@
+.segment {
+  --color-bg: #0e0e0e;
+  --color-surface: #1a1a1a;
+  --color-text: #f3f4ef;
+  --color-muted: #9e9c9c;
+  --color-accent: #fe5e1e;
+  --color-danger: #ff8a80;
+  --color-danger-bg: rgba(255, 138, 128, 0.12);
+  --color-border: #f3f4ef;
+  --task-bg: #0e0e0e;
+  --task-text: #f3f4ef;
+  --task-muted: #9e9c9c;
+  --task-border: #ffffff;
+  --task-accent: #fe5e1e;
+  min-height: calc(100vh - 73px);
+  background: var(--task-bg);
+  color: var(--task-text);
+}
+
+.segment a {
+  color: var(--task-accent);
+}

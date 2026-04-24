@@ -10,7 +10,7 @@ description: MCP Stitch layout generation for ui-generator-agent — default one
 Produce Stitch screen layouts using **MCP Stitch only**.
 
 - **Default:** **one** new/replaced exploration screen per **attempt** for a stated surface. **Variation across time** uses the **retry loop** driven by critique/refinement (see `design_package.skill.md` → `retry`), not parallel variants in one pass.
-- **Source-of-truth (`stitch_workflow`):** when **`engineering-manager-agent`** assigns SoT, follow **`.cursor/skills/design/stitch_workflow.skill.md`** instead for **2–4** variants, exports, and **`design/stitch/`** persistence in that assignment—this skill still governs **prompt quality**, **anti-generic** rules, and **MCP schema** discipline.
+- **Source-of-truth (`stitch_workflow`):** when **`engineering-manager-agent`** assigns SoT, follow **`.cursor/skills/design/stitch_workflow.skill.md`** instead for **2–4** variants, exports, and project-scoped **`projects/<project_slug>/design/stitch/`** persistence in that assignment—this skill still governs **prompt quality**, **anti-generic** rules, and **MCP schema** discipline.
 
 ## When to use
 

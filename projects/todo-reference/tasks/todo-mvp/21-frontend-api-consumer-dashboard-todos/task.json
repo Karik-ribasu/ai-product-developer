@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "21-frontend-api-consumer-dashboard-todos",
+  "title": "Dashboard route: load and mutate todos via HTTP API",
+  "description": "For the Dashboard screen (Stitch screen id 11611814ea7a4a2881d76c0c95fd3066), replace fixture/mock or direct SQLite-backed assumptions for todo lists with fetches to the HTTP JSON API from task 20-backend-http-json-api-todos-activity-feed. Preserve Stitch layout and tokens from tasks 13; add user-visible loading, empty, and error/retry states for API failures per architecture-brief error UX hints.",
+  "acceptance": [
+    "Dashboard route loads todo list from the HTTP API (client or server fetch) using documented base URL strategy consistent with Next.js App Router setup.",
+    "Todo mutations on Dashboard (create, toggle, edit, delete as applicable to MVP) persist through the HTTP API or documented Server Action that delegates to the same use cases—not better-sqlite3 or local-only mocks on the default path.",
+    "No regression to Stitch structure: layout still matches refined ui_spec and design tokens for this screen.",
+    "Failed load/save surfaces readable error UI with recovery or retry where applicable.",
+    "Unit tests for pure presentation helpers (if any) remain in scope; no Prisma in client bundles."
+  ],
+  "depends_on": [
+    "13-frontend-stitch-fidelity-dashboard",
+    "20-backend-http-json-api-todos-activity-feed"
+  ],
+  "architecture_refs": ["clean-architecture", "atomic-design", "singleton-policy"],
+  "implementation_notes": "E2E: NewTodoForm uses id=dashboard-new-todo and aria-label='New todo' on the composer. STITCH_BASELINE_UI renders full-page DashboardStitchBaseline (§4.2); pixelmatch may still differ from PNG due to font rasterization and remote image bytes.",
+  "status": "assigned",
+  "assigned_agent": "frontend-agent",
+  "sector": "frontend-engineering",
+  "requires_screen_implementation": true,
+  "stitch_handoff": {
+    "project_id": "3675777318594458616",
+    "design_package_path": "projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/design_package.json",
+    "meta_path": "projects/todo-reference/design/stitch/meta.json",
+    "canonical_screen_id": "11611814ea7a4a2881d76c0c95fd3066",
+    "canonical_image_path": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+    "canonical_code_path": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html",
+    "screens": [
+      {
+        "id": "11611814ea7a4a2881d76c0c95fd3066",
+        "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+        "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+      },
+      {
+        "id": "ed27f21d8f24440a940099c842b535bf",
+        "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+        "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+      },
+      {
+        "id": "eeb35234b6764d199f5085e69e9cc0fc",
+        "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+        "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+      },
+      {
+        "id": "0caac050ee504d6ebca41d202bbd1ca7",
+        "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+        "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+      }
+    ]
+  },
+  "updated_at": "2026-04-19T15:00:00.000Z"
+}

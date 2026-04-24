@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "06-frontend-todo-ui",
+  "title": "Atomic Design todo UI, pages, accessibility, and Server Action wiring",
+  "description": "Implement MVP UI per architecture brief: CSS Modules co-located with Atomic Design components (atoms/molecules/organisms), shared tokens, main todo route(s) composing organisms. Wire forms and interactions to Server Actions from task 05 only (no direct DB). Cover full CRUD UX: create, list, toggle complete, inline or modal edit, delete with confirmation per MVP, empty state, and visible error/retry for load/save failures. Meet accessibility: semantic structure, labels, keyboard operation, sensible focus for edit/delete flows.",
+  "acceptance": [
+    "All data mutations and loads go through Server Actions or documented server reads that respect the brief (no sqlite or repository imports in components).",
+    "UI implements create, list, toggle, edit text, delete with confirmation, and empty state messaging.",
+    "User-visible error and retry (or recovery) paths exist for load/save failures consistent with backend error contract.",
+    "Components are organized under src/components/ui per Atomic Design; styles use CSS Modules plus shared tokens from src/styles.",
+    "Accessibility: inputs labeled, list semantics, keyboard-accessible toggle/edit/delete, focus management acceptable for edit/cancel flows.",
+    "No Stitch or design_package dependency; visual design is minimal reference quality per brief."
+  ],
+  "depends_on": ["01-infra-project-scaffold", "05-backend-server-actions-integration"],
+  "architecture_refs": [
+    "clean-architecture",
+    "atomic-design",
+    "singleton-policy"
+  ],
+  "implementation_notes": null,
+  "status": "done",
+  "assigned_agent": "frontend-agent",
+  "sector": "frontend-engineering",
+  "requires_screen_implementation": true,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T20:45:00.000Z"
+}

@@ -1,0 +1,52 @@
+{
+  "name": "todo-reference",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0 -p 3000",
+    "postinstall": "prisma generate",
+    "lint": "next lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev",
+    "db:seed": "node ./node_modules/tsx/dist/cli.mjs prisma/seed.ts",
+    "test:unit": "vitest run --config vitest.unit.config.ts",
+    "test:unit:coverage": "vitest run --config vitest.unit.config.ts --coverage",
+    "test:integration:coverage": "vitest run --config vitest.integration.config.ts --coverage",
+    "test:integration": "docker compose -f docker-compose.integration.yml run --rm integration-tests",
+    "test:e2e": "docker compose -f docker-compose.e2e.yml run --rm e2e",
+    "qa:stitch-fidelity": "node ./scripts/stitch-fidelity-report.mjs"
+  },
+  "prisma": {
+    "seed": "node ./node_modules/tsx/dist/cli.mjs prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "6.19.0",
+    "better-sqlite3": "^12.9.0",
+    "next": "15.2.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@playwright/test": "1.51.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^3.1.1",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.4",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "prettier": "^3.5.3",
+    "prisma": "6.19.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5",
+    "vitest": "^3.1.1"
+  }
+}

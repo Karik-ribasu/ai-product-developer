@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "20-backend-http-json-api-todos-activity-feed",
+  "title": "HTTP JSON Route Handlers for todos and activity feed (CA/DDD adapters)",
+  "description": "Expose REST-style JSON endpoints (Next.js Route Handlers or equivalent) for todo CRUD/list and activity feed list (append only if MVP requires). Handlers are thin adapters: parse request, invoke application use cases, map errors to HTTP status. Remove or demote default runtime use of src/fixtures/activity-feed.json and ACTIVITY_FEED_FIXTURE_PATH; static fixture may remain for non-default test utilities only if documented. Deprecate or redirect legacy fixture route from 11-backend-activity-feed-fixture-route in favor of persisted feed API.",
+  "acceptance": [
+    "Documented HTTP JSON API covers at minimum: list/create/update/delete (or equivalent) for todos and list for activity feed; response shapes stable for frontend consumption.",
+    "Route Handlers do not contain domain rules; they delegate to application services/use cases only.",
+    "Activity feed data for normal dev and production-style runs is served from PostgreSQL via use cases, not from activity-feed.json as the default source.",
+    "Legacy fixture env ACTIVITY_FEED_FIXTURE_PATH is not used on the default happy path, or is gated to test-only with explicit documentation.",
+    "Integration tests in isolated containers assert status codes, JSON contracts, and error mapping for representative success and failure cases.",
+    "OpenAPI or shared TypeScript types for the API are optional but if absent, README lists endpoint paths and example payloads."
+  ],
+  "depends_on": ["19-backend-prisma-repositories-idempotent-seed"],
+  "architecture_refs": [
+    "clean-architecture",
+    "ddd-tactical",
+    "singleton-policy",
+    "persistence-prisma-isolated-db",
+    "unit-tests-full-coverage",
+    "integration-tests-full-coverage",
+    "integration-tests-isolated-containers"
+  ],
+  "implementation_notes": null,
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T19:20:00.000Z"
+}

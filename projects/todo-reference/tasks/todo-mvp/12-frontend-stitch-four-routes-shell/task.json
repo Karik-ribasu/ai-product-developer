@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "12-frontend-stitch-four-routes-shell",
+  "title": "Four App Router routes: Stitch layout, stub auth, dashboard todos, feed, dark task creation",
+  "description": "frontend-agent implements four routes 1:1 with Stitch/ui_spec: Dashboard (todo workspace aligned to Stitch, integrating existing todo Server Actions from 05 and organisms from 06 where appropriate), Social Login (stub auth only), Social Activity Feed (client/server fetch of 11 Route Handler JSON), Task Creation (Dark) with route-scoped dark theme segment. Compose Atomic Design components per exports; CSS Modules + tokens from design_system/ui_spec; no Material defaults. EM must set stitch_handoff from design_package after exports.",
+  "acceptance": [
+    "Four App Router routes exist and match paths/names documented in 10-ui-refiner-stitch-ui-spec ui_spec; each route renders layout/section order traceable to canonical Stitch screen stitch.screen_ids[0] and ui_spec (no unconstrained new IA).",
+    "Stub login flow satisfies acceptance: user can reach post-stub shell/dashboard without real OAuth; behavior documented for QA E2E.",
+    "Dashboard todo workspace uses existing todo domain/actions (Server Actions from 05); CRUD UX remains intact with Stitch-aligned presentation.",
+    "Activity feed route consumes the 11-backend-activity-feed-fixture-route handler URL (relative fetch or documented base URL); loading, non-empty, and empty states per ui_spec.",
+    "Task Creation (Dark) route applies dark theme only within that segment (layout or nested layout); other three routes remain light per brief.",
+    "Accessibility: semantic structure, labels, keyboard paths for interactive controls on all four surfaces per acceptance in ui_spec/critique.",
+    "100% unit test line coverage maintained for any new pure UI logic or helpers in declared unit scope; follow repo coverage config and brief exclusions."
+  ],
+  "depends_on": [
+    "05-backend-server-actions-integration",
+    "06-frontend-todo-ui",
+    "10-ui-refiner-stitch-ui-spec",
+    "11-backend-activity-feed-fixture-route"
+  ],
+  "architecture_refs": [
+    "clean-architecture",
+    "atomic-design",
+    "singleton-policy",
+    "unit-tests-full-coverage"
+  ],
+  "implementation_notes": "Routes: /login, /dashboard, /activity-feed, /tasks/new; AppShell nav; middleware protects main routes; dark segment layout under /tasks/new.",
+  "status": "assigned",
+  "assigned_agent": "frontend-agent",
+  "sector": "frontend-engineering",
+  "requires_screen_implementation": true,
+  "stitch_handoff": {
+    "project_id": "3675777318594458616",
+    "design_package_path": "projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/design_package.json",
+    "meta_path": "projects/todo-reference/design/stitch/meta.json",
+    "canonical_screen_id": "11611814ea7a4a2881d76c0c95fd3066",
+    "canonical_image_path": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+    "canonical_code_path": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html",
+    "screens": [
+      {
+        "id": "11611814ea7a4a2881d76c0c95fd3066",
+        "image": "projects/todo-reference/design/stitch/screens/11611814ea7a4a2881d76c0c95fd3066.png",
+        "code": "projects/todo-reference/design/stitch/code/11611814ea7a4a2881d76c0c95fd3066.html"
+      },
+      {
+        "id": "ed27f21d8f24440a940099c842b535bf",
+        "image": "projects/todo-reference/design/stitch/screens/ed27f21d8f24440a940099c842b535bf.png",
+        "code": "projects/todo-reference/design/stitch/code/ed27f21d8f24440a940099c842b535bf.html"
+      },
+      {
+        "id": "eeb35234b6764d199f5085e69e9cc0fc",
+        "image": "projects/todo-reference/design/stitch/screens/eeb35234b6764d199f5085e69e9cc0fc.png",
+        "code": "projects/todo-reference/design/stitch/code/eeb35234b6764d199f5085e69e9cc0fc.html"
+      },
+      {
+        "id": "0caac050ee504d6ebca41d202bbd1ca7",
+        "image": "projects/todo-reference/design/stitch/screens/0caac050ee504d6ebca41d202bbd1ca7.png",
+        "code": "projects/todo-reference/design/stitch/code/0caac050ee504d6ebca41d202bbd1ca7.html"
+      }
+    ]
+  },
+  "updated_at": "2026-04-19T15:00:00.000Z"
+}

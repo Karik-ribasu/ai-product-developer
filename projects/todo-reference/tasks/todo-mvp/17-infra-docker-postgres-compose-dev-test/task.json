@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "17-infra-docker-postgres-compose-dev-test",
+  "title": "Docker Compose PostgreSQL for dev/test with DATABASE_URL docs",
+  "description": "Extend or add a repo-standard Docker Compose service for PostgreSQL (dedicated volume, healthcheck, documented port and database name). Document DATABASE_URL for local dev and for integration/E2E jobs in projects/todo-reference/.env.example and README. Align .gitignore to exclude .env.local (and other env files that must not be committed). Ensure the compose service can be used as the isolated DB target required by architecture-brief persistence.test_isolation.",
+  "acceptance": [
+    "projects/todo-reference includes a Docker Compose definition (new file or extension of existing compose from 02-infra-testing-docker-coverage) with a postgres service: named volume for data, healthcheck (e.g. pg_isready), and stable service hostname for app/test containers.",
+    "README (under projects/todo-reference) documents: docker compose up for the DB, example DATABASE_URL for host vs in-network container use, and a dedicated database name policy (per developer/worktree) aligned with architecture-brief.",
+    ".env.example lists DATABASE_URL with a placeholder matching the compose service and notes never to point at shared prod/staging.",
+    ".gitignore covers .env.local (and any other agreed local secret files) for projects/todo-reference.",
+    "Integration/E2E documentation states test jobs must set DATABASE_URL only to the test-scoped Postgres service from the compose stack, not a developer default workstation URL."
+  ],
+  "depends_on": ["02-infra-testing-docker-coverage"],
+  "architecture_refs": [
+    "persistence-prisma-isolated-db",
+    "integration-tests-isolated-containers",
+    "singleton-policy"
+  ],
+  "implementation_notes": "QA retry 2026-04-19: E2E web image — fix Dockerfile.app install/prisma ordering; compose web command use project-pinned prisma/tsx.",
+  "status": "done",
+  "assigned_agent": "infra-engineer",
+  "sector": "infrastructure-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T18:30:00.000Z"
+}

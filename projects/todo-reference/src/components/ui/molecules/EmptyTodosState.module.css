@@ -1,0 +1,18 @@
+.panel {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+}
+
+.title {
+  margin: 0 0 var(--space-2);
+  font-size: 1.0625rem;
+}
+
+.body {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.5;
+  font-size: 0.9375rem;
+}

@@ -12,28 +12,28 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - name: Install
-        run: bun install --frozen-lockfile
+        run: cd projects/todo-reference && bun install --frozen-lockfile
       - name: Lint
-        run: bun run lint
-      - name: Unit tests
-        run: bun run test:unit
+        run: cd projects/todo-reference && bun run lint
+      - name: Unit tests (100% line coverage)
+        run: cd projects/todo-reference && bun run test:unit:coverage
 
   integration-isolated:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Integration tests (Bun container; SQLite via temp files)
-        run: docker compose -f docker-compose.integration.yml run --rm integration-tests
+      - name: Integration tests (isolated compose)
+        run: cd projects/todo-reference && bun run test:integration
 
   qa-e2e-chromium:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build QA images
-        run: docker compose -f docker-compose.qa.yml build
-      - name: Isolated app + Chromium (Playwright)
+      - name: Build E2E images
+        run: docker compose -f projects/todo-reference/docker-compose.e2e.yml build
+      - name: Isolated app + Postgres + Chromium (Playwright)
         run: >-
-          docker compose -f docker-compose.qa.yml up
+          docker compose -f projects/todo-reference/docker-compose.e2e.yml up
           --abort-on-container-exit
-          --exit-code-from qa-chromium
-          qa-chromium
+          --exit-code-from e2e
+          e2e

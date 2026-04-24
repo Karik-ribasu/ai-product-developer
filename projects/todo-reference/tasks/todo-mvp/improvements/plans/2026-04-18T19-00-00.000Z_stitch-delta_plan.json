@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "kind": "improvement-plan",
+  "feature_slug": "todo-mvp",
+  "created_at": "2026-04-18T19:00:00.000Z",
+  "execution_summary": "The todo-mvp feature completed the mandated design pipeline (tasks 07–12 plus quality-gate) with Stitch as source of truth for four screens, stub auth, a fixture-backed activity-feed route, and route-scoped dark theming. Engineering reported validation_status pass with stitch_fidelity_report passing while design_package kept acceptance.requires_design_visual_acceptance false—so QA proved structural/layout fidelity without the optional design-visual evidence package. This plan captures governance tightening so the next orchestration cycle does not confuse “Stitch SoT + fidelity QA” with “mandatory screenshot + design sign-off,” and so EM payloads consistently echo design_package flags into QA.",
+  "what_worked_well": [
+    "architecture-brief.json spelled out EM ordering (ui-generator → design-system → ui-critic → ui-refiner before frontend) and screen-to-route mapping, which matched the executed task chain 07–12.",
+    "Task 07 owned design_package.json and stitch_handoff with canonical paths, reducing guesswork for downstream frontend and QA.",
+    "Separating requires_stitch_fidelity_qa (true) from requires_design_visual_acceptance (false) allowed a lean QA pass focused on structural fidelity artifacts without duplicating design-owned subjective capture work."
+  ],
+  "issues_identified": [
+    "Skills and agent prompts describe §4.1 visual evidence and §4.2 Stitch fidelity side by side but do not state an explicit combinatorial rule when SoT is true and only fidelity QA is enabled.",
+    "Orchestration logs may still imply “Stitch feature ⇒ full visual acceptance” unless EM and qa-agent explicitly read design_package.acceptance booleans each cycle.",
+    "tasks/_template/task.json documents stitch_handoff shape but not how design_package acceptance flags drive QA artifact obligations."
+  ],
+  "root_causes": [
+    "testing-and-qa-standards evolved additive sections (4.1 vs 4.2) without a single matrix row for fidelity-only gates.",
+    "Human shorthand “Stitch QA” conflates structural fidelity (QA-owned report) with brand/visual evidence (conditional on requires_design_visual_acceptance).",
+    "Template registry fields emphasize paths and screen implementation, not the boolean acceptance contract emitted by ui-generator."
+  ],
+  "improvement_opportunities": [
+    {
+      "id": "document-stitch-fidelity-vs-visual-acceptance-matrix",
+      "priority": "high",
+      "category": "skills",
+      "rationale": "Eliminates last-minute EM/QA debate on whether qa_visual_evidence.json is mandatory when Stitch SoT and requires_stitch_fidelity_qa are true but requires_design_visual_acceptance is false.",
+      "proposed_change": "In `.cursor/skills/testing-and-qa-standards/SKILL.md`, add a short subsection (e.g. after §4.2) titled “Stitch fidelity vs design visual acceptance (combinations)” with a bullet table: (A) requires_stitch_fidelity_qa true + requires_design_visual_acceptance false → QA must produce stitch_fidelity_report.json per §4.2; QA must not require qa_visual_evidence.json unless another acceptance clause explicitly demands captures. (B) requires_design_visual_acceptance true → QA must also run §4.1. (C) both false → neither artifact class is mandatory unless task acceptance names them. Cross-link design_visual_acceptance.skill.md and stitch_workflow.skill.md.",
+      "orchestrator_apply": true,
+      "target_paths": [".cursor/skills/testing-and-qa-standards/SKILL.md"]
+    },
+    {
+      "id": "qa-agent-explicit-skip-visual-when-flag-false",
+      "priority": "medium",
+      "category": "agents",
+      "rationale": "Makes the leaf agent’s responsibilities unambiguous when reading design_package.json from the task payload.",
+      "proposed_change": "In `.cursor/agents/qa-agent.md`, under Responsibilities (near the visual evidence bullet), add one sentence: if artifacts/design_package.json (or copy in payload) has acceptance.requires_design_visual_acceptance false or absent, do not treat design_visual_acceptance.skill.md as mandatory for pass; still execute §4.2 when requires_stitch_fidelity_qa is true. Reference testing-and-qa-standards for the combination matrix.",
+      "orchestrator_apply": true,
+      "target_paths": [".cursor/agents/qa-agent.md"]
+    },
+    {
+      "id": "task-template-design-package-flags-hint",
+      "priority": "low",
+      "category": "governance",
+      "rationale": "Nudges delivery/EM to keep acceptance booleans visible at registry level for features that reuse the template.",
+      "proposed_change": "In `tasks/_template/task.json`, extend `implementation_notes` from null to a string placeholder such as: \"When this task owns artifacts/design_package.json, record acceptance.requires_stitch_fidelity_qa and acceptance.requires_design_visual_acceptance explicitly; QA artifact obligations follow .cursor/skills/testing-and-qa-standards/SKILL.md (Stitch fidelity vs visual acceptance matrix).\"",
+      "orchestrator_apply": true,
+      "target_paths": ["tasks/_template/task.json"]
+    }
+  ],
+  "non_apply_recommendations": [
+    {
+      "id": "em-payload-echo-design-package-acceptance",
+      "priority": "medium",
+      "audience": "engineering-manager-agent",
+      "rationale": "Registry task.json may be scattered; EM consolidation should surface the two booleans in every qa-agent payload for Stitch-backed features.",
+      "proposed_change": "In engineering_execution_report / qa-agent delegation, always quote the current values of acceptance.requires_stitch_fidelity_qa and acceptance.requires_design_visual_acceptance from the owning design_package.json path (no file edit—behavioral discipline only)."
+    },
+    {
+      "id": "quality-gate-acceptance-bullets",
+      "priority": "low",
+      "audience": "delivery-agent",
+      "rationale": "Future quality-gate tasks can list expected QA artifacts as a function of those flags to avoid vague “Stitch QA” wording.",
+      "proposed_change": "When authoring quality-gate acceptance for Stitch SoT features, name stitch_fidelity_report.json and explicitly state whether qa_visual_evidence.json is in scope; orchestrator cannot patch per-feature task.json via Step 11 allowlist."
+    }
+  ]
+}

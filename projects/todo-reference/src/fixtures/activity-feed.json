@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "feed-1",
+      "author": { "name": "Alex Rivera", "handle": "@arivera" },
+      "body": "Shipped the curator dashboard slice — typography finally matches the Stitch reference.",
+      "createdAt": "2026-04-18T10:15:00.000Z",
+      "mediaLabel": null
+    },
+    {
+      "id": "feed-2",
+      "author": { "name": "Jamie Chen", "handle": "@jamiecodes" },
+      "body": "Reminder: activity feed is fixture-only for MVP — no SQLite social model yet.",
+      "createdAt": "2026-04-18T11:02:00.000Z",
+      "mediaLabel": "Note"
+    }
+  ]
+}

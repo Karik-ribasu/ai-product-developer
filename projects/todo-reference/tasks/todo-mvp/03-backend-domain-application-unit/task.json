@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "03-backend-domain-application-unit",
+  "title": "Domain + application core with full todo use cases and unit tests",
+  "description": "Implement Todo entity (identity, content, completion invariant per acceptance), domain errors as needed, repository port in application layer, and use cases: create, list, toggle complete, update text, delete. No SQLite, no Next imports. Provide unit tests achieving 100% line coverage on projects/todo-reference/src/domain/**/*.ts and projects/todo-reference/src/application/**/*.ts using in-memory or fake repository doubles only.",
+  "acceptance": [
+    "Domain and application modules contain zero imports from react, next/*, or sqlite drivers.",
+    "Use cases cover create, list, toggle completion, update content, and delete with clear inputs/outputs (DTOs as needed).",
+    "Repository abstraction lives in application (or domain per brief) and is the only persistence boundary referenced by use cases.",
+    "Unit test suite achieves 100% line coverage on the declared domain and application globs per infra coverage config.",
+    "Edge cases for non-empty content or validation rules are covered by tests if required by MVP acceptance.",
+    "Empty list is treated as valid domain state (not an error) in list behavior."
+  ],
+  "depends_on": ["01-infra-project-scaffold", "02-infra-testing-docker-coverage"],
+  "architecture_refs": [
+    "clean-architecture",
+    "ddd-tactical",
+    "singleton-policy",
+    "unit-tests-full-coverage"
+  ],
+  "implementation_notes": null,
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T16:01:00.000Z"
+}

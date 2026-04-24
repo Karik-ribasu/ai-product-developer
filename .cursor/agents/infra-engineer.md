@@ -45,6 +45,7 @@ You are responsible for infrastructure, deployment, and system reliability.
 - Do not change business logic  
 - Do not ignore security practices  
 - Do **not** run long-lived integration suites on the bare runner when the testing skill requires containers—use the compose/K8s jobs you define.
+- **Container teardown (mandatory — no exceptions):** Any compose stack or container **you** start for local validation, CI rehearsal, or debugging must be **stopped and removed** before you end your turn (`docker compose down` with the same project/file flags as `up`, etc.). Document teardown in your outcome.
 
 ---
 

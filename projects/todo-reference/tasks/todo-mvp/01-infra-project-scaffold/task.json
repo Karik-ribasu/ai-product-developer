@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "01-infra-project-scaffold",
+  "title": "Greenfield Next.js App Router + TypeScript scaffold",
+  "description": "Create projects/todo-reference with Next.js (App Router), TypeScript, and the folder layout from the architecture brief: src/domain, src/application, src/infrastructure, src/app, src/components, src/styles; path aliases in tsconfig; ESLint/Prettier (or repo-equivalent) baseline; package manager aligned with repo root. No feature todo logic beyond placeholders if needed for build.",
+  "acceptance": [
+    "projects/todo-reference builds with next build (or documented dev build) using App Router under src/app.",
+    "Directory skeleton exists: src/domain, src/application, src/infrastructure, src/app, src/components (ui/atoms|molecules|organisms per brief intent), src/styles with tokens entry (e.g. tokens.css) wired from root layout.",
+    "TypeScript strict project references are explicit; no application/domain/infrastructure code imports react, next/*, or sqlite from domain/ or application/ layers (enforced by structure and lint rules where applicable).",
+    "README or package.json scripts document install, dev, and build from projects/todo-reference.",
+    "Singleton policy from brief is documented for implementers (no mutable global DB handles; factories per request/test)."
+  ],
+  "depends_on": [],
+  "architecture_refs": [
+    "clean-architecture",
+    "singleton-policy"
+  ],
+  "implementation_notes": null,
+  "status": "done",
+  "assigned_agent": "infra-engineer",
+  "sector": "infrastructure-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T15:50:00.000Z"
+}

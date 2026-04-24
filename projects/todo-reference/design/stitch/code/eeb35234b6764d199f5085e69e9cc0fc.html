@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Klockwork Neo | Activity Feed</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&amp;family=Space+Grotesk:wght@300..700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "secondary-container": "#80deff",
+                      "on-tertiary-fixed-variant": "#3f00ae",
+                      "on-secondary-container": "#004e61",
+                      "primary-container": "#ff7948",
+                      "on-surface-variant": "#5c5b5b",
+                      "on-error": "#ffefee",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed-dim": "#37d4ff",
+                      "surface-dim": "#d6d4d3",
+                      "primary-dim": "#922c00",
+                      "on-primary-container": "#451000",
+                      "on-tertiary": "#f7f0ff",
+                      "secondary-dim": "#00576c",
+                      "on-tertiary-container": "#360097",
+                      "tertiary-fixed": "#b7a3ff",
+                      "surface-container-highest": "#dfdcdc",
+                      "error-container": "#fb5151",
+                      "surface-container-high": "#e4e2e1",
+                      "tertiary-dim": "#571ed8",
+                      "primary": "#a63400",
+                      "inverse-on-surface": "#9e9c9c",
+                      "on-background": "#2f2f2e",
+                      "surface-tint": "#a63400",
+                      "on-primary": "#ffefeb",
+                      "on-secondary-fixed": "#003a48",
+                      "secondary": "#00647b",
+                      "inverse-primary": "#fe5e1e",
+                      "outline": "#787676",
+                      "on-tertiary-fixed": "#1b0056",
+                      "inverse-surface": "#0e0e0e",
+                      "primary-fixed-dim": "#fe5e1e",
+                      "on-secondary": "#e2f6ff",
+                      "on-primary-fixed": "#000000",
+                      "surface-variant": "#dfdcdc",
+                      "tertiary-fixed-dim": "#aa93ff",
+                      "surface-container": "#eae7e7",
+                      "on-primary-fixed-variant": "#551600",
+                      "outline-variant": "#afadac",
+                      "background": "#f9f6f5",
+                      "on-surface": "#2f2f2e",
+                      "surface": "#f9f6f5",
+                      "on-error-container": "#570008",
+                      "surface-bright": "#f9f6f5",
+                      "tertiary-container": "#b7a3ff",
+                      "on-secondary-fixed-variant": "#00586d",
+                      "surface-container-low": "#f3f0ef",
+                      "tertiary": "#6332e4",
+                      "error-dim": "#9f0519",
+                      "primary-fixed": "#ff7948",
+                      "secondary-fixed": "#80deff",
+                      "error": "#b31b25"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Newsreader", "serif"],
+                      "body": ["Plus Jakarta Sans", "sans-serif"],
+                      "label": ["Space Grotesk", "monospace"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neubrutalist-shadow {
+            box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 1);
+        }
+        .neubrutalist-shadow-sm {
+            box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+        }
+        .neubrutalist-shadow-hover:active {
+            box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 1);
+            transform: translate(4px, 4px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased">
+<!-- TopNavBar -->
+<header class="bg-[#f9f6f5] dark:bg-[#0e0e0e] flex justify-between items-center w-full px-6 py-4 sticky top-0 z-50 border-b-2 border-black dark:border-white">
+<div class="flex items-center gap-8">
+<span class="text-2xl font-black italic text-[#a63400] dark:text-[#fe5e1e]">Klockwork Neo</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-black dark:text-white opacity-70 font-sans font-bold uppercase tracking-wider hover:bg-[#a63400] hover:text-white transition-colors px-2 py-1" href="#">Dashboard</a>
+<a class="text-black dark:text-white opacity-70 font-sans font-bold uppercase tracking-wider hover:bg-[#a63400] hover:text-white transition-colors px-2 py-1" href="#">Tasks</a>
+<a class="text-[#a63400] dark:text-[#fe5e1e] font-bold underline decoration-2 font-sans uppercase tracking-wider px-2 py-1" href="#">Activity</a>
+<a class="text-black dark:text-white opacity-70 font-sans font-bold uppercase tracking-wider hover:bg-[#a63400] hover:text-white transition-colors px-2 py-1" href="#">Settings</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border-b-2 border-primary focus:border-b-4 focus:ring-0 w-64 outline-none font-label text-sm" placeholder="Search projects..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-on-surface p-2 hover:bg-primary hover:text-white transition-colors">notifications</button>
+<button class="material-symbols-outlined text-on-surface p-2 hover:bg-primary hover:text-white transition-colors">add_box</button>
+<div class="w-10 h-10 border-2 border-black bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close-up studio portrait of a young woman with confident expression and colorful graphic eyeliner in front of a neutral backdrop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJjd6AAGxTEs_WQtLsgejTZcb_-bWuLRC5EE7l574aQUWns5dCgHwgc3cbi-3iQKNlFZ8sfXb-lbC-znJWC9ZuFEzObyzmjXxj_s0CIMev9sA92LL3onrbfALdVTUFgWwDJyuOD92RYm064JcZtMpcam157ODjDSjyPklOqzoeKkXnntR0MXyK01D3ofg2VMgP73iLG_0hQEQ-z9NDp9lf7w-xohZmAHNpSFAoBNwYMd7CDOucgyLxuQpBQ3YjUwqu6BjJGbJ7niU"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col fixed left-0 top-0 h-full z-40 bg-[#f9f6f5] dark:bg-[#0e0e0e] h-screen w-64 border-r-4 border-black dark:border-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] pt-24">
+<div class="px-6 mb-10">
+<h1 class="text-xl font-black text-black dark:text-white font-sans uppercase">The Curator</h1>
+<p class="font-label text-xs tracking-tighter opacity-60">STAY BOLD.</p>
+</div>
+<nav class="flex-1 flex flex-col">
+<a class="text-black dark:text-white p-4 hover:italic flex items-center gap-4 font-sans font-bold uppercase tracking-wider hover:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+                </a>
+<a class="text-black dark:text-white p-4 hover:italic flex items-center gap-4 font-sans font-bold uppercase tracking-wider hover:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined">checklist</span> Tasks
+                </a>
+<a class="bg-[#a63400] text-white dark:bg-[#fe5e1e] border-2 border-black m-2 p-4 flex items-center gap-4 font-sans font-bold uppercase tracking-wider scale-95 duration-75" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rss_feed</span> Activity
+                </a>
+<a class="text-black dark:text-white p-4 hover:italic flex items-center gap-4 font-sans font-bold uppercase tracking-wider hover:translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+                </a>
+</nav>
+<div class="p-6">
+<button class="w-full bg-primary text-on-primary font-bold py-4 border-2 border-black neubrutalist-shadow-sm neubrutalist-shadow-hover uppercase tracking-widest font-sans">
+                    New Project
+                </button>
+</div>
+</aside>
+<!-- Main Feed Area -->
+<main class="flex-1 md:ml-64 p-4 lg:p-12 max-w-7xl mx-auto">
+<header class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<span class="font-label text-primary font-bold uppercase tracking-widest text-sm mb-2 block">— Social Pulse</span>
+<h2 class="font-headline text-5xl md:text-7xl font-extrabold tracking-tighter">Community Flow.</h2>
+</div>
+<div class="flex gap-2">
+<span class="px-4 py-1 bg-secondary-container text-on-secondary-container font-label text-sm font-bold border-2 border-black">TEAMS</span>
+<span class="px-4 py-1 bg-surface-container-highest text-on-background font-label text-sm font-bold border-2 border-black">FRIENDS</span>
+</div>
+</header>
+<!-- Grid Layout for Feed -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Large Featured Card (Team Milestone) -->
+<section class="lg:col-span-8 flex flex-col gap-8">
+<article class="bg-surface-container-lowest border-2 border-black p-8 neubrutalist-shadow flex flex-col md:flex-row gap-8">
+<div class="w-full md:w-1/3 aspect-square border-4 border-black bg-tertiary overflow-hidden">
+<img alt="Team working" class="w-full h-full object-cover" data-alt="Diverse group of creative professionals high-fiving in a modern sunlit studio filled with plants and design sketches" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMhvh2w9whYDGyZMjWVaMITKfKs26FfWy3weFZ0_twGGgzbEr-yY4Fzfyn6MSJ-3TYXf0fhrFjpYEdJEScFnvemQSRNhbiCYGEe1hwHd7UzJp1wtAZG-PYzJfmd8VlOG6xcwvj-YwLbUKQe5L_KkH6FL3qCFH4WzgZ52tTo8tYEIG99LbJAogi-Sc6awnFwNzKfvw2HIHdF34kjAfcjZbGbAZrtU6o285fNf6zmOz0DREoXxtPdXKv8UP3T9ZbEpZVp5V2mzxica8"/>
+</div>
+<div class="flex-1 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-4">
+<span class="bg-tertiary-container text-on-tertiary-container font-label text-xs font-bold px-2 py-1 uppercase border border-black">Milestone reached</span>
+<span class="font-label text-xs opacity-60">2h ago</span>
+</div>
+<h3 class="font-headline text-3xl font-bold mb-2">Team Project Alpha is 80% done.</h3>
+<p class="font-body text-on-surface-variant mb-6 leading-relaxed">The final sprint has begun! The architecture phase is complete and the team is now moving into final asset polish.</p>
+</div>
+<div class="flex flex-col gap-4">
+<div class="w-full bg-surface-container h-8 border-2 border-black relative">
+<div class="h-full bg-primary border-r-2 border-black" style="width: 80%"></div>
+<span class="absolute right-2 top-1/2 -translate-y-1/2 font-label text-xs font-black">80%</span>
+</div>
+<div class="flex -space-x-3">
+<div class="w-8 h-8 rounded-full border-2 border-black overflow-hidden bg-secondary-container">
+<img alt="Avatar" data-alt="Portrait of a young woman with curly hair smiling in outdoor setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC25fSwJJupIqwkbjV5xyVpI_yNGZ0qT8HNCLRg6CGzf5Hl8PndkK--fBDQMGu03lbZGtzcbxTzHVtXE51okncl7ClxDQZG25HNSQ-oSXOL-oGcgAzeM9wyfV7MeIcaOTFjn389e21uD4iWMM7T0fZ3H04gyWPVpzMV6W8X4JYTm_jnlLuT3SIOlAk_ceJYl_rq_dWn6PcQybS3dM9mi9B0og0_RJqOmRuh45RUBNqZg-8nxYYj07-1jFYA44vbVz5mww82687-eUU"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-black overflow-hidden bg-primary-container">
+<img alt="Avatar" data-alt="Close up portrait of a man with a beard and glasses in front of urban background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGV9buh2DBb3rlhLQ408nI4S7wASxwAKYerZt6TLUTHcMQPL7pwN5oIGqnjFIdin4Pk4ZtavbT58MMcBEPKH3uWZNAjGCE2uB4iMvZhPHdjBR6SOZS-39oCBOQZsZWa7FsNdteLKODbVNYX1uQxOUfwSEqd4GDYmaJCL70P9Uh8iLNd2AhRoo_5OMU2yXyahqr_8znl61l0AONBYiaOlMR516L5V7i1n9YndoZU8Xe9jSwTzWjVkJkahffNmzJiRGL6MBOEhj05fQ"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-black overflow-hidden bg-tertiary-container">
+<img alt="Avatar" data-alt="Portrait of a laughing man in a crisp white shirt with natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6lAy6Lzdwc5wqdgzPxjfjNfBBWncxWfh-389hM93hG4GoUwEia4Q4LX44sM-us9CCig841NND4A-_rEs1z4vBL62pmwZ-g8l67iRYPtAXQO68bfOyZKaYA7ejKDlTPrUvvGIajZfMIRxCq7L1C2UZnLd6RPdC6K3cBo3tbvvBym1OnEJCgIp-_AcjpzunxFcb_NtOGH5yYCSTV4gQGIFNhwgPONcYB2dOEd7osrfNKolKuno4SgzZLMkcVS61CmvS8S9Vwf6Rj7k"/>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Feed Items -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Card 1 -->
+<article class="bg-surface-container-lowest border-2 border-black p-6 neubrutalist-shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 border-2 border-black bg-primary-container shrink-0">
+<img alt="User" class="w-full h-full object-cover" data-alt="Cool young man with streetwear fashion sitting on stairs in an urban environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxCOpQg2AgxUkd3zWsw4yJedJVUKx1ukNVnZAI96uSDykJI8HXnIMo_ld-cPwaIKyzDsMYfwmz3CJHthxTDA4k40qv5_aJ5YvFjGUsQ3HOoYbme1qAEdCxjkP8nFg9AkXUlSLTZCV48NWFU1bRcN2kxtzoUYqLFu6M2ZClJzQizsguvHyPyVLVwvD45i5xM8MGLqwJygh0kijCLpYbCQI4vzbna1Y2JED1Jg9e4ue79-fzsiisGYm1u2ysb_Yg5ISGMB5m_9q5p6E"/>
+</div>
+<div class="overflow-hidden">
+<h4 class="font-body font-bold text-sm truncate">Marcus Chen</h4>
+<p class="font-label text-[10px] uppercase opacity-50">Just Now</p>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold leading-tight">Sarah completed 5 tasks today!</h3>
+<div class="flex flex-wrap gap-2">
+<span class="font-label text-[10px] bg-secondary-container px-2 py-0.5 border border-black uppercase">Productivity Streak</span>
+<span class="font-label text-[10px] bg-surface-container px-2 py-0.5 border border-black uppercase">+500 XP</span>
+</div>
+<button class="mt-2 border-2 border-black py-2 font-label text-xs font-bold uppercase neubrutalist-shadow-hover hover:bg-secondary-container transition-all">Congratulate</button>
+</article>
+<!-- Card 2 -->
+<article class="bg-secondary-container border-2 border-black p-6 neubrutalist-shadow-sm flex flex-col gap-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<div class="overflow-hidden">
+<h4 class="font-body font-bold text-sm truncate">System Insight</h4>
+<p class="font-label text-[10px] uppercase text-on-secondary-container">15 min ago</p>
+</div>
+</div>
+<h3 class="font-headline text-xl font-bold leading-tight">The "Deep Work" circle has been active for 4 hours.</h3>
+<div class="mt-auto flex justify-end">
+<span class="material-symbols-outlined text-2xl">trending_up</span>
+</div>
+</article>
+<!-- Card 3 (Image Focused) -->
+<article class="bg-surface-container-lowest border-2 border-black p-0 neubrutalist-shadow-sm overflow-hidden md:col-span-2">
+<div class="flex flex-col md:flex-row">
+<div class="md:w-1/2 aspect-video md:aspect-auto border-b-2 md:border-b-0 md:border-r-2 border-black">
+<img alt="Office" class="w-full h-full object-cover" data-alt="Spacious modern office with floor to ceiling windows, minimalist furniture and soft natural morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDldej3fUlpcEeNt7bijzFIqMZgm0xfLvqz4IyK1ohr_o4gx9I0Y1ZHmslQsOfGsJVVYyF6wuHmzDQzXBMRiaRhv6ClFPQk6b_7s7ajb6jI04Tx9OqD1NnLT7LHq1WOB9wC2uYKMdFq55Ah85XWZSIP1QyCQmGgHzPghefqVAlJlAk2iNThOj0OkZWqn67a7iklnaD9bhar-7SPi_Ns9ZCOfpHvNWuJe0k4cTzYwp29ig4bp2Iy0i50C2ZmjMPcLDgQOc7GZ1yWG_Q"/>
+</div>
+<div class="p-6 flex-1 flex flex-col justify-center">
+<div class="flex items-center gap-2 mb-4">
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+<span class="font-label text-xs uppercase font-bold tracking-tighter">Live Session Underway</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4">"Creative Ops" just started a collaborative whiteboard.</h3>
+<div class="flex gap-4">
+<button class="bg-black text-white px-6 py-2 font-label text-xs font-bold uppercase neubrutalist-shadow-hover translate-x-[-2px] translate-y-[-2px]">Join Now</button>
+<button class="border-2 border-black px-6 py-2 font-label text-xs font-bold uppercase neubrutalist-shadow-hover">View Board</button>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Sidebar Content (Bento Style) -->
+<aside class="lg:col-span-4 flex flex-col gap-8">
+<!-- Stats Mini-Card -->
+<div class="bg-primary border-2 border-black p-6 neubrutalist-shadow text-on-primary">
+<span class="font-label text-xs uppercase opacity-80 mb-2 block">Global Leaderboard</span>
+<div class="flex items-baseline gap-2">
+<span class="font-headline text-6xl font-black">#04</span>
+<span class="font-label text-xl">/ 120</span>
+</div>
+<p class="mt-4 font-body text-sm font-bold italic">"You are in the top 5% of curators this week. Stay bold."</p>
+</div>
+<!-- Upcoming Deadlines -->
+<div class="bg-surface-container border-2 border-black p-6 neubrutalist-shadow-sm">
+<h4 class="font-sans font-bold uppercase tracking-wider text-sm mb-6 border-b-2 border-black pb-2">Active Curators</h4>
+<ul class="flex flex-col gap-4">
+<li class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 border-2 border-black bg-tertiary-container overflow-hidden">
+<img alt="Avatar" data-alt="Cheerful woman with glasses and short hair in a bright office space" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_8KCrOy4o62bxe1NcZ9SHzIDjCH2fZpOmfPFQnju8Br0gAvM6WEI6ObEHz8cAXERoKdqPgrgZsregwsRIlB2SnPdknABf9qaGnBl3DCwbBPq5lDm1udGEse3zQcUmlVm7UJoGG3DpAy7_SdcG0dUIZ0B7Rdf8MKcbxmKf_NX6lmBMRDHy87OC7Sw3b8m53x21tZHb_QcpisqzogQLJvIBzotn_-5_c56cpWTnwe-2lz7NZF3meN99Gt0hv8XmE7-txuIqFDDRL9w"/>
+</div>
+<span class="font-body font-bold text-sm group-hover:italic">Elena Vance</span>
+</div>
+<span class="w-3 h-3 bg-green-500 border border-black rounded-full"></span>
+</li>
+<li class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 border-2 border-black bg-secondary-container overflow-hidden">
+<img alt="Avatar" data-alt="Portrait of a young man with trendy glasses looking directly at camera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB88-9FRmnrC76jihwWB7Px7CinhiRhXAwKnZ0DGfOT7GzICZcox_dPBW0OdNUoI868Rbc5T5PggLb363CU10PKpjKiqmsXhMCdkKWJezsEUXIVaXSF-aUuZyqBORyXuYGksdYMEJHYcSRnPOVZIzousDHQ7RluIRorjtXqsL23Z1FM2H8bJde_kZlLoD_Aw-Agls2_hFwjDJTZPfh9evEJhtWUDbcNLjfIIejvoH99_zLSXBf47zRQIfptAfKLVx-jJ68zNJiRseM"/>
+</div>
+<span class="font-body font-bold text-sm group-hover:italic">Julian K.</span>
+</div>
+<span class="w-3 h-3 bg-green-500 border border-black rounded-full"></span>
+</li>
+<li class="flex items-center justify-between group cursor-pointer">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 border-2 border-black bg-primary-container overflow-hidden">
+<img alt="Avatar" data-alt="Close up of a woman with freckles and serious expression in soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBB1sUFn5dtXos8G1goCrk_uG4NDHvmw_FDF11QS_oxE2T77e6-dnKrVgk9SmXWs0P_YocvzDoshvN2TieB7h4SbtQF_VquLf6B1hQu8RKl7JEeSSLBkvP2vhm4zK_j_Eai7WPYjmRog0IejKRlonqyYzW3AIMcJwOVbd6pj9iTwhrXL82YeofRZU1wyCbHAPaUb5ajyCObVgvmIKC7OhEDHfNz91fux9Cd3JcZgOMNM4U3EWygYAHbGjNIkWYDvFG-W50vt17RF4"/>
+</div>
+<span class="font-body font-bold text-sm group-hover:italic">Aria Montgomery</span>
+</div>
+<span class="w-3 h-3 bg-surface-dim border border-black rounded-full"></span>
+</li>
+</ul>
+<button class="w-full mt-6 py-2 border-2 border-black font-label text-xs font-bold uppercase hover:bg-black hover:text-white transition-all">Find more curators</button>
+</div>
+<!-- Tonal Layering Ad/CTA -->
+<div class="relative bg-surface-container-lowest border-4 border-black p-8 overflow-hidden">
+<div class="absolute -right-4 -bottom-4 w-32 h-32 bg-primary rotate-12 z-0"></div>
+<div class="relative z-10">
+<h4 class="font-headline text-3xl font-black mb-4">Go Pro.</h4>
+<p class="font-body text-sm mb-6">Unlock team analytics and advanced curation tools.</p>
+<a class="font-label text-xs font-black uppercase underline decoration-4 underline-offset-4 decoration-primary" href="#">Upgrade Identity</a>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom NavBar (Visible on small screens) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-black flex justify-around items-center h-16 z-50">
+<button class="flex flex-col items-center justify-center text-on-surface opacity-50">
+<span class="material-symbols-outlined">dashboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface opacity-50">
+<span class="material-symbols-outlined">checklist</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">rss_feed</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface opacity-50">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</nav>
+<!-- Contextual FAB -->
+<button class="fixed bottom-24 right-6 md:bottom-12 md:right-12 w-16 h-16 bg-primary text-on-primary border-4 border-black neubrutalist-shadow flex items-center justify-center z-50 hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+<span class="material-symbols-outlined text-4xl">add</span>
+</button>
+</body></html>

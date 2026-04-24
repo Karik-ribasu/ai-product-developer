@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "09-ui-critic-stitch-four-screens",
+  "title": "UI critique: four Stitch screens vs brief and accessibility",
+  "description": "ui-critic-agent produces structured ui_critique.json for all four screens using Stitch exports, design_system.json, and architecture-brief constraints (stub auth, fixture feed, route-scoped dark for Task Creation). Updates design_package.json references.ui_critique and status per design_package skill; does not call Stitch to replace layout.",
+  "acceptance": [
+    "artifacts/ui_critique.json exists and is referenced from design_package.json references.ui_critique with relative path from artifact root.",
+    "Critique covers hierarchy, spacing/readability, UX clarity, and accessibility risks for each of the four surfaces; calls out alignment or gaps vs stub login, static feed presentation, and dark segment scope.",
+    "design_package.json status reflects critiquing/refining handoff (e.g. critiquing or refining) without mutating stitch.screen_ids without EM policy."
+  ],
+  "depends_on": ["08-design-system-stitch-tokens"],
+  "architecture_refs": ["atomic-design"],
+  "implementation_notes": "ui_critique.json emitted with six findings spanning hierarchy, spacing, ux, clarity.",
+  "status": "done",
+  "assigned_agent": "ui-critic-agent",
+  "sector": "product-design",
+  "requires_screen_implementation": true,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T16:45:00.000Z"
+}

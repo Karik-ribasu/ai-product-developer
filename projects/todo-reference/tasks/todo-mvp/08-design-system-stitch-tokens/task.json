@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "08-design-system-stitch-tokens",
+  "title": "Design system: Neubrutalism tokens and primitives from Stitch exports",
+  "description": "design-system-agent normalizes Editorial Neubrutalism Modern Curator tokens (typography roles, seed orange #FF5F1F, strokes, shadows, radii) and shared atoms/molecules intent from projects/todo-reference/design/stitch/ exports and 07 artifacts/design_package.json. Writes design_system.json (and updates design_package.json references.design_system) under the same artifact root owned by 07; no Stitch regeneration.",
+  "acceptance": [
+    "artifacts/design_system.json exists under projects/todo-reference/tasks/todo-mvp/07-ui-generator-stitch-four-screens/artifacts/ (or path referenced by design_package.json references.design_system) with token roles aligned to brief: Newsreader, Plus Jakarta Sans, Space Grotesk; no Material-default visual language.",
+    "design_package.json references.design_system is non-null and points to the file with portable relative paths; design_package.json status advanced appropriately (e.g. tokens_applied or workflow state per team convention).",
+    "Outputs are traceable to the four exported screens (no unconstrained new layout; primitives support all four routes)."
+  ],
+  "depends_on": ["07-ui-generator-stitch-four-screens"],
+  "architecture_refs": ["atomic-design"],
+  "implementation_notes": "design_system.json authored; globals/tokens wired in src/styles/tokens.css and next/font in root layout.",
+  "status": "done",
+  "assigned_agent": "design-system-agent",
+  "sector": "product-design",
+  "requires_screen_implementation": true,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T16:45:00.000Z"
+}

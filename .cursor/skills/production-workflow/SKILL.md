@@ -7,15 +7,28 @@ description: Enforces a strict orchestrator pipeline (exploration → discovery 
 
 ## Core rule (critical)
 
-The orchestrator **must not** perform domain-specific work: no **product** code, no product/architecture decisions, no “fixing” another agent’s output by rewriting it. It **routes**, **validates I/O**, and **enforces order**.
+The orchestrator **must not** perform domain-specific work: no **product** code (including UI, CSS, visual alignment, product tests, or “small” patches), no product/architecture decisions, no “fixing” another agent’s output by rewriting it. It **routes**, **validates I/O**, and **enforces order**. **There are no exceptions** to this for product paths—not even one file, not even after a failed QA pass.
 
-**Exception (mandatory closing phase):** after **`improvement-agent`** writes a registered plan, the orchestrator **may apply file edits** **only** as specified in [Step 11 — Apply improvement plan](#step-11--apply-improvement-plan-orchestrator) and **only** under the [Orchestrator apply allowlist](#orchestrator-apply-allowlist-improvement-step). All other editing by the orchestrator remains forbidden.
+The **engineering-manager-agent** **must not** implement product code either: **zero** application edits. It **only** delegates to **`frontend-agent`**, **`qa-agent`**, and other specialists. Visual work is **always** **`frontend-agent`**; visual comparison and QA test execution are **always** **`qa-agent`**.
+
+**Exception (mandatory closing phase):** after **`improvement-agent`** writes a registered plan, the orchestrator **may apply file edits** **only** as specified in [Step 11 — Apply improvement plan](#step-11--apply-improvement-plan-orchestrator) and **only** under the [Orchestrator apply allowlist](#orchestrator-apply-allowlist-improvement-step). Step 11 is **governance-only**, not implementation.
+
+### No “successful” end state with open QA failures
+
+The pipeline **must not** be treated as **complete** or reported to the user as **shipped** while **`engineering_execution_report.validation_status`** is **`fail`** (or QA `issues` unresolved per acceptance). The orchestrator **returns** to **`engineering-manager-agent`** with the QA payload; EM **only** re-delegates to the responsible specialist(s), then **`qa-agent`** again—until **`pass`** or the user explicitly **stops** the run. **`improvement-agent`** runs **only** after QA **`pass`** (Step 10).
 
 ### Multi-agent execution (mandatory)
 
 - **No monolithic implementation:** a single specialized agent must not be given the entire product or an end-to-end slice that spans multiple engineering disciplines “for speed.” Work is split so each assignment maps to **one** accountable specialist and **one** `sector` (see [Sector vocabulary](#sector-vocabulary-english)).
 - **No bypass:** product-changing work (code, migrations, CI, infra scripts that ship behavior) is done **only** when the **engineering manager** invokes the **assigned** specialist—never by the orchestrator, never by ad-hoc “just implement it” in a generic or catch-all agent, and never by collapsing multiple sectors into one specialist without an explicit EM split (each piece still gets its own `agent` + `sector`).
 - **Handoff shape:** every delegation from the engineering manager to a specialist states **`agent`** and **`sector`** (English) exactly as in the validated engineering manager output, plus the **`task_slug`** (and path to `task.json`) for the task registry.
+
+### Container lifecycle during pipeline runs (mandatory — no exceptions)
+
+- **Rule:** Any specialist who **starts** a container or compose stack during their assignment (integration DB, E2E `web`+`postgres`, one-off app container, QA harness, infra validation, etc.) **must tear it down** before that specialist’s work is considered complete: e.g. `docker compose -f <file> down` (use the **same** project name / flags as `up`), `docker stop` / `docker rm` for ad-hoc containers, or the stack’s documented shutdown. **Leaving containers running after an agent turn is forbidden.**
+- **Scope:** Applies to **all** delegated agents in Steps 2–10 that can run containers — including **`infra-engineer`**, **`backend-agent`**, **`frontend-agent`**, **`qa-agent`**, design pipeline agents if they start services, and any other assignee. **`exploration-agent`**, **`discovery-agent`**, **`architecture-agent`**, **`delivery-agent`**, **`improvement-agent`** are not excused if **they** start a container for validation: same teardown rule.
+- **No handoff of running stacks:** Do not “leave Postgres up for the next task.” The next assignee starts what it needs and stops what it started.
+- **Reporting:** Assignees must note in their outcome (or EM **`per_task` notes**) **what** was started and **that** it was torn down (commands or compose project name). **`engineering-manager-agent`** includes this expectation in **every** delegation that may use Docker. **`orchestrator-agent`** in Step 8 rejects or retries EM output if containers were clearly used but teardown is not documented.
 
 ### Orchestrator invocation boundary (mandatory)
 
@@ -68,14 +81,15 @@ User input → **Exploration** → Discovery → **Architecture** → Delivery �
 
 **Target:** `architecture-agent`  
 **Input:** validated discovery output + exploration context + any technical constraints from the user.  
-**Expected output:** per `.cursor/agents/architecture-agent.md` — **`tasks/<feature_slug>/architecture-brief.json`** (schema v1) + short summary in prose.  
+**Expected output:** per `.cursor/agents/architecture-agent.md` — **`projects/<project_slug>/tasks/<feature_slug>/architecture-brief.json`** (schema v1) + short summary in prose.  
 **Gate:**
 
 - **Skip** this step when `decision` is not **`build`** (e.g. `kill` → pipeline stops earlier; `iterate` only if the orchestrator explicitly continues to delivery for a scoped iteration **without** a new brief—otherwise run architecture again).
 
 **Validation:**
 
-- `feature_slug` in the brief is `kebab-case` ASCII and matches what **delivery** will use for `tasks/<feature_slug>/`.
+- `project_slug` in the brief is `kebab-case` ASCII and matches what delivery will use for `projects/<project_slug>/`.
+- `feature_slug` in the brief is `kebab-case` ASCII and matches what **delivery** will use for `projects/<project_slug>/tasks/<feature_slug>/`.
 - Brief aligns with `.cursor/skills/architecture-standards/SKILL.md` (no contradictions).
 - If the brief is missing required fields → **retry** `architecture-agent` with a gap list (orchestrator does not author the brief).
 
@@ -84,14 +98,15 @@ User input → **Exploration** → Discovery → **Architecture** → Delivery �
 ## Step 5 — Invoke Delivery
 
 **Target:** `delivery-agent`  
-**Input:** validated discovery output + exploration context + **read** `.cursor/skills/architecture-standards/SKILL.md` + **`tasks/<feature_slug>/architecture-brief.json`** from Step 4 (when `decision` was `build`).  
+**Input:** validated discovery output + exploration context + **read** `.cursor/skills/architecture-standards/SKILL.md` + **`projects/<project_slug>/tasks/<feature_slug>/architecture-brief.json`** from Step 4 (when `decision` was `build`).  
 **Expected output (contract):** see [Delivery output](#delivery-output).  
 **Validation:**
 
 - Tasks must be actionable and traceable to `mvp_scope`.
 - Each task should have testable **acceptance** criteria and non-empty **`architecture_refs`** (see architecture-standards skill) whenever the task touches implementation surfaces.
+- **`project_slug`** in delivery JSON must **equal** `project_slug` in `architecture-brief.json` (when Step 4 ran).
 - **`feature_slug`** in delivery JSON must **equal** `feature_slug` in `architecture-brief.json` (when Step 4 ran).
-- **Registry:** for every item in `tasks[]`, a matching `tasks/<feature_slug>/<task_slug>/task.json` must exist on disk and match the [Task registry](#task-registry-on-disk) schema.
+- **Registry:** for every item in `tasks[]`, a matching `projects/<project_slug>/tasks/<feature_slug>/<task_slug>/task.json` must exist on disk and match the [Task registry](#task-registry-on-disk) schema.
 - If unclear → send back to delivery with concrete refinement questions (do not author tasks yourself).
 
 ---
@@ -99,7 +114,7 @@ User input → **Exploration** → Discovery → **Architecture** → Delivery �
 ## Step 6 — Invoke Engineering Manager
 
 **Target:** `engineering-manager-agent`  
-**Input:** validated delivery output **and** confirmation that every delivery task is registered under `tasks/<feature_slug>/<task_slug>/task.json` (paths/slugs must match the delivery JSON contract) **and** path to **`tasks/<feature_slug>/architecture-brief.json`**.  
+**Input:** validated delivery output **and** confirmation that every delivery task is registered under `projects/<project_slug>/tasks/<feature_slug>/<task_slug>/task.json` (paths/slugs must match the delivery JSON contract) **and** path to **`projects/<project_slug>/tasks/<feature_slug>/architecture-brief.json`**.  
 **Expected output (contract):** see [Engineering manager output](#engineering-manager-output), plus an **engineering execution report** when the manager’s cycle finishes (artifacts summary, per-task status, QA outcome).  
 **Validation:**
 
@@ -107,9 +122,11 @@ User input → **Exploration** → Discovery → **Architecture** → Delivery �
 - Assignments must not bundle multiple sectors; if work crosses sectors, **delivery/engineering manager** must split into separate assignments (each with its own `agent` + `sector`) before implementation.
 - `execution_order` respects dependencies; parallel work is explicit; **`qa-agent`** appears in the plan where validation is required (typically after implementation tasks), using `quality-engineering`.
 - **Design before frontend (new surfaces):** when delivery registers UI design tasks for new screens/features, **`execution_order`** must run **`ui-generator-agent`** → **`design-system-agent`** → **`ui-critic-agent`** → **`ui-refiner-agent`** (or the subset delivery defines) **before** dependent **`frontend-agent`** tasks, so **`artifacts/design_package.json`** and **`ui_spec.json`** exist as handoff inputs (see **`.cursor/skills/design/design_package.skill.md`**).
-- **Stitch source-of-truth (layout-bearing UI):** when tasks introduce or materially change **layout/structure**, **`engineering-manager-agent`** must attach **`.cursor/skills/design/stitch_workflow.skill.md`**, set **`stitch_workflow: source_of_truth`** on **`ui-generator-agent`**, and block **`frontend-agent`** until **`design/stitch/`** exports + **`meta.json`** exist and **`design_package.json`** reflects **`stitch.source_of_truth`** (see same skill for QA fidelity expectations).
+- **Stitch source-of-truth (layout-bearing UI):** when tasks introduce or materially change **layout/structure**, **`engineering-manager-agent`** must attach **`.cursor/skills/design/stitch_workflow.skill.md`**, set **`stitch_workflow: source_of_truth`** on **`ui-generator-agent`**, and block **`frontend-agent`** until project-scoped Stitch exports under **`projects/<project_slug>/design/stitch/`** + **`meta.json`** exist and **`design_package.json`** reflects **`stitch.source_of_truth`** (see same skill for QA fidelity expectations).
+- **Shared UI before screen assembly:** for Stitch-backed new screens or structural UI changes, the design/implementation handoff must identify which primitives, patterns, or composites should become **shared product-level design system / reusable components**. **`frontend-agent`** should consume or extend those shared assets before composing the final screen, rather than shipping only screen-local markup.
 - **Screen implementation flag:** for **every** task in the slice, EM must set **`requires_screen_implementation`** in the matching **`task.json`** (`true` | `false`) when moving a task to **`assigned`**—see [Task registry](#task-registry-on-disk).
 - **Stitch path registration:** when SoT applies, EM must ensure **`design_package.json`** includes **`stitch.screens`** (per-screen **image** + **code** paths) after generator export, and must populate **`stitch_handoff`** on relevant **`task.json`** rows (**canonical** `canonical_image_path` + **`canonical_code_path`** minimum). **`assignments[]`** in the EM plan should mirror the same paths for auditability.
+- **Frontend task granularity:** **`delivery-agent`** must not register **one** **`frontend-agent`** task covering **multiple** Stitch screens or **multiple** primary routes. If the delivery JSON violates **`.cursor/agents/delivery.md` → Frontend / Stitch granularity**, the orchestrator must **return the plan to delivery** for splitting before Step 6 execution.
 
 **Iterate note (quality gate proportionality):** When Discovery returns **`decision: iterate`** with a small delta, **delivery** (with EM alignment) may narrow **`quality-gate`** acceptance in the matching **`task.json`** to the **commands and surfaces touched** by that delta (for example lint/tests plus a documented smoke path) as long as the written acceptance reflects that scope. For cross-cutting risk, keep the broader gate. This clarifies proportionality; it does **not** waive the requirement for a QA **`pass`** before **`improvement-agent`**.
 
@@ -122,13 +139,14 @@ User input → **Exploration** → Discovery → **Architecture** → Delivery �
 For each assignment in `execution_order`:
 
 **Delegates to:** the assigned specialist only (`ui-generator-agent`, `design-system-agent`, `ui-critic-agent`, `ui-refiner-agent`, `frontend-agent`, `backend-agent`, `infra-engineer`, `data-engineer`, `blockchain-developer`, **`qa-agent`**, …).  
-**Input:** task title/description + acceptance + **`task_slug`** + path to `tasks/.../task.json` + **`agent` + `sector`** + path to **`tasks/<feature_slug>/architecture-brief.json`** + pointer to **`.cursor/skills/architecture-standards/SKILL.md`** + exploration/discovery context as needed (do not invent scope).  
+**Input:** task title/description + acceptance + **`task_slug`** + path to `projects/.../tasks/.../task.json` + **`agent` + `sector`** + path to **`projects/<project_slug>/tasks/<feature_slug>/architecture-brief.json`** + pointer to **`.cursor/skills/architecture-standards/SKILL.md`** + exploration/discovery context as needed (do not invent scope). For frontend assignments tied to new screens or structural UI changes, include the relevant **`design_package.json`**, **`ui_spec.json`**, **`projects/<project_slug>/design/stitch/meta.json`**, canonical Stitch exports, and any explicit note about which pieces must become shared product-level components/design-system assets first.  
 **Rules (for EM, not orchestrator):**
 
 - Do not edit task scope to “improve” it; bounce back to delivery if wrong.
 - Parallelize only when the plan says dependencies allow it.
 - **Invoke** only the agent named in the assignment; payload must include **`sector`** and **`task_slug`**.
 - Update **`task.json`** when ownership is set (`assigned_agent`, `sector`, `status`).
+- **Container teardown:** every payload to a specialist who may run Docker/compose must state explicitly: *if you start any container or compose stack, you must stop and remove it before returning; document what ran and that teardown completed* (see [Container lifecycle during pipeline runs](#container-lifecycle-during-pipeline-runs-mandatory--no-exceptions)).
 
 **Orchestrator rule:** the orchestrator **does not** perform Step 7 delegations; it waits for the engineering manager’s consolidated report.
 
@@ -139,13 +157,14 @@ For each assignment in `execution_order`:
 - Receive the **engineering execution report** from `engineering-manager-agent` (artifacts, commands, per-`task_slug` outcomes, QA `validation_status` + `issues`).
 - Cross-check **task registry** folders and `task.json` **status** / ownership fields vs assignments.
 - Check for **missing** deliverables vs delivery acceptance criteria.
+- **Containers:** If the report or artifacts indicate Docker/compose stacks were started (commands, logs, paths), confirm **`per_task` notes** or equivalent document **teardown completed**. If not → **return to `engineering-manager-agent`** with a gap list (incomplete handoff); do not treat the step as validated.
 
 ---
 
 ## Step 9 — QA gate (orchestrator validation only)
 
 - Do **not** invoke `qa-agent` from the orchestrator. Confirm the EM report includes QA results: **`validation_status`**: `pass` | `fail`, **`issues`**: structured list.
-- If **fail** → return control to **`engineering-manager-agent`** with the QA `issues` and affected `task_slug` list; EM re-invokes the responsible specialists, then **`qa-agent`** again. Repeat until pass or explicit user stop.
+- If **fail** → return control to **`engineering-manager-agent`** with the QA `issues` and affected `task_slug` list. The **engineering manager must not** fix findings personally; they **only** delegate to the **accountable** agent (**`frontend-agent`** for visual/UI, **`qa-agent`** for tests/comparisons/harnesses, **`backend-agent`**, etc.), then schedule **`qa-agent`** again. Repeat until **`pass`** or explicit user stop. **Do not** advance to Step 10 or present a “completed” pipeline while **`fail`** persists.
 - **Design visual acceptance (optional gate):** when **`design_package.json`** sets **`acceptance.requires_design_visual_acceptance`: `true`**, confirm the EM report (or linked artifacts) includes **`qa_visual_evidence.json`** from **`qa-agent`** and **`design_visual_acceptance.json`** from the assigned **design** agent (`ui-critic-agent` unless delivery specifies otherwise), per **`.cursor/skills/design/design_visual_acceptance.skill.md`**. A **`fail`** verdict is a **return-to-EM** signal (same as functional QA fail) for frontend/design rework—not an orchestrator delegation change. For **`verdict: waived`** while the baseline is not yet frozen or approved, use **Path B — Waiver and interim baseline** in that skill so validators do not treat `refining` / `approved_baseline: false` as a hard blocker when Step 10’s `pass` or `waived` policy applies.
 
 ---
@@ -156,7 +175,7 @@ For each assignment in `execution_order`:
 
 **Target:** `improvement-agent` (see `.cursor/agents/improvement-agent.md`).
 
-**Input:** `feature_slug`; paths to `tasks/<feature_slug>/architecture-brief.json`; EM **`engineering_execution_report`** (and pointers to `task.json` files as needed); short validated summary of discovery/delivery if available.
+**Input:** `project_slug`; `feature_slug`; paths to `projects/<project_slug>/tasks/<feature_slug>/architecture-brief.json`; EM **`engineering_execution_report`** (and pointers to `task.json` files as needed); short validated summary of discovery/delivery if available.
 
 **Expected output:**
 
@@ -164,7 +183,7 @@ For each assignment in `execution_order`:
 
 **Validation:**
 
-- Plan file exists under `tasks/<feature_slug>/improvements/plans/` and matches [Improvement plan (on-disk)](#improvement-plan-on-disk).
+- Plan file exists under `projects/<project_slug>/tasks/<feature_slug>/improvements/plans/` and matches [Improvement plan (on-disk)](#improvement-plan-on-disk).
 - `history.jsonl` received a new line with matching `plan_path`.
 - Every `orchestrator_apply: true` item lists only paths under the [Orchestrator apply allowlist](#orchestrator-apply-allowlist-improvement-step).
 
@@ -191,7 +210,7 @@ The orchestrator **applies** file changes **only** by executing edits that are:
 - `.cursor/skills/**`
 - `tasks/_template/**` (templates only)
 
-**Forbidden targets for orchestrator apply:** `app/`, `src/`, product tests, per-feature `tasks/<feature_slug>/<task_slug>/task.json` (registry), `architecture-brief.json`, `package.json` / lockfiles, infra that ships app behavior, and any path not explicitly allowed above.
+**Forbidden targets for orchestrator apply:** project application paths such as `projects/<project_slug>/app/`, `projects/<project_slug>/src/`, project product tests, per-feature `projects/<project_slug>/tasks/<feature_slug>/<task_slug>/task.json` (registry), `architecture-brief.json`, project `package.json` / lockfiles, infra that ships app behavior, and any path not explicitly allowed above.
 
 If the plan requests disallowed targets, **skip** those items, record them in the Step 12 summary as **skipped (out of allowlist)**, and do not patch.
 
@@ -202,6 +221,7 @@ If the plan requests disallowed targets, **skip** those items, record them in th
 Only after Step 11 completes (or Step 10 skipped per policy below):
 
 - Summary of what shipped (by `task_slug` / `agent` / `sector`), mapped to `success_metrics`.
+- Explicit confirmation that **`engineering_execution_report.validation_status`** was **`pass`** before Step 10 (if `decision: build`). If the run stopped early with QA **`fail`**, the summary must say **blocked / not complete**, list open `issues`, and state that EM must continue the loop—**not** imply success.
 - Confirmation against acceptance criteria and registry paths.
 - **Improvement:** path to the plan file + `history.jsonl`; list of files the orchestrator changed in Step 11 (or `none`).
 - If Step 10 **skipped** (e.g. pipeline stopped before QA pass, or `decision` ≠ `build`): state **why** `improvement-agent` was not run.
@@ -256,12 +276,16 @@ Input:
 { "discovery": { "...": "validated contract" }, "exploration_summary": "...", "user_constraints": ["..."] }
 
 Expected:
-- tasks/<feature_slug>/architecture-brief.json (schema v1) + prose summary; aligns with architecture-standards skill
+- projects/<project_slug>/tasks/<feature_slug>/architecture-brief.json (schema v1) + prose summary; aligns with architecture-standards skill
 ```
 
 ---
 
 ## Data contracts
+
+### Project workspace rule
+
+For newly generated work, the canonical project root is **`projects/<project_slug>/`**. Project-owned folders such as **`design/`**, **`e2e/`**, **`infra/`**, **`scripts/`**, **`src/`**, **`tasks/`**, and **`tests/`** must live inside that isolated project workspace rather than at repository root. Repository-root assets remain for governance, templates, and legacy/examples unless explicitly migrated later.
 
 ### Discovery output
 
@@ -278,6 +302,7 @@ Expected:
 
 ```json
 {
+  "project_slug": "string",
   "feature_slug": "string",
   "epics": [],
   "tasks": [
@@ -293,7 +318,7 @@ Expected:
 }
 ```
 
-`feature_slug` and each `task_slug` must match the on-disk paths under `tasks/`. `depends_on` lists other **`task_slug`** values in the same feature (omit or `[]` if none). **`architecture_refs`** must list stable ids from `.cursor/skills/architecture-standards/SKILL.md` for any task that changes implementation; use `[]` only for purely procedural/docs tasks if explicitly justified. Include a final **`quality-gate`** (or equivalent) **`task_slug`** for QA validation so it is registered and assignable like other work.
+`project_slug`, `feature_slug`, and each `task_slug` must match the on-disk paths under `projects/<project_slug>/tasks/`. `depends_on` lists other **`task_slug`** values in the same feature (omit or `[]` if none). **`architecture_refs`** must list stable ids from `.cursor/skills/architecture-standards/SKILL.md` for any task that changes implementation; use `[]` only for purely procedural/docs tasks if explicitly justified. Include a final **`quality-gate`** (or equivalent) **`task_slug`** for QA validation so it is registered and assignable like other work.
 
 ### Engineering manager output
 
@@ -312,6 +337,7 @@ Expected:
   ],
   "execution_order": ["string"],
   "engineering_execution_report": {
+    "project_slug": "string",
     "feature_slug": "string",
     "validation_status": "pass | fail",
     "issues": [],
@@ -327,7 +353,7 @@ Expected:
 
 | Field | Type | Required | Notes |
 |--------|------|----------|-------|
-| `requires_screen_implementation` | boolean | yes | `true` when the task changes or implements **layout/UI**; otherwise `false`. |
+| `requires_screen_implementation` | boolean | yes | `true` when the task changes or implements **layout/UI**; otherwise `false`. This flag implies design-first coordination for new screens or structural UI changes. |
 | `design_package_path` | string \| null | yes | Repository-relative path to **`artifacts/design_package.json`** when the assignment is part of the design/Stitch pipeline; else `null`. |
 | `stitch_handoff` | object \| null | yes | When SoT exports exist, same shape as **`task.json` → `stitch_handoff`** (canonical **image** + **code** paths required for frontend-bound rows); else `null`. |
 
@@ -335,10 +361,10 @@ Field names are stable; empty arrays/objects are allowed only when explicitly ju
 
 ### Improvement plan (on-disk)
 
-**Root:** `tasks/<feature_slug>/improvements/`
+**Root:** `projects/<project_slug>/tasks/<feature_slug>/improvements/`
 
-- **Plans:** `tasks/<feature_slug>/improvements/plans/<ISO8601_Z>_<slug>_plan.json` — schema **`kind`: `improvement-plan`**, version and fields per `.cursor/agents/improvement-agent.md`.
-- **History:** append-only **`tasks/<feature_slug>/improvements/history.jsonl`** — each line is one JSON object with `kind`: `improvement-history-entry` (see `improvement-agent.md`).
+- **Plans:** `projects/<project_slug>/tasks/<feature_slug>/improvements/plans/<ISO8601_Z>_<slug>_plan.json` — schema **`kind`: `improvement-plan`**, version and fields per `.cursor/agents/improvement-agent.md`.
+- **History:** append-only **`projects/<project_slug>/tasks/<feature_slug>/improvements/history.jsonl`** — each line is one JSON object with `kind`: `improvement-history-entry` (see `improvement-agent.md`).
 
 **Who writes what**
 
@@ -347,13 +373,14 @@ Field names are stable; empty arrays/objects are allowed only when explicitly ju
 
 ### Task registry (on-disk)
 
-**Root:** repository-relative `tasks/<feature_slug>/<task_slug>/` (one directory per delivery task).
+**Root:** repository-relative `projects/<project_slug>/tasks/<feature_slug>/<task_slug>/` (one directory per delivery task).
 
 **File:** `task.json` — UTF-8, single object, **no** comments. **Schema (version 1):**
 
 | Field | Type | Required | Notes |
 |--------|------|----------|--------|
 | `schema_version` | `1` | yes | Bump only if the contract changes |
+| `project_slug` | string | yes | Matches `projects/<project_slug>/` parent workspace |
 | `feature_slug` | string | yes | Matches parent folder |
 | `task_slug` | string | yes | Matches leaf folder |
 | `title` | string | yes | Short title |
@@ -365,11 +392,11 @@ Field names are stable; empty arrays/objects are allowed only when explicitly ju
 | `sector` | string \| null | yes | English sector after EM assigns; `null` until then |
 | `updated_at` | string | yes | ISO-8601 UTC timestamp of last registry write |
 | `requires_screen_implementation` | boolean | yes | **`engineering-manager-agent`:** `true` if the task ships or materially changes **user-facing layout** (including **`frontend-agent`** on a new/changed surface); `false` for logic-only / backend / infra / docs-only work. |
-| `stitch_handoff` | object \| null | yes | **`engineering-manager-agent`** after SoT exports: see **`tasks/_template/task.json`** for shape; use **`null`** until exports exist, then set **canonical** PNG + code paths. **`delivery-agent`** may leave **`null`**. |
+| `stitch_handoff` | object \| null | yes | **`engineering-manager-agent`** after SoT exports: see **`tasks/_template/task.json`** for shape; use **`null`** until exports exist, then set **canonical** PNG + code paths. **`delivery-agent`** may leave **`null`**. Paths point into the owning project workspace under `projects/<project_slug>/...`. |
 
 **Who writes what**
 
-- **`delivery-agent`:** creates the directory and initial `task.json` (`status`: `planned`, `assigned_agent` / `sector`: `null`, `schema_version`: `1`, `updated_at` set).
+- **`delivery-agent`:** creates the directory and initial `task.json` (`project_slug` set, `status`: `planned`, `assigned_agent` / `sector`: `null`, `schema_version`: `1`, `updated_at` set).
 - **`engineering-manager-agent`:** sets `assigned_agent`, `sector`, `status` → `assigned` when dispatching; sets **`requires_screen_implementation`**; sets **`stitch_handoff`** when Stitch SoT paths are known (copy from **`design_package.json` → `stitch.screens`**); may set `blocked` with notes in `description` only if policy allows (prefer a new chat turn to delivery for scope change).
 - **Assignee specialist (one task at a time):** sets `status` to `in_progress` when starting, `done` when complete, or `failed_qa` / `blocked` when appropriate; refreshes `updated_at`.
 - **`qa-agent`:** may set `failed_qa` or leave `done` unchanged after verification; updates `updated_at`; records details in the EM **engineering_execution_report** / QA output, not only in JSON, if space is tight.
@@ -378,13 +405,13 @@ Do not add **ad-hoc** keys beyond this table and the documented **`stitch_handof
 
 #### `stitch_handoff` object (when not `null`)
 
-All paths are **repository-root-relative**.
+All paths are **repository-root-relative**, typically under `projects/<project_slug>/...` for project-owned artifacts.
 
 | Field | Type | Required when handoff set | Notes |
 |--------|------|---------------------------|-------|
 | `project_id` | string | yes | Stitch project id (same **`feature_slug`** default policy—see **`stitch_workflow.skill.md`**). |
-| `design_package_path` | string | yes | e.g. `tasks/<feature>/<task>/artifacts/design_package.json`. |
-| `meta_path` | string | yes | e.g. `design/stitch/meta.json`. |
+| `design_package_path` | string | yes | e.g. `projects/<project>/tasks/<feature>/<task>/artifacts/design_package.json`. |
+| `meta_path` | string | yes | e.g. `projects/<project>/design/stitch/meta.json`. |
 | `canonical_screen_id` | string | yes | Must equal **`stitch.screen_ids[0]`** in the package. |
 | `canonical_image_path` | string | yes | PNG (or raster) for canonical screen. |
 | `canonical_code_path` | string | yes | HTML or exported layout code for canonical screen. |
@@ -430,7 +457,8 @@ Use these **canonical** `sector` values (extend only if discovery/delivery docum
 - **Missing `sector` or wrong language** on assignments or delegations.
 - **Bypassing specialists:** any repo or product change not executed under an explicit `agent` + `sector` assignment from the engineering manager (with the pipeline above).
 - **Orchestrator calling engineering or QA agents:** violates invocation boundary; only `engineering-manager-agent` may call those specialists.
-- **Missing task registry:** delivery did not create `tasks/<feature_slug>/<task_slug>/task.json` for each task (including QA gate slug).
+- **Leaving containers running after a specialist turn** (or missing teardown documentation when compose/Docker was used): violates [Container lifecycle](#container-lifecycle-during-pipeline-runs-mandatory--no-exceptions).
+- **Missing task registry:** delivery did not create `projects/<project_slug>/tasks/<feature_slug>/<task_slug>/task.json` for each task (including QA gate slug).
 - **Missing architecture traceability:** delivery tasks lack **`architecture_refs`** where they touch implementation, or `feature_slug` disagrees with `architecture-brief.json`.
 
 ---

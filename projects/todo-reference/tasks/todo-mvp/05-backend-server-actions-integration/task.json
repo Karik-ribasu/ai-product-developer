@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "project_slug": "todo-reference",
+  "feature_slug": "todo-mvp",
+  "task_slug": "05-backend-server-actions-integration",
+  "title": "Server Actions boundary wiring use cases (no UI components)",
+  "description": "Add Next.js Server Action modules under src/app/**/actions.ts (or equivalent single documented glob) that are the only server entrypoints mutating persistence: they construct repositories/use case dependencies per request (no mutable globals), invoke application use cases, and return serializable results or domain-safe errors for the client. Include containerized integration tests achieving 100% line coverage on all registered actions.ts files. Do not implement page layout or visual components here.",
+  "acceptance": [
+    "All mutations that change SQLite go through Server Actions in the declared actions.ts glob, not from client-side DB access.",
+    "Actions use explicit factory or composition root (per brief) to obtain repository and use cases—no ad-hoc module-level mutable singletons.",
+    "Actions expose operations needed for MVP: create todo, list, toggle, update text, delete (aligned with use cases).",
+    "Integration tests in containers exercise actions against real SQLite (via compose) and achieve 100% line coverage on the actions modules in scope.",
+    "User-visible error mapping hooks exist so frontend can show load/save failures (contract documented; behavior verified in integration where applicable).",
+    "No React component implementation in this task beyond minimal server-only helpers if required by Next patterns."
+  ],
+  "depends_on": ["03-backend-domain-application-unit", "04-backend-infrastructure-sqlite-integration"],
+  "architecture_refs": [
+    "clean-architecture",
+    "singleton-policy",
+    "integration-tests-full-coverage",
+    "integration-tests-isolated-containers"
+  ],
+  "implementation_notes": null,
+  "status": "done",
+  "assigned_agent": "backend-agent",
+  "sector": "backend-engineering",
+  "requires_screen_implementation": false,
+  "stitch_handoff": null,
+  "updated_at": "2026-04-18T16:01:00.000Z"
+}

@@ -88,6 +88,7 @@ For each discovery cycle, provide:
 - Do not rely on internal opinions as validation  
 - Do not over-scope solutions (prefer smallest testable version)  
 - Do not aim for certainty; aim for risk reduction  
+- **Container teardown (mandatory — no exceptions):** If you start any container or compose stack, **tear it down** before finishing and note that shutdown completed.
 
 ---
 
